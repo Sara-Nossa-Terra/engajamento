@@ -23,11 +23,12 @@ Para parar o container basta digitar:
 
 
 ## Tecnologias
-* [Docker](https://www.docker.com/)
-* [PHP 7.x](http://php.net/)
-* [jQuery](https://jquery.com/)
+* [Docker](https://www.docker.com)
 * [MySql](https://www.oracle.com/database/technologies/mysql.html)
-* [WordPress](https://wordpress.org/about/)
+* [PHP 7.x](http://php.net)
+* [CodeIgniter](https://codeigniter.com)
+* [jQuery](https://jquery.com)
+* [Bootstrap](https://getbootstrap.com)
 
 ## Autores
 Várias pessoas colaboraram com o desenvimento do projeto ENGAJAMENTO e decidimos centralizar em um único local todos os que participaram com o desenvolvimento do projeto.
