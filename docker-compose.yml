@@ -1,8 +1,8 @@
 version: '3.1'
 services:
-  wordpress:
-    container_name: 'app_engajamento_wp'
-    image: wordpress:php7.3-apache
+  app:
+    container_name: 'app_engajamento'
+    image: bitnami/codeigniter:3.1.11
     restart: always
     ports:
       - 80:80
@@ -10,16 +10,8 @@ services:
       - db
     depends_on:
       - db
-    environment:
-      WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: sys_user
-      WORDPRESS_DB_PASSWORD: sys_password
-      WORDPRESS_DB_NAME: engajamento_wp
-#      WORDPRESS_DEBUG: 1
-      WORDPRESS_TABLE_PREFIX: wpe_
     volumes:
-      - ./src/wp-content:/var/www/html/wp-content
-      - ./src/.htaccess:/var/www/html/.htaccess
+      - .:/app
   db:
     container_name: 'banco_engajamento_wp'
     image: mysql:5.7
@@ -29,10 +21,10 @@ services:
     expose:
       - 3306
     environment:
-      MYSQL_DATABASE: engajamento_wp
+      MYSQL_DATABASE: engajamento
       MYSQL_USER: sys_user
       MYSQL_PASSWORD: sys_password
-      MYSQL_ROOT_PASSWORD: iec7Aediec7shoovoo7eiKaeliip7eCh
+      MYSQL_ROOT_PASSWORD: iec9Aediec9shoovoo7eiKaeliip7eCh
 #      MYSQL_RANDOM_ROOT_PASSWORD: '1'
     volumes:
       - ./db:/docker-entrypoint-initdb.d
