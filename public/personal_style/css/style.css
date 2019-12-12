@@ -1,0 +1,24 @@
+/* COR DE FONTES */
+.red{
+	color: red;
+}
+
+.white{
+	color: #FFF;
+}
+
+/* ESPAÇAMENTO DOS ALERTAS DE ERROS DOS FORMS */
+.mt-n15{
+	position: relative;
+	top: -15px;
+}
+
+/* FORMATAÇÃO DO BOTÃO DE EDITAR DOS FORMS */
+button > a{
+	color: #FFF;
+	text-decoration: none;
+}
+button > a:hover{
+	color: #FFF;
+	text-decoration: none;
+}
