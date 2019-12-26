@@ -1,0 +1,41 @@
+version: '3.1'
+services:
+  app:
+    container_name: 'app_engajamento'
+    image: saranossaterra/engajamento-web:1.0
+    restart: always
+    ports:
+      - 80:80 
+    environment:
+      APPLICATION_ENV: development
+      URL_BASE: http://eumeimportosim.com.br
+      GIT_BRANCH: master
+      GIT_REPOSITORY: https://github.com/sara-nossa-terra/engajamento.git
+      DB_USERNAME: sys_user
+      DB_PASSWORD: sys_password
+      DB_NAME: engajamento
+      DB_HOST: db_engajamento
+      DB_PORT: 3306
+    links:
+      - db
+    depends_on:
+      - db
+    volumes:
+      - .:/var/www/engajamento
+  db:
+    container_name: 'db_engajamento'
+    image: mysql:5.7
+    restart: always
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    environment:
+      MYSQL_DATABASE: engajamento
+      MYSQL_USER: sys_user
+      MYSQL_PASSWORD: sys_password
+      MYSQL_ROOT_PASSWORD: iec9Aediec9shoovoo7eiKaeliip7eCh
+#      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
+      - ./docker/mysql:/var/lib/mysql
