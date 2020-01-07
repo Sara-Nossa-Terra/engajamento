@@ -16,6 +16,16 @@ Para criar um ambiente para trabalhar com o ENGAJAMENTO basta executar o comando
   docker-compose up -d
 ```
 
+Registre o seguinte host no seu sistema operacional da sua estação de trabalho apontando para seu prórpio IP:
+```
+  127.0.1.1	eumeimportosim.com.br
+```
+
+Acesse no seu browser:
+```
+eumeimportosim.com.br
+```
+
 Para parar o container basta digitar:
 ```
   docker-compose down
