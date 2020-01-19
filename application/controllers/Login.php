@@ -46,9 +46,9 @@ class Login extends CI_Controller {
 
 			if($result){
 
-				if(password_verify($form_senha, $result->senha)){
-					$this->session->set_userdata("nome", $result->nome);
-					$this->session->set_userdata("email", $result->email);
+				if(password_verify($form_senha, $result->tx_senha)){
+					$this->session->set_userdata("nome", $result->tx_nome);
+					$this->session->set_userdata("email", $result->tx_email);
 				}else{
 					$json["status"] = 0;
 				}

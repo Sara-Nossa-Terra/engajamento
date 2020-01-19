@@ -33,11 +33,12 @@ class Users_model extends CI_Model{
 		return $result->row();
 	}
 
-	public function get_user_data($form_login){
-		$this->db->select("id_usuario, nome, email, senha, status_2")
-			 			 ->from("usuario")
-			 			 ->where("email", $form_login)
-			 			 ->where("status_2", 1);
+	public function get_user_data($form_login)
+	{
+		$this->db->select("id_usuario, tx_nome, tx_email, tx_senha, tx_status_2")
+			 			 ->from("tb_usuario")
+			 			 ->where("tx_email", $form_login)
+			 			 ->where("tx_status_2", 1);
 
 	 	$result = $this->db->get();
 
