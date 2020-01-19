@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="<?= base_url(); ?>public/personal_style/css/floating-labels.css" />
     <link rel="stylesheet" href="<?= base_url(); ?>public/personal_style/css/style.css" />
   </head>
+  <script>
+    const BASE_URL = "<?= base_url(); ?>";
+  </script>
   <body>
     <form id="login_form" method="post" class="form-signin">
       <div class="text-center mb-4">

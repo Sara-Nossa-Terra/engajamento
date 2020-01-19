@@ -1,4 +1,3 @@
-const BASE_URL = "http://localhost/engajamento/";
 
 function clearErrors(){
 	$(".is-invalid").removeClass("is-invalid");

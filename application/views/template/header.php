@@ -19,6 +19,9 @@
   } ?>
 
 </head>
+<script>
+    const BASE_URL = "<?= base_url(); ?>";
+</script>
 <header>
   <!-- Fixed navbar -->
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
