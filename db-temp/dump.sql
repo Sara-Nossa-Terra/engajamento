@@ -56,14 +56,16 @@ CREATE TABLE `tb_lider` (
   `tx_nome` varchar(200) NOT NULL,
   `tx_email` varchar(120) NOT NULL,
   `tx_senha` varchar(255) NOT NULL,
-  `dt_nascimento` date DEFAULT NULL,
-  `tx_telefone` varchar(15) DEFAULT NULL,
+  `dt_nascimento` date NOT NULL,
+  `tx_telefone` varchar(15) NOT NULL,
   `dt_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `dt_deletado` timestamp NULL DEFAULT NULL,
   `id_deletado` int(11) DEFAULT NULL,
   `fk_lider` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_lider`),
-  KEY `tb_lider_id_lider_index` (`id_lider`)
+  KEY `tb_lider_id_lider_index` (`id_lider`),
+  KEY `fk_tb_lider_tb_lider_idx` (`fk_lider`),
+  CONSTRAINT `fk_tb_lider_tb_lider` FOREIGN KEY (`fk_lider`) REFERENCES `tb_lider` (`id_lider`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabela de com informações sobre os líderes.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -91,8 +93,11 @@ CREATE TABLE `tb_pessoa` (
   `dt_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `dt_deletado` timestamp NULL DEFAULT NULL,
   `id_deletado` int(11) DEFAULT NULL,
+  `fk_lider` int(11) NOT NULL,
   PRIMARY KEY (`id_pessoa`),
-  KEY `tb_pessoa_id_pessoa_index` (`id_pessoa`)
+  KEY `tb_pessoa_id_pessoa_index` (`id_pessoa`),
+  KEY `fk_tb_pessoa_tb_lider1_idx` (`fk_lider`),
+  CONSTRAINT `fk_tb_pessoa_tb_lider1` FOREIGN KEY (`fk_lider`) REFERENCES `tb_lider` (`id_lider`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabela para cadastro de pessoas ajudadas.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -147,7 +152,7 @@ CREATE TABLE `tb_usuario` (
   `nu_telefone` varchar(11) DEFAULT NULL,
   `tx_status_2` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id_usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -156,7 +161,7 @@ CREATE TABLE `tb_usuario` (
 
 LOCK TABLES `tb_usuario` WRITE;
 /*!40000 ALTER TABLE `tb_usuario` DISABLE KEYS */;
-INSERT INTO `tb_usuario` VALUES (1,'Admin','$2y$10$DnnDu3gZ8zlffs7ASozqk.8wOaHjf3AI3EStw53jlnY2zNj13/AoK','admin@admin.com',NULL,1);
+INSERT INTO `tb_usuario` VALUES (1,'Admin','$2y$10$DnnDu3gZ8zlffs7ASozqk.8wOaHjf3AI3EStw53jlnY2zNj13/AoK','admin@admin.com',NULL,1),(2,'Douglas x ','$2y$10$bUss9DDGk6UXodEj1N5PxuXb8Dmzux6L14ghOOc3xmI9WI9c.XhvO','douglas@gmail.com','',0);
 /*!40000 ALTER TABLE `tb_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -169,4 +174,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-01-19 15:29:12
+-- Dump completed on 2020-01-19 18:49:50
