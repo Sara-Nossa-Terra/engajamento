@@ -1,15 +1,18 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class EditarUsuario extends CI_Controller {
+class EditarUsuario extends CI_Controller
+{
 
-	public function __construct(){
+	public function __construct()
+	{
 		parent::__construct();
 		$this->load->library("controle_acesso");
 		$this->controle_acesso->controlar();
 	}
 
-	public function index(){
+	public function index()
+	{
 		$this->load->model("users_model");
 		$id = $this->input->get("id");
 		$user = $this->users_model->show_info_user($id);
@@ -26,7 +29,8 @@ class EditarUsuario extends CI_Controller {
 		$this->template->show("editar_usuario.php", $data);
 	}
 
-	public function ajax_editar_usuario(){
+	public function ajax_editar_usuario()
+	{
 
 		if (!$this->input->is_ajax_request()) {
 			exit("Nenhum acesso de script direto permitido!");
@@ -44,34 +48,33 @@ class EditarUsuario extends CI_Controller {
 		$id_usuario = $data["id_usuario"];
 
 		// VALIDAÇÃO DOS CHECKBOX DE STATUS
-		$status = (($this->input->post("status")) ? 1 : 0);
+		$status = (($this->input->post("tx_status_2")) ? 1 : 0);
 
-		if(empty($data["nome"])){
-			$json["error_list"]["#nome"] = "Nome é obrigatório!";
+		if (empty($data["tx_nome"])) {
+			$json["error_list"]["#tx_nome"] = "Nome é obrigatório!";
 		}
 
-		if(empty($data["email"])){
-			$json["error_list"]["#email"] = "E-mail é obrigatório!";
-		}else{
-			if($this->users_model->is_duplicated("email", $data["email"], $id_usuario)){
-				$json["error_list"]["#email"] = "E-mail já existente!";
+		if (empty($data["tx_email"])) {
+			$json["error_list"]["#tx_email"] = "E-mail é obrigatório!";
+		} else {
+			if ($this->users_model->is_duplicated("tx_email", $data["tx_email"], $id_usuario)) {
+				$json["error_list"]["#tx_email"] = "E-mail já existente!";
 			}
 		}
 
-		if(!empty($json["error_list"])){
-			$json["status"] = 0;
-		}else{
+		if (!empty($json["error_list"])) {
+			$json["tx_status"] = 0;
+		} else {
 			$data = [
-				'nome' => $data["nome"],
-				'email' => $data["email"],
-				'telefone' => $data["telefone"],
-				'status_2' => $status
+				"tx_nome" => $data['tx_nome'],
+				"tx_email" => $data['tx_email'],
+				"nu_telefone" => $data['nu_telefone'],
+				"tx_status_2" => $status
 			];
+
 			$this->users_model->update($id_usuario, $data);
 		}
-
 		echo json_encode($json);
-
 	}
 
 }

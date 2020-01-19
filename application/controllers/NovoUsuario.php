@@ -1,15 +1,18 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class NovoUsuario extends CI_Controller {
+class NovoUsuario extends CI_Controller
+{
 
-	public function __construct(){
+	public function __construct()
+	{
 		parent::__construct();
 		$this->load->library("controle_acesso");
 		$this->controle_acesso->controlar();
 	}
 
-	public function index(){
+	public function index()
+	{
 		$data = array(
 			"styles" => array(
 				"public/personal_style/css/style.css",
@@ -22,7 +25,8 @@ class NovoUsuario extends CI_Controller {
 		$this->template->show("novo_usuario.php", $data);
 	}
 
-	public function ajax_novo_usuario(){
+	public function ajax_novo_usuario()
+	{
 
 		if (!$this->input->is_ajax_request()) {
 			exit("Nenhum acesso de script direto permitido!");
@@ -36,32 +40,33 @@ class NovoUsuario extends CI_Controller {
 
 		$data = $this->input->post();
 
-		if(empty($data["nome"])){
+		if (empty($data["tx_nome"])) {
 			$json["error_list"]["#nome"] = "Nome é obrigatório!";
 		}
 
-		if(empty($data["email"])){
+		if (empty($data["tx_email"])) {
 			$json["error_list"]["#email"] = "E-mail é obrigatório!";
-		}else{
-			if($this->users_model->is_duplicated("email", $data["email"])){
+		} else {
+			if ($this->users_model->is_duplicated("tx_email", $data["tx_email"])) {
 				$json["error_list"]["#email"] = "E-mail já existente!";
 			}
 		}
 
-		if(empty($data["senha"])){
+		if (empty($data["tx_senha"])) {
 			$json["error_list"]["#senha"] = "Senha é obrigatória!";
 		}
 
-		if(!empty($json["error_list"])){
+		if (!empty($json["error_list"])) {
 			$json["status"] = 0;
-		}else{
+		} else {
 			$data = [
-				'nome' => $data["nome"],
-				'email' => $data["email"],
-				'senha' => password_hash($data["senha"], PASSWORD_DEFAULT),
-				'telefone' => $data["telefone"],
-				'status_2' => $data["status"]
+				"tx_nome" => $data['tx_nome'],
+				"tx_email" => $data['tx_email'],
+				"tx_senha" => password_hash($data['tx_senha'], PASSWORD_DEFAULT),
+				"nu_telefone" => $data['nu_telefone'],
+				"tx_status_2" => $data['status']
 			];
+
 			$this->users_model->insert($data);
 		}
 
