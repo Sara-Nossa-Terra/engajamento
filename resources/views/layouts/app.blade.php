@@ -105,6 +105,7 @@
     </nav>
 
     <main class="alinhamento">
+        @include('layouts.flash-message')
         @yield('content')
     </main>
 </div>

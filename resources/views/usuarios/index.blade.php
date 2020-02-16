@@ -2,23 +2,11 @@
 
 @section('content')
     <div class="container">
-        {{--<div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Dashboard</div>
 
-                    <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-
-                        Seja bem vindo ao sistema engajamento
-                    </div>
-                </div>
-            </div>
-        </div>--}}
+        <h4 class="text-center">Lista de Líderes</h4>
+        <a href="{{ route('lideres.create') }}" class="btn-novo btn btn-success">
+            <i class="fa fa-plus"></i>&nbsp;Novo
+        </a>
         <div class="table-responsive">
             <table class="table table-striped table-hover table-bordered dataTable">
                 <thead class="thead-light">
@@ -37,7 +25,7 @@
                                class="btn btn-primary" title="Editar">
                                 <span class="fa fa-edit"></span>
                             </a>
-                            <a href="{{ route('lideres.edit', base64_encode($usuario->id)) }}"
+                            <a href="{{ route('lideres.delete', base64_encode($usuario->id)) }}"
                                class="btn btn-danger link-excluir" title="Excluir">
                                 <span class="fa fa-trash"></span>
                             </a>

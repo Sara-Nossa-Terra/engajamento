@@ -14,6 +14,7 @@ class EngajamentoController extends Controller
     protected $dirView;
     protected $redirectSave;
     protected $redirectDelete;
+    protected $orderBy;
 
     /**
      * EngajamentoController constructor.
@@ -43,6 +44,12 @@ class EngajamentoController extends Controller
         if (!is_object($this->model)) {
             $this->model = new $this->modelName();
         }
+
+        if (count($this->model->getFillable())) {
+            $this->orderBy = $this->model->getFillable()[0];
+        } else {
+            throw new \Exception("Não foi encontrado nenhum atributo \$fillable da model {$this->modelName}!");
+        }
     }
 
     /**
@@ -53,8 +60,7 @@ class EngajamentoController extends Controller
     public function index()
     {
         try {
-            $orderBy = $this->model->getFillable()[0];
-            $aItens = $this->model->orderBy("{$orderBy}", "asc")->paginate(10);
+            $aItens = $this->model->orderBy("{$this->orderBy}", "asc")->paginate(10);
 
             return view("{$this->dirView}.index", compact('aItens'));
         } catch (\Exception $e) {
@@ -129,7 +135,7 @@ class EngajamentoController extends Controller
         }
     }
 
-    protected function _recuperarDados()
+    protected function recuperarDados()
     {
         return [];
     }

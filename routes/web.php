@@ -12,6 +12,7 @@ Route::middleware(['auth'])->group(function () {
         return view('home');
     })->name('home');
 
+    Route::get('/lideres/{id}/destroy', 'UserController@destroy')->name('lideres.delete');
     Route::resources([
         'lideres' => 'UserController',
     ]);
