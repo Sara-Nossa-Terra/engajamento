@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  db:
+    container_name: db_engajamento_laravel
+    image: postgres:9.6
+    ports:
+      - 5437:5432
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: iec9Aediec9shoovoo7eiKaeliip7eCh
+      POSTGRES_DB: db_engajamento

@@ -1,25 +1,22 @@
-.DS_Store
-
-application/cache/*
-!application/cache/index.html
-
-application/logs/*
-!application/logs/index.html
-
-!application/*/.htaccess
-
-composer.lock
-
-user_guide_src/build/*
-user_guide_src/cilexer/build/*
-user_guide_src/cilexer/dist/*
-user_guide_src/cilexer/pycilexer.egg-info/*
-/vendor/
+/node_modules
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+.env
+.env.backup
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
 
 # IDE Files
 #-------------------------
 /nbproject/
+.nbprojects/
 .idea/*
+.vscode/
 
 ## Sublime Text cache files
 *.tmlanguage.cache
@@ -30,8 +27,4 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /tests/tests/
 /tests/results/
 
-index.php
-application/config/config.php
-application/config/database.php
-docker/mysql
-
+docker/mysql/
