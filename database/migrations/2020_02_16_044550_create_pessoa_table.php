@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreatePessoaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,27 +13,22 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        # tabela de líderes
-        Schema::create('users', function (Blueprint $table) {
-            $table->$table->bigIncrements('id');
-            $table->string('tx_nome');
+        Schema::create('tb_pessoas', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('tx_nome', 200);
             $table->date('dt_nascimento');
             $table->string('tx_telefone', 15)->nullable();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('email', 120)->unique();
-            $table->string('password', 255);
-            $table->enum('bol_ativo', array('A', 'I', 'B'))->default('A');
+
             $table->integer('deleted_id')->nullable()
                 ->comment('ID do usuário que removeu o registro');
 
-            $table->integer('lider_id')->nullable()->comment('Autorelacionamento de líderes');
+            $table->integer('lider_id')->comment('Relacionamento com líder da tabela users');
             $table->foreign('lider_id')->references('id')->on('users');
 
-            $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
 
-            $table->index('id');
+            $table->index(['id', 'lider_id', 'deleted_id']);
         });
     }
 
@@ -44,6 +39,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('tb_pessoas');
     }
 }
