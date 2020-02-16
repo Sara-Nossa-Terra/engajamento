@@ -15,6 +15,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="{{ asset('css/font-awesome/font-awesome.css') }}" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -42,10 +43,7 @@
                             <a class="nav-link" href="{{ route('home') }}">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('usuarios.index') }}">Usuários</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('home') }}">Líderes</a>
+                            <a class="nav-link" href="{{ route('lideres.index') }}">Líderes</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('home') }}">Pessoas Ajudadas</a>
@@ -54,7 +52,7 @@
                             <a class="nav-link" href="{{ route('home') }}">Revisão de vidas</a>
                         </li>
 
-                        <li class="nav-item dropdown">
+                        {{--<li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Telas de Gerenciamento
@@ -64,7 +62,7 @@
                                 <a class="dropdown-item" href="#">Pessoas Ajudadas</a>
                                 <a class="dropdown-item" href="#">Usuários</a>
                             </div>
-                        </li>
+                        </li>--}}
                     @endauth
                 </ul>
 

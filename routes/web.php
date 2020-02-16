@@ -13,7 +13,7 @@ Route::middleware(['auth'])->group(function () {
     })->name('home');
 
     Route::resources([
-        'usuarios' => 'UserController',
+        'lideres' => 'UserController',
     ]);
 
 });

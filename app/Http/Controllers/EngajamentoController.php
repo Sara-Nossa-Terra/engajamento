@@ -54,7 +54,7 @@ class EngajamentoController extends Controller
     {
         try {
             $orderBy = $this->model->getFillable()[0];
-            $aItens = $this->model->orderBy("{$orderBy}", "asc")->get();
+            $aItens = $this->model->orderBy("{$orderBy}", "asc")->paginate(10);
 
             return view("{$this->dirView}.index", compact('aItens'));
         } catch (\Exception $e) {
