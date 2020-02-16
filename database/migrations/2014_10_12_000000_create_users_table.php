@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('tx_nome');
             $table->string('tx_telefone', 15)->nullable();
-            $table->string('tx_email')->unique();
+            $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('bol_ativo', ['A', 'I', 'B'])->default('A');

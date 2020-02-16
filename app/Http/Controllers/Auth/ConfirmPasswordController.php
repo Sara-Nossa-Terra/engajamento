@@ -37,11 +37,4 @@ class ConfirmPasswordController extends Controller
     {
         $this->middleware('auth');
     }
-
-/*    protected function rules()
-    {
-        return [
-            'password' => 'required|password',
-        ];
-    }*/
 }

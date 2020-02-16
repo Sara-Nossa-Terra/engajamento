@@ -40,45 +40,9 @@ class LoginController extends Controller
     }
 
     /**
-     * Get the login username to be used by the controller.
-     *
-     * @return string
-     */
-    public function username()
-    {
-        return 'tx_email';
-    }
-
-    /**
-     * Validate the user login request.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return void
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    protected function validateLogin(Request $request)
-    {
-        $request->validate([
-            $this->username() => 'required|string',
-            'password' => 'required|string',
-        ]);
-    }
-
-    /**
-     * Get the needed authorization credentials from the request.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return array
-     */
-    protected function credentials(Request $request)
-    {
-        return $request->only($this->username(), 'password');
-    }
-
-    /**
      * Handle a login request to the application.
      *
+     * TODO Fazer validação pela flag de 'bol_ativo'.
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      *

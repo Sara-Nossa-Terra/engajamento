@@ -37,33 +37,35 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav mr-auto">
 
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ route('home') }}">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('home') }}">Usuários</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('home') }}">Líderes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('home') }}">Pessoas Ajudadas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('home') }}">Revisão de vidas</a>
-                    </li>
+                    @auth
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{ route('home') }}">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('usuarios.index') }}">Usuários</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('home') }}">Líderes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('home') }}">Pessoas Ajudadas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('home') }}">Revisão de vidas</a>
+                        </li>
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Telas de Gerenciamento
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">Líderes</a>
-                            <a class="dropdown-item" href="#">Pessoas Ajudadas</a>
-                            <a class="dropdown-item" href="#">Usuários</a>
-                        </div>
-                    </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Telas de Gerenciamento
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="#">Líderes</a>
+                                <a class="dropdown-item" href="#">Pessoas Ajudadas</a>
+                                <a class="dropdown-item" href="#">Usuários</a>
+                            </div>
+                        </li>
+                    @endauth
                 </ul>
 
                 <!-- Right Side Of Navbar -->

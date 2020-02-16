@@ -6,11 +6,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::middleware(['auth'])->group(function () {
 
+    Route::get('/home', function () {
+        return view('home');
+    })->name('home');
 
-Route::resources([
-    'photos' => 'PhotoController',
-    'posts' => 'PostController'
-]);
+    Route::resources([
+        'usuarios' => 'UserController',
+    ]);
 
+});

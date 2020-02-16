@@ -20,6 +20,7 @@ class EngajamentoController extends Controller
      */
     public function __construct()
     {
+        $this->middleware('auth');
         $classe = substr(get_class($this), strrpos(get_class($this), '\\') + 1);
         if (!$this->modelName) {
             $this->modelName = 'App\\Models\\' . str_replace('Controller', '', $classe);
