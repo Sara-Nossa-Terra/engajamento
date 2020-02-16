@@ -14,8 +14,8 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
         \App\Models\User::create([
             'tx_nome'     => 'Admin Engajamento',
-            'tx_email'    => 'admin@admin.com',
-            'password'    => bcrypt(123456789),
+            'email'    => 'admin@admin.com',
+            'password'    => bcrypt(123),
             'bol_ativo'   => 'A',
         ]);
     }
