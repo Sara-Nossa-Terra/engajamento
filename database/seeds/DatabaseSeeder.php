@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             'tx_nome'     => 'Admin Engajamento',
             'email'    => 'admin@admin.com',
             'password'    => bcrypt(123),
+            'dt_nascimento'   => date('Y-m-d'),
             'bol_ativo'   => 'A',
         ]);
     }

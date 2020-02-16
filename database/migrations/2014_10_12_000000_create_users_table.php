@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         # tabela de líderes
         Schema::create('users', function (Blueprint $table) {
-            $table->$table->bigIncrements('id');
+            $table->bigIncrements('id');
             $table->string('tx_nome');
             $table->date('dt_nascimento');
             $table->string('tx_telefone', 15)->nullable();
