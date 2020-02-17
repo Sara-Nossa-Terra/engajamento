@@ -14,6 +14,7 @@
                     <th>Ações</th>
                     <th scope="col">Nome</th>
                     <th scope="col">Data de Nascimento</th>
+                    <th scope="col">E-mail</th>
                     <th scope="col">Líder</th>
                 </tr>
                 </thead>
@@ -33,7 +34,8 @@
                         <td>{{ $usuario->tx_nome }}</td>
                         {{-- @todo Adicionar formatacao com carbon para o campo de data --}}
                         <td>{{ $usuario->dt_nascimento }}</td>
-                        <td>{{ $usuario->lider_id }}</td>
+                        <td>{{ $usuario->email }}</td>
+                        <td>{{ $usuario->user->tx_nome ?? $usuario->tx_nome }}</td>
                     </tr>
                 @endforeach
                 </tbody>

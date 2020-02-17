@@ -10,6 +10,7 @@
                     <div class="card-body">
                         <form method="POST" action="{{ route('lideres.store') }}">
                             @csrf
+                            <input type="hidden" name="id" id="id" value="{{ base64_encode($model->id) }}">
 
                             <div class="form-group row">
                                 <label for="lider_id" class="col-md-2 col-form-label text-md-right">
@@ -20,9 +21,10 @@
                                     <select name="lider_id" class="form-control" data-show-subtext="true"
                                             id="lider_id" data-live-search="true">
                                         <option selected disabled>Selecione</option>
-                                        @foreach($lideres as $supervisor)
-                                            <option value="{{$supervisor->id}}" {{ ($model->lider_id == $supervisor->id) ? 'selected' : '' }}>
-                                                {{ $supervisor->tx_nome }}
+                                        @foreach($lideres as $lider)
+                                            <option
+                                                value="{{ $lider->id }}" {{ ( $model->lider_id == $lider->id ) ? 'selected' : '' }}>
+                                                {{ $lider->tx_nome }}
                                             </option>
                                         @endforeach
 
@@ -53,7 +55,8 @@
 
                                 <div class="col-md-10">
                                     <input id="dt_nascimento" type="date" class="form-control @error('dt_nascimento') is-invalid
-                                    @enderror" name="dt_nascimento" value="{{ $model->dt_nascimento ?? old('dt_nascimento') }}" required
+                                    @enderror" name="dt_nascimento"
+                                           value="{{ $model->dt_nascimento ?? old('dt_nascimento') }}" required
                                            autocomplete="dt_nascimento" autofocus>
 
                                     @error('dt_nascimento')
@@ -70,7 +73,8 @@
 
                                 <div class="col-md-10">
                                     <input id="tx_telefone" type="text" class="form-control @error('tx_telefone') is-invalid
-                                    @enderror" name="tx_telefone" value="{{ $model->tx_telefone ?? old('tx_telefone') }}" required
+                                    @enderror" name="tx_telefone"
+                                           value="{{ $model->tx_telefone ?? old('tx_telefone') }}" required
                                            autocomplete="tx_telefone" autofocus>
 
                                     @error('tx_telefone')
@@ -108,7 +112,7 @@
                                 <div class="col-md-10">
                                     <input id="password" type="password" class="form-control
                                     @error('password') is-invalid @enderror" name="password"
-                                           required autocomplete="new-password">
+                                           autocomplete="new-password">
 
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">

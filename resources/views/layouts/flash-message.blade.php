@@ -1,6 +1,6 @@
 @if ($message = session('success'))
     <div class="alert alert-success alert-block">
-        <button type="button" class="clse" data-dismiss="alert">×</button>
+        <button type="button" class="close" data-dismiss="alert">×</button>
         <strong>{{ $message }}</strong>
     </div>
 @endif
