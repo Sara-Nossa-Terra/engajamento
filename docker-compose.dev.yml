@@ -1,6 +1,9 @@
+# v3 syntax
 version: '3'
 
 services:
+
+  # PostgreSQL (9.6)
   db:
     container_name: db_engajamento_laravel
     image: postgres:9.6
@@ -10,3 +13,14 @@ services:
     environment:
       POSTGRES_PASSWORD: iec9Aediec9shoovoo7eiKaeliip7eCh
       POSTGRES_DB: db_engajamento
+
+  # PHP (with Nginx)
+  app:
+    build: .
+    volumes:
+      - .:/var/www/app
+    ports:
+      - "8000:8000"
+      - "87:8080"
+    links:
+      - db
