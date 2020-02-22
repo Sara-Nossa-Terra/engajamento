@@ -5,7 +5,6 @@ namespace App\Models;
 class Atividade extends EngajamentoModel
 {
     protected $table = 'tb_atividade';
-    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.

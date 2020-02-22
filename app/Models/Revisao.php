@@ -5,7 +5,6 @@ namespace App\Models;
 class Revisao extends EngajamentoModel
 {
     protected $table = 'tb_revisao';
-    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.

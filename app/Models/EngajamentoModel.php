@@ -3,14 +3,29 @@
 namespace App\Models;
 
 use App\Classes\Util;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\{Model, SoftDeletes};
 
 class EngajamentoModel extends Model
 {
     Use SoftDeletes;
+
+    /**
+     * Array with attributes with date
+     * @var array
+     */
     protected $dates = ['deleted_at'];
+
+    /**
+     * Array with floats values.
+     * @var array
+     */
     protected $floats = [];
+
+    /**
+     * Set the all instances models with primaryKey 'id'.
+     * @var string
+     */
+    protected $primaryKey = 'id';
 
     /**
      * Overwrite the method for treat attributes before save on database.

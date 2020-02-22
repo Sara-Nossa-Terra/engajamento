@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-class RevisaoController extends EngajamentoController
+class PessoasAjudadasController extends EngajamentoController
 {
     public function destroy($id)
     {
