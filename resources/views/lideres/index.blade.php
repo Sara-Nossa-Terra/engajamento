@@ -26,10 +26,12 @@
                                class="btn btn-primary" title="Editar">
                                 <span class="fa fa-edit"></span>
                             </a>
-                            <a href="{{ route('lideres.delete', base64_encode($usuario->id)) }}"
-                               class="btn btn-danger link-excluir" title="Excluir">
-                                <span class="fa fa-trash"></span>
-                            </a>
+                            @if( $usuario->id !== auth()->user()->id )
+                                <a href="{{ route('lideres.delete', base64_encode($usuario->id)) }}"
+                                   class="btn btn-danger link-excluir" title="Excluir">
+                                    <span class="fa fa-trash"></span>
+                                </a>
+                            @endif
                         </td>
                         <td>{{ $usuario->tx_nome }}</td>
                         {{-- @todo Adicionar formatacao com carbon para o campo de data --}}
