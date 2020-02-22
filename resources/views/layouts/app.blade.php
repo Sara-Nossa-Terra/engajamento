@@ -46,7 +46,7 @@
                             <a class="nav-link" href="{{ route('lideres.index') }}">Líderes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('home') }}">Pessoas Ajudadas</a>
+                            <a class="nav-link" href="{{ route('pessoasajudadas.index') }}">Pessoas Ajudadas</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('home') }}">Revisão de vidas</a>

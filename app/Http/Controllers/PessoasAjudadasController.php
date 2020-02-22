@@ -20,4 +20,11 @@ class PessoasAjudadasController extends EngajamentoController
             return back()->with('error', 'Não foi possível realizar a operação!');
         }
     }
+
+    protected function recuperarDados()
+    {
+        $aDados['lideres'] = \App\Models\User::orderby("tx_nome", "asc")->get();
+
+        return $aDados;
+    }
 }

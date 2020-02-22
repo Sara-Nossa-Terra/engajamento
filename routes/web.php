@@ -13,8 +13,11 @@ Route::middleware(['auth'])->group(function () {
     })->name('home');
 
     Route::get('/lideres/{id}/destroy', 'UserController@destroy')->name('lideres.delete');
+    Route::get('/pessoasajudadas/{id}/destroy', 'PessoasAjudadasController@destroy')->name('pessoasajudadas.delete');
+
     Route::resources([
         'lideres' => 'UserController',
+        'pessoasajudadas' => 'PessoasAjudadasController',
     ]);
 
 });

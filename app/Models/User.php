@@ -48,4 +48,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo(\App\Models\User::class, 'lider_id', 'id');
     }
+
+    /**
+     * Relacionamento de Líder com PessoasAjudadas.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function pessoasAjudadas()
+    {
+        return $this->hasMany(\App\Models\PessoasAjudadas::class, 'lider_id', 'id');
+    }
 }
