@@ -11,6 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/engajamento.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -44,6 +45,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('lideres.index') }}">Líderes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('atividades.index') }}">Atividades</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('pessoasajudadas.index') }}">Pessoas Ajudadas</a>

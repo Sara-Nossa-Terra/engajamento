@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-class Atividade extends EngajamentoModel
+class Atividades extends EngajamentoModel
 {
-    protected $table = 'tb_atividade';
+    protected $table = 'tb_atividades';
 
     /**
      * The attributes that are mass assignable.
