@@ -53,7 +53,7 @@
                             <a class="nav-link" href="{{ route('pessoasajudadas.index') }}">Pessoas Ajudadas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('home') }}">Revisão de vidas</a>
+                            <a class="nav-link" href="{{ route('revisao.index') }}">Revisão de vidas</a>
                         </li>
 
                         {{--<li class="nav-item dropdown">
