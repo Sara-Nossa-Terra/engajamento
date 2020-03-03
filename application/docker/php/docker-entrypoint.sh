@@ -12,8 +12,10 @@ echo "Back - Starting Endpoint of Application"
 
 if  ! [ -e "/var/www/html/.env" ] ; then
      echo "[ ****************** ] Copying sample application configuration to real one [ ****************** ]"
-     cp /var/www/html/.env.example /var/www/html/.env && chmod 777 /var/www/html/.env && chmod 777 -R storage && php artisan key:generate
-#     && php artisan migrate:refresh
+     cp /var/www/html/.env.example /var/www/html/.env \
+     && chmod 777 /var/www/html/.env \
+     && chmod 777 -R storage \
+     && php artisan key:generate
 fi
 
 echo "[ ****************** ] Ending Endpoint of Application [ ****************** ]"
