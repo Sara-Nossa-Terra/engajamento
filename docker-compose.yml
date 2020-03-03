@@ -2,7 +2,7 @@ version: "3.2"
 services:
   php-engajamento:
     container_name: php-engajamento
-    image: php:7.2-fpm
+    image: php:7.4-fpm
     build:
       context: application
       dockerfile: Dockerfile
@@ -29,10 +29,9 @@ services:
       - php-engajamento
     networks:
       - network-engajamento
-  pgsql-engajamento:
-    container_name: pgsql-engajamento
+  database-service:
+    container_name: database-engajamento
     image: postgres
-    restart: always
     environment:
       POSTGRES_DB: 'laravel'
       POSTGRES_USER: 'root'
