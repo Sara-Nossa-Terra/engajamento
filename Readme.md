@@ -19,6 +19,12 @@ Com Docker e docker-compose devidamente instalados em sua máquina basta clonar 
     git https://github.com/sara-nossa-terra/engajamento && cd engajamento
     docker-compose up
 ```
+
+Dentro da pasta engajamento rodar o seguinte comando
+```
+    docker exec php-engajamento /bin/bash -c 'php artisan migrate:refresh && php artisan db:seed'
+```
+
 Após alguns minutos a aplicação estará disponível em
 ```
     localhost:8082
