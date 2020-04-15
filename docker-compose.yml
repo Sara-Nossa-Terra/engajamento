@@ -1,41 +1,50 @@
-version: '3.1'
+version: "3.2"
 services:
-  app:
-    container_name: 'app_engajamento'
-    image: saranossaterra/engajamento-web:1.1
-    restart: always
-    ports:
-      - 80:80 
+  php-engajamento:
+    container_name: php-engajamento
+    image: php:7.4-fpm
+    build:
+      context: application
+      dockerfile: Dockerfile
+    volumes:
+      - ./application/:/var/www/html
+      - ./application/docker/php/config/extensions.ini:/usr/local/etc/php/conf.d/extensions.ini
     environment:
-      APPLICATION_ENV: development
-      URL_BASE: http://eumeimportosim.com.br
-      GIT_BRANCH: master
-      GIT_REPOSITORY: https://github.com/sara-nossa-terra/engajamento.git
-      DB_USERNAME: sys_user
-      DB_PASSWORD: sys_password
-      DB_NAME: engajamento
-      DB_HOST: db_engajamento
-      DB_PORT: 3306
-    links:
-      - db
+      - UPDATE_COMPOSER_DEPENDENCIES=true
+      - USE_PHP_FPM=true
+    ports:
+      - 8081:80
+    working_dir: /var/www/html/
+    networks:
+      - network-engajamento
+  nginx-webserver-engajamento:
+    container_name: nginx-webserver-engajamento
+    image: nginx:1.17-alpine
+    volumes:
+      - ./application/:/var/www/html/
+      - ./application/docker/nginx/backend/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8082:80"
     depends_on:
-      - db
-    volumes:
-      - .:/var/www/engajamento
-  db:
-    container_name: 'db_engajamento'
-    image: mysql:5.7
-    restart: always
-    ports:
-      - 3306:3306
-    expose:
-      - 3306
+      - php-engajamento
+    networks:
+      - network-engajamento
+  database-service:
+    container_name: database-engajamento
+    image: postgres
     environment:
-      MYSQL_DATABASE: engajamento
-      MYSQL_USER: sys_user
-      MYSQL_PASSWORD: sys_password
-      MYSQL_ROOT_PASSWORD: iec9Aediec9shoovoo7eiKaeliip7eCh
-#      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+      POSTGRES_DB: 'laravel'
+      POSTGRES_USER: 'root'
+      POSTGRES_PASSWORD: '123456'
+    ports:
+      - "5433:5432"
+    expose:
+      - "5432"
     volumes:
-      - ./db:/docker-entrypoint-initdb.d
-      - ./docker/mysql:/var/lib/mysql
+      - ./database/docker-data/postgres:/var/lib/postgresql/data
+      - ./database/:/docker-entrypoint-initdb.d/
+    networks:
+      - network-engajamento
+networks:
+  network-engajamento:
+    driver: bridge
