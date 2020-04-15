@@ -16,23 +16,28 @@ independentemente do Sistema Operacional(SO) utilizado. Informaçoes mais detalh
 
 Com Docker e docker-compose devidamente instalados em sua máquina basta clonar o projeto executar o ```docker-compose```:
 ```bash
-    git https://github.com/sara-nossa-terra/engajamento && cd engajamento
-    docker-compose up
+    $ git clone https://github.com/sara-nossa-terra/engajamento && cd engajamento
+    $ docker-compose up
 ```
 
-Dentro da pasta engajamento rodar o seguinte comando
-```
-    docker exec php-engajamento /bin/bash -c 'php artisan migrate:fresh --seed'
+Dentro da pasta engajamento rodar o seguinte comando para dar permissão de escrita para a pasta de arquivos temporária da aplicação
+```bash
+    $ chmod -R 775 application/storage
 ```
 
-Após alguns minutos a aplicação estará disponível em
+Após os containers terminarem de serem carregados, dentro da pasta engajamento rodar o seguinte comando:
+```bash
+    $ docker exec php-engajamento /bin/bash -c 'php artisan migrate:fresh --seed'
 ```
+
+Após alguns instantes a aplicação estará disponível em:
+```bash
     localhost:8082
 ```
 
-Para parar o container basta digitar:
-```
-    docker-compose down
+Para descarregar os containers basta digitar:
+```bash
+    $ docker-compose down
 ```
 
 ## Tecnologias
