@@ -12,7 +12,7 @@ independentemente do Sistema Operacional(SO) utilizado. Informaçoes mais detalh
 [aqui](doc/Guia_utilizacao_docker.md).
 
 
-### Instalação
+### :nut_and_bolt: Instalação
 
 Com Docker e docker-compose devidamente instalados em sua máquina basta clonar o projeto executar o ```docker-compose```:
 ```bash
