@@ -6,7 +6,7 @@
 
 Bem vindo/a à documentação do ENGAJAMENTO! Aqui você vai encontrar diversas documentações sobre o processo de desenvolvimento do ENGAJAMENTO, versionameno e publicação.
 
-## Docker
+## :whale2: Docker
 Utilizamos o Docker como plataforma de desenvolvimento com o intuito de garantir o mesmo ambiente de desenvolvimento 
 independentemente do Sistema Operacional(SO) utilizado. Informaçoes mais detalhadas sobre a utilização do docker clique
 [aqui](doc/Guia_utilizacao_docker.md).
@@ -40,7 +40,7 @@ Para descarregar os containers basta digitar:
     $ docker-compose down
 ```
 
-## Tecnologias
+## :rocket: Tecnologias
 * [Docker](https://www.docker.com)
 * [PostgreSql](https://www.postgresql.org/)
 * [PHP 7.x](http://php.net)
@@ -48,7 +48,7 @@ Para descarregar os containers basta digitar:
 * [jQuery](https://jquery.com)
 * [Bootstrap](https://getbootstrap.com)
 
-## Autores
+## :busts_in_silhouette: Autores
 Várias pessoas colaboraram com o desenvimento do projeto ENGAJAMENTO e decidimos centralizar em um único local todos os que participaram com o desenvolvimento do projeto.
   
 Clique [aqui](https://github.com/sara-nossa-terra/engajamento/graphs/contributors) para visualizar.
