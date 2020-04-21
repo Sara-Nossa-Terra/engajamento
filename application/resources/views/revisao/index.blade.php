@@ -12,9 +12,8 @@
                 <thead class="thead-light">
                 <tr>
                     <th>Ações</th>
-                    <th scope="col">Nome da Atividade</th>
-                    <th scope="col">Dia</th>
-                    <th scope="col">Hora</th>
+                    <th scope="col">Data de Cadastro</th>
+                    <th scope="col">Data da Revisão</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -30,10 +29,8 @@
                                 <span class="fa fa-trash"></span>
                             </a>
                         </td>
-                        <td>{{ $pAjudadas->tx_nome }}</td>
-                        <td>{{ $pAjudadas->tx_dia }}</td>
-                        {{-- @todo Adicionar formatacao com carbon para o exibicao de telefone --}}
-                        <td>{{ $pAjudadas->tx_hora }}</td>
+                        <td>{{ \Carbon\Carbon::parse($pAjudadas->dt_cadastro)->format('d/m/Y') }}</td>
+                        <td>{{ \Carbon\Carbon::parse($pAjudadas->dt_revisao)->format('d/m/Y') }}</td>
                     </tr>
                 @endforeach
                 </tbody>
