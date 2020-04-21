@@ -34,8 +34,7 @@
                             @endif
                         </td>
                         <td>{{ $usuario->tx_nome }}</td>
-                        {{-- @todo Adicionar formatacao com carbon para o campo de data --}}
-                        <td>{{ $usuario->dt_nascimento }}</td>
+                        <td>{{ \Carbon\Carbon::parse($usuario->dt_nascimento)->format('d/m/Y') }}</td>
                         <td>{{ $usuario->email }}</td>
                         <td>{{ $usuario->user->tx_nome ?? $usuario->tx_nome }}</td>
                     </tr>

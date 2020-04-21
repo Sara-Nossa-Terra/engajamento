@@ -13,26 +13,8 @@
                             <input type="hidden" name="id" id="id" value="{{ base64_encode($model->id) }}">
 
                             <div class="form-group row">
-                                <label for="tx_data" class="col-md-2 col-form-label text-md-right">
-                                    {{ __('Data da Revisão') }} <span class="required">*</span>
-                                </label>
-
-                                <div class="col-md-10">
-                                    <input id="tx_data" type="date" class="form-control @error('tx_data') is-invalid
-                                    @enderror inteiro" name="tx_data"
-                                           value="{{ $model->tx_data ?? old('tx_data') }}" required
-                                           autocomplete="tx_data" autofocus maxlength="1">
-
-                                    @error('tx_data')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="form-group row">
                                 <label for="dt_revisao" class="col-md-2 col-form-label text-md-right">
-                                    {{ __('Data Cadastro') }} <span class="required">*</span>
+                                    {{ __('Data da Revisão') }} <span class="required">*</span>
                                 </label>
 
                                 <div class="col-md-10">
@@ -42,6 +24,24 @@
                                            autocomplete="dt_revisao" autofocus maxlength="1">
 
                                     @error('dt_revisao')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="dt_cadastro" class="col-md-2 col-form-label text-md-right">
+                                    {{ __('Data Cadastro') }} <span class="required">*</span>
+                                </label>
+
+                                <div class="col-md-10">
+                                    <input id="dt_cadastro" type="date" class="form-control @error('dt_cadastro') is-invalid
+                                    @enderror inteiro" name="dt_cadastro"
+                                           value="{{ $model->dt_cadastro ?? old('dt_cadastro') }}" required
+                                           autocomplete="dt_cadastro" autofocus maxlength="1">
+
+                                    @error('dt_cadastro')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

@@ -32,8 +32,7 @@
                             </a>
                         </td>
                         <td>{{ $pAjudadas->tx_nome }}</td>
-                        <td>{{ $pAjudadas->dt_nascimento }}</td>
-                        {{-- @todo Adicionar formatacao com carbon para o exibicao de telefone --}}
+                        <td>{{ \Carbon\Carbon::parse($pAjudadas->dt_nascimento)->format('d/m/Y') }}</td>
                         <td>{{ $pAjudadas->tx_telefone }}</td>
                         <td>{{ $pAjudadas->lider->tx_nome }}</td>
                     </tr>
