@@ -20,9 +20,14 @@ Com Docker e docker-compose devidamente instalados em sua máquina basta clonar 
     $ docker-compose up
 ```
 
-Dentro da pasta engajamento rodar o seguinte comando para dar permissão de escrita para a pasta de arquivos temporária da aplicação
+Dentro da pasta engajamento rodar o seguinte comando para dar permissão de escrita para a pasta de arquivos temporária da aplicação:
 ```bash
     $ chmod -R 775 application/storage
+```
+
+Se não esteja utilizando root para subir os containers, dê permissão de escrita para o usuário www-data utilizado pelo serviço web:
+```bash
+    $ sudo chown -R www-data: application/storage
 ```
 
 Após os containers terminarem de serem carregados, dentro da pasta engajamento rodar o seguinte comando:
