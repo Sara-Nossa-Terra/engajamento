@@ -31,7 +31,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($aItens as $pAjudadas)
+                        @foreach($pessoasAjudadas as $pAjudadas)
                             <tr>
                                 <td>
                                     <a href="{{ route('pessoasajudadas.edit', base64_encode($pAjudadas->id)) }}"
@@ -54,10 +54,10 @@
                 </div>
                 <div class="card-footer clearfix">
                     <ul class="pagination pagination-sm m-0 float-right">
-                        {{ $aItens->links() }}
+                        {{ $pessoasAjudadas->links() }}
                     </ul>
                 </div>
             </div>
         </div>
     </div>
-@endsection
+@stop

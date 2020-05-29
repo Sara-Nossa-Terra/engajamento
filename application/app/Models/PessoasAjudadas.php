@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
-class PessoasAjudadas extends EngajamentoModel
+use Illuminate\Database\Eloquent\{Model, SoftDeletes};
+
+class PessoasAjudadas extends Model
 {
+    Use SoftDeletes;
+
     protected $table = 'tb_pessoas';
 
     /**
