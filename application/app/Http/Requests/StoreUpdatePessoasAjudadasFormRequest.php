@@ -28,16 +28,6 @@ class StoreUpdatePessoasAjudadasFormRequest extends FormRequest
             'dt_nascimento'   => "required|date",
             'nu_telefone'     => "required",
 //            'nu_telefone'     => "required|min:12|max:12",
-//            'lider_id'        => "required",
-//            'deleted_id'      => "",
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'tx_nome'         => "O campo Nome deve ser preenchido",
-//            'dt_nascimento'   => "O campo Nome deve ser preenchido",
         ];
     }
 
@@ -45,8 +35,8 @@ class StoreUpdatePessoasAjudadasFormRequest extends FormRequest
     {
         return [
             'tx_nome'         => "Nome",
-            'dt_nascimento'         => "Data de Nascimento",
-            'nu_telefone'         => "Número de telefone",
+            'dt_nascimento'   => "Data de Nascimento",
+            'nu_telefone'     => "Número de telefone",
         ];
     }
 }
