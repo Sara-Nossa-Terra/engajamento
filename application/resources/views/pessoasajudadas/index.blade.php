@@ -45,7 +45,7 @@
                                 </td>
                                 <td>{{ $pAjudadas->tx_nome }}</td>
                                 <td>{{ \Carbon\Carbon::parse($pAjudadas->dt_nascimento)->format('d/m/Y') }}</td>
-                                <td>{{ $pAjudadas->tx_telefone }}</td>
+                                <td>{{ $pAjudadas->nu_telefone }}</td>
                                 <td>{{ $pAjudadas->lider->tx_nome }}</td>
                             </tr>
                         @endforeach

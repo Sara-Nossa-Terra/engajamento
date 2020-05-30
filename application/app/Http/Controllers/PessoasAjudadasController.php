@@ -8,9 +8,16 @@ use Illuminate\Http\Request;
 
 class PessoasAjudadasController
 {
+    protected $repository;
+
+    public function __construct()
+    {
+//        $this->repository = PessoasAjudadas;
+    }
+
     public function index()
     {
-        $pessoasAjudadas = PessoasAjudadas::orderBy('title', 'ASC')->paginate(5);
+        $pessoasAjudadas = PessoasAjudadas::orderBy('tx_nome', 'ASC')->paginate(5);
         return view('pessoasajudadas.index', compact('pessoasAjudadas'));
     }
 
@@ -24,9 +31,12 @@ class PessoasAjudadasController
 
     public function store(StoreUpdatePessoasAjudadasFormRequest $request)
     {
-        dd($request);
+        $pessoasAjudadas = new PessoasAjudadas();
+        $pessoasAjudadas->fill($request->toArray());
+        $pessoasAjudadas->save();
+
         return redirect()
-            ->route('categories.index')
+            ->route('pessoasajudadas.index')
             ->withSuccess('Cadastro realizado com sucesso');
     }
 
@@ -42,10 +52,12 @@ class PessoasAjudadasController
 
     public function edit($id)
     {
-        if (!$category = $this->repository->findById($id))
+        if (!$pessoasAjudadas = PessoasAjudadas::where('id', base64_decode($id))->first() )
             return redirect()->back();
 
-        return view('admin.categories.edit', compact('category'));
+        $lideres = \App\Models\User::all();
+
+        return view('pessoasajudadas.create', compact(['pessoasAjudadas', 'lideres']));
     }
 
     public function update(StoreUpdatePessoasAjudadasFormRequest $request, $id)
@@ -62,7 +74,14 @@ class PessoasAjudadasController
 
     public function destroy($id)
     {
-        dd($id);
+        if (!$pessoasAjudadas = PessoasAjudadas::where('id', base64_decode($id))->first() )
+            return redirect()->back();
+
+        $pessoasAjudadas->delete();
+
+        return redirect()
+            ->route('pessoasajudadas.index')
+            ->withSuccess('Cadastro excluído com sucesso !');
     }
 
     public function search(Request $request)

@@ -7,11 +7,12 @@
         <div class="col-sm-10">
             <select name="lider_id" class="form-control" data-show-subtext="true"
                     id="lider_id" data-live-search="true">
-                <option selected disabled>Selecione</option>
+                <option value="">Selecione</option>
                 @foreach($lideres as $lider)
                     <option
-                        value="{{ $lider->id ?? old('lider_id') }}">
-{{--                        {{ ( $pessoasAjudadas->lider_id == $lider->id ) ? 'selected' : '' }}>--}}
+                        @if (isset($pessoasAjudadas->lider_id) && $pessoasAjudadas->lider_id == $lider->id) selected @endif
+                        value="{{ $lider->id ?? old('lider_id') }}"
+                    >
                         {{ $lider->tx_nome }}
                     </option>
                 @endforeach
