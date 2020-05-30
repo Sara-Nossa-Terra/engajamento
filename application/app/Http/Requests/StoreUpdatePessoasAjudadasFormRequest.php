@@ -30,13 +30,4 @@ class StoreUpdatePessoasAjudadasFormRequest extends FormRequest
 //            'nu_telefone'     => "required|min:12|max:12",
         ];
     }
-
-    public function attributes()
-    {
-        return [
-            'tx_nome'         => "Nome",
-            'dt_nascimento'   => "Data de Nascimento",
-            'nu_telefone'     => "Número de telefone",
-        ];
-    }
 }
