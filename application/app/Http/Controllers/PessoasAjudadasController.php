@@ -35,9 +35,7 @@ class PessoasAjudadasController
         $pessoasAjudadas->fill($request->toArray());
         $pessoasAjudadas->save();
 
-        return redirect()
-            ->route('pessoasajudadas.index')
-            ->withSuccess('Cadastro realizado com sucesso');
+        return redirect()->route('pessoasajudadas.index')->withSuccess('Cadastro realizado com sucesso');
     }
 
     public function show($id)
@@ -75,13 +73,11 @@ class PessoasAjudadasController
     public function destroy($id)
     {
         if (!$pessoasAjudadas = PessoasAjudadas::where('id', base64_decode($id))->first() )
-            return redirect()->back();
+            return redirect()->back()->with('message', 'Não foi possível excluír o registro !');
 
         $pessoasAjudadas->delete();
 
-        return redirect()
-            ->route('pessoasajudadas.index')
-            ->withSuccess('Cadastro excluído com sucesso !');
+        return redirect()->route('pessoasajudadas.index')->withSuccess('Cadastro excluído com sucesso !');
     }
 
     public function search(Request $request)

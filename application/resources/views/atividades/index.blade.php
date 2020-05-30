@@ -19,6 +19,7 @@
                         </a>
                     </div>
                 </div>
+                @include('includes.alerts')
                 <div class="card-body">
                     <table class="table table-striped table-hover table-bordered ">
                         <thead class="thead-light">
