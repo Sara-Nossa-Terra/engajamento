@@ -6,7 +6,7 @@ use App\Http\Requests\StoreUpdatePessoasAjudadasFormRequest;
 use App\Models\{User, PessoasAjudadas};
 use Illuminate\Http\Request;
 
-class PessoasAjudadasController
+class PessoasAjudadasController extends Controller
 {
     protected $repository;
 

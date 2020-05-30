@@ -24,32 +24,30 @@
                     <table class="table table-striped table-hover table-bordered ">
                         <thead class="thead-light">
                         <tr>
-                            <th>Ações</th>
+                            <th style="width: 15%">Ações</th>
                             <th scope="col">Nome</th>
-                            <th scope="col">Data de Nascimento</th>
-                            <th scope="col">E-mail</th>
-                            <th scope="col">Líder</th>
+{{--                            <th scope="col">Data de Nascimento</th>
+                            <th scope="col">Telefone</th>
+                            <th scope="col">Líder</th>--}}
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($aItens as $lider)
+                        @foreach($lideres as $lider)
                             <tr>
                                 <td>
                                     <a href="{{ route('lideres.edit', base64_encode($lider->id)) }}"
                                        class="btn btn-primary" title="Editar">
                                         <span class="fa fa-edit"></span>
                                     </a>
-                                    @if( $lider->id !== auth()->user()->id )
-                                        <a href="{{ route('lideres.delete', base64_encode($lider->id)) }}"
-                                           class="btn btn-danger link-excluir" title="Excluir">
-                                            <span class="fa fa-trash"></span>
-                                        </a>
-                                    @endif
+                                    <a href="{{ route('lideres.delete', base64_encode($lider->id)) }}"
+                                       class="btn btn-danger link-excluir" title="Excluir">
+                                        <span class="fa fa-trash"></span>
+                                    </a>
                                 </td>
                                 <td>{{ $lider->tx_nome }}</td>
-                                <td>{{ \Carbon\Carbon::parse($lider->dt_nascimento)->format('d/m/Y') }}</td>
-                                <td>{{ $lider->email }}</td>
-                                <td>{{ $lider->user->tx_nome ?? $lider->tx_nome }}</td>
+{{--                                <td>{{ \Carbon\Carbon::parse($lider->dt_nascimento)->format('d/m/Y') }}</td>
+                                <td>{{ $lider->nu_telefone }}</td>
+                                <td>{{ $lider->lider->tx_nome }}</td>--}}
                             </tr>
                         @endforeach
                         </tbody>
@@ -57,10 +55,10 @@
                 </div>
                 <div class="card-footer clearfix">
                     <ul class="pagination pagination-sm m-0 float-right">
-                        {{ $aItens->links() }}
+                        {{ $lideres->links() }}
                     </ul>
                 </div>
             </div>
         </div>
     </div>
-@endsection
+@stop
