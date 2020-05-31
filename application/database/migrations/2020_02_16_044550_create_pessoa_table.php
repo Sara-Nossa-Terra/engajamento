@@ -17,7 +17,7 @@ class CreatePessoaTable extends Migration
             $table->bigIncrements('id');
             $table->string('tx_nome', 200);
             $table->date('dt_nascimento');
-            $table->string('tx_telefone', 15)->nullable();
+            $table->string('nu_telefone', 15)->nullable();
 
             $table->integer('deleted_id')->nullable()
                 ->comment('ID do usuário que removeu o registro');

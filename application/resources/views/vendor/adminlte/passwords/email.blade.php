@@ -24,6 +24,7 @@
         </div>
         <div class="card">
             <div class="card-body login-card-body">
+
                 <p class="login-box-msg">{{ __('adminlte::adminlte.password_reset_message') }}</p>
                 @if (session('status'))
                     <div class="alert alert-success">
@@ -46,6 +47,7 @@
                         @endif
                     </div>
                     <button type="submit" class="btn btn-primary btn-block btn-flat">
+
                         {{ __('adminlte::adminlte.send_password_reset_link') }}
                     </button>
                 </form>

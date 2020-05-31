@@ -85,7 +85,7 @@
                         </a>
                     </p>
                 @endif
-                
+
                 @if ($register_url)
                     <p class="mb-0">
                         <a href="{{ $register_url }}">

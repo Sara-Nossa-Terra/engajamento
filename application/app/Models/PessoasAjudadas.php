@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
-class PessoasAjudadas extends EngajamentoModel
+use Illuminate\Database\Eloquent\{Model, SoftDeletes};
+
+class PessoasAjudadas extends Model
 {
+    Use SoftDeletes;
+
     protected $table = 'tb_pessoas';
 
     /**
@@ -12,7 +16,7 @@ class PessoasAjudadas extends EngajamentoModel
      * @var array
      */
     protected $fillable = [
-        'tx_nome', 'dt_nascimento', 'tx_telefone', 'lider_id', 'deleted_id'
+        'tx_nome', 'dt_nascimento', 'nu_telefone', 'lider_id', 'deleted_id'
     ];
 
     /**

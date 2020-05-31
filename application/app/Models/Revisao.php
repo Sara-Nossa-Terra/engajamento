@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
-class Revisao extends EngajamentoModel
+use Illuminate\Database\Eloquent\{Model, SoftDeletes};
+
+class Revisao extends Model
 {
+    Use SoftDeletes;
     protected $table = 'tb_revisoes';
 
     /**
