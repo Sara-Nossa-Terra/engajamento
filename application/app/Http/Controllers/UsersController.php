@@ -59,16 +59,15 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function edit($id)
     {
-        if (!$lideres = User::where('id', base64_decode($id))->first() )
-            return redirect()->back();
+        if (!$lideres = User::findOrFail(base64_decode($id)) )
+            return redirect()->back()->with('message', 'Não foi possível editar o registro !');
 
-        dd($lideres);
-        return view('pessoasajudadas.create', compact('lideres'));
+        return view('lideres.edit', compact('lideres'));
     }
 
     /**
@@ -80,7 +79,24 @@ class UsersController extends Controller
      */
     public function update(StoreUpdateUserRequest $request, $id)
     {
-        //
+        if (!$lider = User::findOrFail($id) )
+            return redirect()->back()->with('message', 'Não foi possível atualizar o registro !');
+
+        $data = $request->toArray();
+        if (isset($request->password)) {
+            $data['password'] = bcrypt($data['password']);
+            unset($data['password_confirmation']);
+        } else {
+            unset($data['password_confirmation']);
+            unset($data['password']);
+        }
+
+        $lider->fill($data);
+        $lider->save();
+
+        return redirect()
+            ->route('lideres.index')
+            ->withSuccess('Cadastro atualizado com sucesso !');
     }
 
     /**

@@ -23,12 +23,19 @@ class StoreUpdateUserRequest extends FormRequest
      */
     public function rules()
     {
+        if (!$this->isMethod('PUT')) {
+            $estaEditando['chave'] = 'password';
+            $estaEditando['valor'] = 'required|required_with:password_confirmation|string|confirmed';
+        } else {
+            $estaEditando = array('chave' => '', 'valor' => '');
+        }
+
         return [
-            'password'      => 'required|required_with:password_confirmation|string|confirmed',
-            'tx_nome'       => "required|max:100|min:15",
+            'tx_nome'       => "required|max:100",
             'dt_nascimento' => "required|date",
             'nu_telefone'   => "required",
             'email'         => "required|email",
+            "{$estaEditando['chave']}" => "{$estaEditando['valor']}",
         ];
     }
 }

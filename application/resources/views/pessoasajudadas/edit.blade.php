@@ -8,8 +8,10 @@
         <div class="card-header">
             <h3 class="card-title">Formulário de Pessoas Ajudadas</h3>
         </div>
-        <form method="PUT" action="{{ route('pessoasajudadas.update') }}" class="form-horizontal">
-                @include('pessoasajudadas._partials.formulario')
+        <form method="POST" action="{{ route('pessoasajudadas.update', $pessoasAjudadas->id) }}"
+              class="form-horizontal">
+            @method('PUT')
+            @include('pessoasajudadas._partials.formulario')
         </form>
     </div>
 @stop

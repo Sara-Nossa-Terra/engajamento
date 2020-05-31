@@ -89,8 +89,7 @@
 {{--                    <span class="input-group-text"><i class="fas fa-phone"></i></span>--}}
                 </div>
                 <input type="password" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
-                       name="password" id="password"
-                       value="{{ $lideres->password ?? old('password') }}">
+                       name="password" id="password">
                 @if ($errors->has('password'))
                     <div class="invalid-feedback">
                         {{ $errors->first('password') }}

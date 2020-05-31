@@ -39,10 +39,12 @@
                                        class="btn btn-primary" title="Editar">
                                         <span class="fa fa-edit"></span>
                                     </a>
+                                    @if($lider->id !== auth()->user()->id)
                                     <a href="{{ route('lideres.delete', base64_encode($lider->id)) }}"
                                        class="btn btn-danger link-excluir" title="Excluir">
                                         <span class="fa fa-trash"></span>
                                     </a>
+                                    @endif
                                 </td>
                                 <td>{{ $lider->tx_nome }}</td>
 {{--                                <td>{{ \Carbon\Carbon::parse($lider->dt_nascimento)->format('d/m/Y') }}</td>

@@ -50,24 +50,25 @@ class PessoasAjudadasController extends Controller
 
     public function edit($id)
     {
-        if (!$pessoasAjudadas = PessoasAjudadas::where('id', base64_decode($id))->first() )
-            return redirect()->back();
+        if (!$pessoasAjudadas = PessoasAjudadas::findOrFail(base64_decode($id)) )
+            return redirect()->back()->with('message', 'Não foi possível editar o registro !');
 
         $lideres = \App\Models\User::all();
 
-        return view('pessoasajudadas.create', compact(['pessoasAjudadas', 'lideres']));
+        return view('pessoasajudadas.edit', compact(['pessoasAjudadas', 'lideres']));
     }
 
     public function update(StoreUpdatePessoasAjudadasFormRequest $request, $id)
     {
-        dd($request);
-        $this->repository
-            ->update($id, [
-                'title'         => $request->title,
-                'description'   => $request->description,
-            ]);
+        if (!$pessoasAjudadas = PessoasAjudadas::findOrFail($id) )
+            return redirect()->back()->with('message', 'Não foi possível atualizar o registro !');
 
-        return redirect()->route('categories.index');
+        $pessoasAjudadas->fill($request->toArray());
+        $pessoasAjudadas->save();
+
+        return redirect()
+            ->route('pessoasajudadas.index')
+            ->withSuccess('Cadastro atualizado com sucesso !');
     }
 
     public function destroy($id)

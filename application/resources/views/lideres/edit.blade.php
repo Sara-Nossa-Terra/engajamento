@@ -8,7 +8,8 @@
         <div class="card-header">
             <h3 class="card-title">Formulário de Líderes</h3>
         </div>
-        <form method="PUT" action="{{ route('lideres.update') }}" class="form-horizontal">
+        <form method="POST" action="{{ route('lideres.update', $lideres->id) }}" class="form-horizontal">
+            @method('PUT')
             @include('lideres._partials.formulario')
         </form>
     </div>
