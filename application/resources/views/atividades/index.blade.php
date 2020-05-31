@@ -31,22 +31,22 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($aItens as $ativiade)
+                        @foreach($atividades as $atividade)
                             <tr>
                                 <td>
-                                    <a href="{{ route('atividades.edit', base64_encode($ativiade->id)) }}"
+                                    <a href="{{ route('atividades.edit', base64_encode($atividade->id)) }}"
                                        class="btn btn-primary" title="Editar">
                                         <span class="fa fa-edit"></span>
                                     </a>
-                                    <a href="{{ route('atividades.delete', base64_encode($ativiade->id)) }}"
+                                    <a href="{{ route('atividades.delete', base64_encode($atividade->id)) }}"
                                        class="btn btn-danger link-excluir" title="Excluir">
                                         <span class="fa fa-trash"></span>
                                     </a>
                                 </td>
-                                <td>{{ $ativiade->tx_nome }}</td>
-                                <td>{{ $ativiade->tx_dia }}</td>
+                                <td>{{ $atividade->tx_nome }}</td>
+                                <td>{{ $atividade->tx_dia }}</td>
                                 {{-- @todo Adicionar formatacao com carbon para o exibicao de telefone --}}
-                                <td>{{ $ativiade->tx_hora }}</td>
+                                <td>{{ $atividade->tx_hora }}</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -54,7 +54,7 @@
                 </div>
                 <div class="card-footer clearfix">
                     <ul class="pagination pagination-sm m-0 float-right">
-                        {{ $aItens->links() }}
+                        {{ $atividades->links() }}
                     </ul>
                 </div>
             </div>

@@ -153,6 +153,8 @@ return [
         'nu_telefone'     => "Número de telefone",
         'tx_desc'         => 'Descrição',
         'password'        => 'senha',
+        'tx_hora'         => 'Hora',
+        'tx_dia'          => 'Dia',
 
         'address'   => 'endereço',
         'age'       => 'idade',
