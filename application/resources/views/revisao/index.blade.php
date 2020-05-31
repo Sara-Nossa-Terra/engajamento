@@ -30,20 +30,20 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($aItens as $index => $revisao)
+                        @foreach($revisoes as $revisao)
                             <tr>
                                 <td>
-                                    <a href="{{ route('pessoasajudadas.edit', base64_encode($revisao->id)) }}"
+                                    <a href="{{ route('revisao.edit', base64_encode($revisao->id)) }}"
                                        class="btn btn-primary" title="Editar">
                                         <span class="fa fa-edit"></span>
                                     </a>
-                                    <a href="{{ route('pessoasajudadas.delete', base64_encode($revisao->id)) }}"
+                                    <a href="{{ route('revisao.delete', base64_encode($revisao->id)) }}"
                                        class="btn btn-danger link-excluir" title="Excluir">
                                         <span class="fa fa-trash"></span>
                                     </a>
                                 </td>
-                                <td>{{ \Carbon\Carbon::parse($revisao->dt_cadastro)->format('d/m/Y') }}</td>
                                 <td>{{ \Carbon\Carbon::parse($revisao->dt_revisao)->format('d/m/Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($revisao->dt_cadastro)->format('d/m/Y') }}</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="card-footer clearfix">
                     <ul class="pagination pagination-sm m-0 float-right">
-                        {{ $aItens->links() }}
+                        {{ $revisoes->links() }}
                     </ul>
                 </div>
             </div>

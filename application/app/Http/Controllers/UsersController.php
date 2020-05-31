@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreUpdateUserRequest;
+use App\Http\Requests\StoreUpdateUserFormRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -32,9 +32,9 @@ class UsersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreUpdateUserRequest $request
+     * @param StoreUpdateUserFormRequest $request
      */
-    public function store(StoreUpdateUserRequest $request)
+    public function store(StoreUpdateUserFormRequest $request)
     {
         $lider = new User();
         $data = $request->toArray();
@@ -73,11 +73,11 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param StoreUpdateUserRequest $request
+     * @param StoreUpdateUserFormRequest $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreUpdateUserRequest $request, $id)
+    public function update(StoreUpdateUserFormRequest $request, $id)
     {
         if (!$lider = User::findOrFail($id) )
             return redirect()->back()->with('message', 'Não foi possível atualizar o registro !');
