@@ -1,0 +1,44 @@
+.author-contact-info {
+    padding-left: 15px;
+    padding-right: 5px;
+}
+
+.author-name {
+    font-size: 15px;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.btn-whatsapp {
+    background-color: rgb(6, 215, 85);
+}
+
+.btn-whatsapp:hover {
+    background-color: rgba(6, 215, 85, 0.8);
+    transition: background-color 0.5s;
+}
+
+.btn-dislike {
+    background-color: rgb(240, 239, 240);
+}
+
+.bg-grey {
+    background-color: #eee;
+}
+
+.bg-info-blue {
+    background-color: #00aadd;
+}
+
+.btn-blue {
+    background-color: #1e95dd;
+}
+
+.btn-blue:hover {
+    background-color: rgba(30, 149, 221, 0.8);
+    transition: background-color 0.5s;
+}
+
+.btn-blue:active {
+    opacity: 0.7;
+}
