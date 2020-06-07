@@ -44,8 +44,9 @@
                     <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                 </div>
                 {{-- Implementar callendar.--}}
-                <input class="form-control {{ $errors->has('dt_nascimento') ? 'is-invalid' : '' }}"
-                       type="date" name="dt_nascimento" id="dt_nascimento"
+                <input class="form-control date_input {{ $errors->has('dt_nascimento') ? 'is-invalid' : '' }}"
+                       type="text" name="dt_nascimento" id="dt_nascimento"
+                       placeholder="06/06/2020"
                        value="{{ $pessoasAjudadas->dt_nascimento ?? old('dt_nascimento') }}">
                 @if ($errors->has('dt_nascimento'))
                     <div class="invalid-feedback">
@@ -65,7 +66,7 @@
                     <span class="input-group-text"><i class="fas fa-phone"></i></span>
                 </div>
                 {{-- Implementar máscara de telefone.--}}
-                <input type="tel" class="form-control {{ $errors->has('nu_telefone') ? 'is-invalid' : '' }}"
+                <input type="text" class="form-control  phone_input  {{ $errors->has('nu_telefone') ? 'is-invalid' : '' }}"
                        name="nu_telefone" id="nu_telefone"
                        value="{{ $pessoasAjudadas->nu_telefone ?? old('nu_telefone') }}">
                 @if ($errors->has('nu_telefone'))

@@ -27,7 +27,8 @@
                     <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                 </div>
                 {{-- Implementar callendar.--}}
-                <input class="form-control {{ $errors->has('tx_dia') ? 'is-invalid' : '' }}"
+                <input class="form-control  date_input  {{ $errors->has('tx_dia') ? 'is-invalid' : '' }}"
+                        placeholder="06/06/2020"
                        type="text" name="tx_dia" id="tx_dia"
                        value="{{ $atividades->tx_dia ?? old('tx_dia') }}">
                 @if ($errors->has('tx_dia'))
@@ -48,7 +49,8 @@
                     <span class="input-group-text"><i class="fas fa-clock"></i></span>
                 </div>
                 {{-- Implementar máscara de telefone.--}}
-                <input type="tel" class="form-control {{ $errors->has('tx_hora') ? 'is-invalid' : '' }}"
+                <input type="text" class="form-control time_input  {{ $errors->has('tx_hora') ? 'is-invalid' : '' }}"
+                        placeholder="14:00"
                        name="tx_hora" id="tx_hora"
                        value="{{ $atividades->tx_hora ?? old('tx_hora') }}">
                 @if ($errors->has('tx_hora'))

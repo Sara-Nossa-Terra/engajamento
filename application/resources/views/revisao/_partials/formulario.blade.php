@@ -12,8 +12,9 @@
                     <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                 </div>
                 {{-- Implementar callendar.--}}
-                <input class="form-control {{ $errors->has('dt_revisao') ? 'is-invalid' : '' }}"
-                       type="date" name="dt_revisao" id="dt_revisao"
+                <input class="form-control  date_input  {{ $errors->has('dt_revisao') ? 'is-invalid' : '' }}"
+                        placeholder="06/06/2020"
+                       type="text" name="dt_revisao" id="dt_revisao"
                        value="{{ $revisao->dt_revisao ?? old('dt_revisao') }}">
                 @if ($errors->has('dt_revisao'))
                     <div class="invalid-feedback">
@@ -33,8 +34,9 @@
                     <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                 </div>
                 {{-- Implementar callendar.--}}
-                <input class="form-control {{ $errors->has('dt_cadastro') ? 'is-invalid' : '' }}"
-                       type="date" name="dt_cadastro" id="dt_cadastro"
+                <input class="form-control date_input  {{ $errors->has('dt_cadastro') ? 'is-invalid' : '' }}"
+                        placeholder='06/06/2020'
+                       type="text" name="dt_cadastro" id="dt_cadastro"
                        value="{{ $revisao->dt_cadastro ?? old('dt_cadastro') }}">
                 @if ($errors->has('dt_cadastro'))
                     <div class="invalid-feedback">
