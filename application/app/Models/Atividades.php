@@ -15,6 +15,6 @@ class Atividades extends Model
      * @var array
      */
     protected $fillable = [
-        'tx_nome', 'tx_dia', 'tx_hora', 'deleted_id'
+        'tx_nome', 'dt_dia', 'deleted_id'
     ];
 }

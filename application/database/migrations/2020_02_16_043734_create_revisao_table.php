@@ -16,7 +16,7 @@ class CreateRevisaoTable extends Migration
         Schema::create('tb_revisoes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->date('dt_revisao');
-            $table->date('dt_cadastro');
+            $table->date('dt_cadastro')->default('NOW()');
 
             $table->integer('deleted_id')->nullable()
                 ->comment('ID do usuário que removeu o registro');

@@ -16,9 +16,8 @@ class CreateAtividadeTable extends Migration
         Schema::create('tb_atividades', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('tx_nome', 200);
-            $table->string('tx_dia', 1);
-            $table->string('tx_hora', 1);
-
+            $table->dateTime('dt_dia')->default('NOW()')
+                ->comment('Dia da semana e Hora de realização da atividade');
             $table->integer('deleted_id')->nullable()
                 ->comment('ID do usuário que removeu o registro');
 
