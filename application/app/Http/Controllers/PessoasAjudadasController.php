@@ -17,7 +17,7 @@ class PessoasAjudadasController extends Controller
 
     public function index()
     {
-        $pessoasAjudadas = PessoasAjudadas::orderBy('tx_nome', 'ASC')->paginate(5);
+        $pessoasAjudadas = PessoasAjudadas::orderBy('tx_nome', 'ASC')->paginate(30);
         return view('pessoasajudadas.index', compact('pessoasAjudadas'));
     }
 
@@ -50,7 +50,7 @@ class PessoasAjudadasController extends Controller
 
     public function edit($id)
     {
-        if (!$pessoasAjudadas = PessoasAjudadas::findOrFail(base64_decode($id)) )
+        if (!$pessoasAjudadas = PessoasAjudadas::findOrFail($id))
             return redirect()->back()->with('message', 'Não foi possível editar o registro !');
 
         $lideres = \App\Models\User::all();
@@ -60,7 +60,7 @@ class PessoasAjudadasController extends Controller
 
     public function update(StoreUpdatePessoasAjudadasFormRequest $request, $id)
     {
-        if (!$pessoasAjudadas = PessoasAjudadas::findOrFail($id) )
+        if (!$pessoasAjudadas = PessoasAjudadas::findOrFail($id))
             return redirect()->back()->with('message', 'Não foi possível atualizar o registro !');
 
         $pessoasAjudadas->fill($request->toArray());
@@ -73,7 +73,7 @@ class PessoasAjudadasController extends Controller
 
     public function destroy($id)
     {
-        if (!$pessoasAjudadas = PessoasAjudadas::where('id', base64_decode($id))->first() )
+        if (!$pessoasAjudadas = PessoasAjudadas::where('id', $id)->first())
             return redirect()->back()->with('message', 'Não foi possível excluír o registro !');
 
         $pessoasAjudadas->delete();

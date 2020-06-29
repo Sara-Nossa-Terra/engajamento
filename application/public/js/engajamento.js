@@ -27,32 +27,3 @@ $(document).ready(function ($) {
     $(".time_input").mask("23:00");
     $(".phone_input").mask("(00) 9 0000-0000");
 });
-
-/**
- * Filtro da dashboard
- */
-$(document).ready(function () {
-    const input = document.getElementById("home_search");
-
-    if (input) {
-        // atualiza o estado da dom toda vez que o input é editado
-        input.onkeyup = (event) => {
-            const valorInput = $(input).val();
-            const textsEl = document.querySelectorAll(".author-name");
-
-            // mostrar todos os items com a classe .search_identifier
-            $(".search_identifier").show();
-
-            textsEl.forEach((el) => {
-                if (
-                    // oculta item se ele não der match com o texto procurado
-                    el.innerHTML
-                        .toLowerCase()
-                        .indexOf(valorInput.toLowerCase()) < 0
-                ) {
-                    $(el).parent().parent().parent().parent().parent().hide();
-                }
-            });
-        };
-    }
-});
