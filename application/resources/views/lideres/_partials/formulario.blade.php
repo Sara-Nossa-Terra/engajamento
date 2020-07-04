@@ -133,7 +133,6 @@
 </div>
 
 <script>
-    document.addEventListener('load', () => {
         // datepicker
         flatpickr('#dt_nascimento', {
             dateFormat: 'Y-m-d',
@@ -142,6 +141,4 @@
             locale: 'pt',
             altInput: true,
         });
-
-    })
 </script>
