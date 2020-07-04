@@ -25,8 +25,8 @@ class StoreUpdateAtividadesFormRequest extends FormRequest
     {
         return [
             'tx_nome' => "required|max:100",
-            'tx_dia'  => "required|max:1",
-            'tx_hora' => "required|max:1",
+            'tx_dia'  => "required|date",
+            'tx_hora' => "required|max:5",
         ];
     }
 }

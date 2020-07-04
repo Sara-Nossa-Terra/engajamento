@@ -23,7 +23,7 @@ $("input.inteiro").keyup(function () {
  *
  */
 $(document).ready(function ($) {
-    $(".date_input").mask("00/00/0000");
-    $(".time_input").mask("23:00");
+//    $(".date_input").mask("0000/00/00");
+    $(".time_input").mask("00:00");
     $(".phone_input").mask("(00) 9 0000-0000");
 });

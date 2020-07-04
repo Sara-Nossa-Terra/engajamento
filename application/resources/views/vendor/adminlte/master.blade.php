@@ -50,6 +50,10 @@
         <meta name="msapplication-TileImage" content="{{ asset('favicon/ms-icon-144x144.png') }}">
     @endif
 
+    {{--  Arquivos do datepicker e timepicker  --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr@4.6.3/dist/l10n/pt.js"></script>
 </head>
 <body class="@yield('classes_body')" @yield('body_data')>
 
