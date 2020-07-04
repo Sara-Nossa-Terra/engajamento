@@ -131,3 +131,17 @@
         Voltar
     </a>
 </div>
+
+<script>
+    document.addEventListener('load', () => {
+        // datepicker
+        flatpickr('#dt_nascimento', {
+            dateFormat: 'Y-m-d',
+            altFormat: "j F Y",
+            defaultDate: new Date(2000, 5, 1),
+            locale: 'pt',
+            altInput: true,
+        });
+
+    })
+</script>

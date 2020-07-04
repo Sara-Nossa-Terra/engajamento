@@ -57,3 +57,22 @@
         Voltar
     </a>
 </div>
+
+<script>
+    // datepicker
+    flatpickr('#dt_cadastro', {
+        dateFormat: 'Y-m-d',
+        altFormat: "j F Y",
+        defaultDate: new Date(),
+        locale: 'pt',
+        altInput: true,
+    });
+
+    flatpickr('#dt_revisao', {
+        dateFormat: 'Y-m-d',
+        altFormat: "j F Y",
+        defaultDate: new Date(),
+        locale: 'pt',
+        altInput: true,
+    });
+</script>

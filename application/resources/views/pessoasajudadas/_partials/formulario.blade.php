@@ -88,3 +88,16 @@
         Voltar
     </a>
 </div>
+<script>
+
+    const dataAgora = new Date(2000, 5, 2);
+
+    // datepicker
+    flatpickr('#dt_nascimento', {
+        dateFormat: 'Y-m-d',
+        altFormat: "j F Y",
+        defaultDate: dataAgora,
+        locale: 'pt',
+        altInput: true,
+    });
+</script>
