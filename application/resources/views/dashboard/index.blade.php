@@ -21,7 +21,7 @@
                                 <i class="fa fa-angle-double-right"></i>
                             </div>
                         </div>
-                        
+
                         <!-- Atividades -->
                         <div class="card p-1 mt-1 bg-info-blue mb-1">
                             <div class="row px-2">
@@ -128,7 +128,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Pessoas -->
                         <div class="card search_identifier p-1 mt-1 mb-2 div_pessoa_ajudada">
                              <div class="row">
@@ -212,7 +212,7 @@
                                  </div>
                              </div>
                          </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -222,9 +222,9 @@
 
 @section('js')
     <script>
-        pessoas = new pessoasAjudadas();
+        pessoas = new PessoasAjudadas();
         pessoas.url = '{{ route('dashboard.listarpessoas') }}';
-//        pessoasAjudadas.lislistarPessoasAjudadas();
+//        PessoasAjudadas.lislistarPessoasAjudadas();
 
     </script>
 @stop

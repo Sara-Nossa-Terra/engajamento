@@ -18,8 +18,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/atividades/{id}/destroy', 'AtividadesController@destroy')->name('atividades.delete');
     Route::get('/revisao/{id}/destroy', 'RevisaoController@destroy')->name('revisao.delete');
 
-    Route::get('/dashboard-listar-pessoas', 'DashboardController@listarPessoas')->name('dashboard.listarpessoas');
-    
+    Route::get('/listar-pessoas-ajudadas', 'DashboardController@listarPessoasAjudadas')->name('dashboard.listarpessoas');
+
     Route::resources([
         'atividades'      => 'AtividadesController',
         'lideres'         => 'UsersController',
