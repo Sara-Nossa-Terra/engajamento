@@ -15,10 +15,20 @@ class AtividadesController extends Controller
 //        $this->repository = PessoasAjudadas;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $atividades = Atividades::orderBy('tx_nome', 'ASC')->paginate(30);
-        return view('atividades.index', compact('atividades'));
+        if ( !$request->ajax() )
+            return view('atividades.index');
+
+        $atividades = Atividades::orderBy('tx_nome', 'ASC')->get()->toArray();
+
+        $atividades = array_map(function ($atividades) {
+            $atividades['dt_dia'] = (new \DateTime($atividades['dt_dia']))->format('d/m/Y  H:i');
+
+            return $atividades;
+        }, $atividades);
+
+        return response()->json($atividades, 200);
     }
 
     public function create()
@@ -47,7 +57,7 @@ class AtividadesController extends Controller
 
     public function edit($id)
     {
-        if (!$atividades = Atividades::findOrFail(base64_decode($id)) )
+        if (!$atividades = Atividades::findOrFail($id) )
             return redirect()->back()->with('message', 'Não foi possível editar o registro !');
 
         return view('atividades.edit', compact('atividades'));
@@ -68,7 +78,7 @@ class AtividadesController extends Controller
 
     public function destroy($id)
     {
-        if (!$atividades = Atividades::where('id', base64_decode($id))->first() )
+        if (!$atividades = Atividades::where('id', $id)->first() )
             return redirect()->back()->with('message', 'Não foi possível excluír o registro !');
 
         $atividades->delete();

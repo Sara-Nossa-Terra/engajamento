@@ -27,37 +27,43 @@
                             <th>Ações</th>
                             <th scope="col">Nome da Atividade</th>
                             <th scope="col">Dia</th>
-                            <th scope="col">Hora</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        @foreach($atividades as $atividade)
-                            <tr>
-                                <td>
-                                    <a href="{{ route('atividades.edit', base64_encode($atividade->id)) }}"
-                                       class="btn btn-primary" title="Editar">
-                                        <span class="fa fa-edit"></span>
-                                    </a>
-                                    <a href="{{ route('atividades.delete', base64_encode($atividade->id)) }}"
-                                       class="btn btn-danger link-excluir" title="Excluir">
-                                        <span class="fa fa-trash"></span>
-                                    </a>
-                                </td>
-                                <td>{{ $atividade->tx_nome }}</td>
-                                <td>{{ $atividade->tx_dia }}</td>
-                                {{-- @todo Adicionar formatacao com carbon para o exibicao de telefone --}}
-                                <td>{{ $atividade->tx_hora }}</td>
-                            </tr>
-                        @endforeach
-                        </tbody>
+                        <tbody class="lista-atividades"></tbody>
                     </table>
-                </div>
-                <div class="card-footer clearfix">
-                    <ul class="pagination pagination-sm m-0 float-right">
-                        {{ $atividades->links() }}
-                    </ul>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
+@section('js')
+    <script>
+        $(function () {
+            $.ajax({
+                type: 'GET',
+                url: "{{ route('atividades.index') }}",
+                dataType: "json",
+                success: function (response) {
+                    var tabela = '';
+
+                    $.each(response, function (index, atividade) {
+                        tabela += '<tr>\n';
+                        tabela += '<td>\n';
+                        tabela += `<a href='atividades/${atividade.id}/edit'\n`+
+                        ' class="btn btn-primary" title="Editar">\n' +
+                        '<span class="fa fa-edit"></span></a>';
+                        tabela += `<a href='atividades/${atividade.id}/destroy'\n`+
+                        ' class="btn btn-danger link-excluir" title="Excluir">\n' +
+                        '<span class="fa fa-trash"></span></a>';
+                        tabela += '</td>\n';
+                        tabela += `<td>${atividade.tx_nome}</td>\n`;
+                        tabela += `<td>${atividade.dt_dia}</td>\n`;
+                        tabela += '</tr>\n';
+                    });
+                    $('.lista-atividades').html(tabela);
+                }
+            });
+        });
+    </script>
+@stop
