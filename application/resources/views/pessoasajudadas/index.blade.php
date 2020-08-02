@@ -32,24 +32,6 @@
                         </tr>
                         </thead>
                         <tbody id="container_pessoas_ajudadas">
-{{--                        @foreach($pessoasAjudadas as $pAjudadas)--}}
-{{--                            <tr>--}}
-{{--                                <td>--}}
-{{--                                    <a href="{{ route('pessoasajudadas.edit', base64_encode($pAjudadas->id)) }}"--}}
-{{--                                       class="btn btn-primary" title="Editar">--}}
-{{--                                        <span class="fa fa-edit"></span>--}}
-{{--                                    </a>--}}
-{{--                                    <a href="{{ route('pessoasajudadas.delete', base64_encode($pAjudadas->id)) }}"--}}
-{{--                                       class="btn btn-danger link-excluir" title="Excluir">--}}
-{{--                                        <span class="fa fa-trash"></span>--}}
-{{--                                    </a>--}}
-{{--                                </td>--}}
-{{--                                <td>{{ $pAjudadas->tx_nome }}</td>--}}
-{{--                                <td>{{ \Carbon\Carbon::parse($pAjudadas->dt_nascimento)->format('d/m/Y') }}</td>--}}
-{{--                                <td>{{ $pAjudadas->nu_telefone }}</td>--}}
-{{--                                <td>{{ $pAjudadas->lider->tx_nome }}</td>--}}
-{{--                            </tr>--}}
-{{--                        @endforeach--}}
                         </tbody>
                     </table>
                 </div>
