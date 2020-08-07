@@ -1,12 +1,12 @@
 PessoasAjudadas = {
 
-    url: null,
+    url: "http://localhost:8000/listar-pessoas-ajudadas",
     lista: [],
 
-    requisitar = function () {
+    requisitar: function () {
         $.ajax({
             type: 'GET',
-            url: this.urlListarPessoasAjudadas,
+            url: this.url,
             //        data: {}, // serializes the form's elements.
             dataType: "json",
             success: function (response) {
@@ -16,23 +16,15 @@ PessoasAjudadas = {
         });
     },
 
-    listar = function () {
-        $(pessoasAjudadas.lista).each(function (chave, pessoa) {
+    listar : function () {
+        $(this.lista).each(function (chave, pessoa) {
             console.log(pessoa.nome);
         });
     },
 
-    mostrar = function (nome) {
+    mostrar : function (nome) {
 
     }
 };
 
-linhaPessoaAtividade = {
-    Nome: null,
-    linha: null,
 
-    mostrar: function () {
-
-    }
-
-};
