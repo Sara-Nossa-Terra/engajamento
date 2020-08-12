@@ -2,7 +2,7 @@ version: "3.2"
 services:
   php-engajamento:
     container_name: php-engajamento
-    image: php:7.4-fpm
+    image: php-engajamento:7.4-fpm
     build:
       context: application
       dockerfile: Dockerfile
