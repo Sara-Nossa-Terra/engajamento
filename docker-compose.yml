@@ -12,7 +12,13 @@ services:
     environment:
       - UPDATE_COMPOSER_DEPENDENCIES=true
       - USE_PHP_FPM=true
-      - APP_URL=http://localhost
+      - HOME_URI_VAL=http://localhost
+      - DB_DATABASE=laravel
+      - DB_USERNAME=root
+      - DB_PASSWORD=123456
+      - DB_HOST=database-engajamento
+      - DB_PORT=5432
+      - DB_CONNECTION=pgsql
     ports:
       - 8081:80
     working_dir: /var/www/html/
@@ -33,13 +39,6 @@ services:
   database-service:
     container_name: database-engajamento
     image: postgres
-    environment:
-      - DB_DATABASE=laravel
-      - USERNAME_DB=root
-      - DB_PASSWORD=123456
-      - DB_HOST=database-engajamento
-      - DB_PORT=5432
-      - DB_CONNECTION=pgsql
     ports:
       - "5433:5432"
     expose:
