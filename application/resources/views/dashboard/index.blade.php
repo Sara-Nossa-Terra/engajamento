@@ -228,7 +228,7 @@
 
 
         class Atividades {
-            url = "http://localhost:8000/listar-atividades";
+            url = "{{ config('url') }}/listar-atividades";
             atividades = [];
             totalAtividades = 0;
             totalPorPagina = 30;

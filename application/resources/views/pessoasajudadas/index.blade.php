@@ -51,7 +51,7 @@
         * */
         class PessoasAjudadas {
             lista = [];
-            url=   "http://localhost:8000/listar-pessoas-ajudadas"
+            url = "{{ config('url') }}/listar-pessoas-ajudadas";
             itemTemplate = ""
 
             /*
