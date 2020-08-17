@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUpdateAtividadesFormRequest;
 use App\Models\Atividades;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AtividadesController extends Controller
 {
@@ -93,5 +94,43 @@ class AtividadesController extends Controller
         $categories = $this->repository->search($data);
 
         return view('admin.categories.index', compact('categories', 'data'));
+    }
+
+    /**
+     * Retorna lista de Atividades de acordo pela data filtrada.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getAtividadesPorFiltro(Request $request)
+    {
+        $data = $this->getData($request->all());
+
+        $atividades = Atividades::where(function ($query) use ($data) {
+            $query->where(DB::raw("TO_CHAR(dt_dia, 'YYYY-MM-DD')"), $data);
+        })->get();
+
+        return response()->json($atividades, 200);
+    }
+
+    /**
+     * Verifica filtros passados via parametro e retorna data para ser filtrada.
+     *
+     * @param array $params
+     * @return string
+     */
+    private function getData(array $params): string
+    {
+        if (
+            !array_key_exists('year', $params) ||
+            !array_key_exists('month', $params) ||
+            !array_key_exists('day', $params)
+        ) {
+            return date("Y-m-d");
+        }
+
+        $date = "{$params['year']}-{$params['month']}-{$params['day']}";
+
+        return $date;
     }
 }
