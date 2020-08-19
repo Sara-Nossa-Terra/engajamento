@@ -46,6 +46,10 @@ services:
     volumes:
       - ./database/docker-data/postgres:/var/lib/postgresql/data
       - ./database/:/docker-entrypoint-initdb.d/
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=laravel
     networks:
       - network-engajamento
 networks:
