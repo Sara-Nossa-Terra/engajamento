@@ -32,7 +32,7 @@ class StoreUpdateUserFormRequest extends FormRequest
 
         return [
             'tx_nome'       => "required|max:100",
-            'dt_nascimento' => "required|date",
+//            'dt_nascimento' => "required|date",
             'nu_telefone'   => "required",
             'email'         => "required|email",
             "{$estaEditando['chave']}" => "{$estaEditando['valor']}",

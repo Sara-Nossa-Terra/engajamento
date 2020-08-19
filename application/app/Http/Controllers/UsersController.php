@@ -15,7 +15,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $lideres = User::orderBy('tx_nome', 'ASC')->paginate(5);
+        $lideres = User::orderBy('tx_nome', 'ASC')->paginate(30);
         return view('lideres.index', compact('lideres'));
     }
 
@@ -43,17 +43,6 @@ class UsersController extends Controller
         $lider->save();
 
         return redirect()->route('lideres.index')->withSuccess('Cadastro realizado com sucesso');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**

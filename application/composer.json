@@ -41,7 +41,6 @@
             "database/factories"
         ],
         "files": [
-            "app/Classes/Util.php"
         ]
     },
     "autoload-dev": {

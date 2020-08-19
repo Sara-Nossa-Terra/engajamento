@@ -17,7 +17,7 @@ class AtividadesController extends Controller
 
     public function index()
     {
-        $atividades = Atividades::orderBy('tx_nome', 'ASC')->paginate(5);
+        $atividades = Atividades::orderBy('tx_nome', 'ASC')->paginate(30);
         return view('atividades.index', compact('atividades'));
     }
 

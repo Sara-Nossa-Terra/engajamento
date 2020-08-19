@@ -35,7 +35,6 @@ COPY . /var/www/html
 COPY ./docker/php/docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint.sh"]
 
-RUN chmod 777 /usr/local/bin/docker-entrypoint.sh \
-    && ln -s /usr/local/bin/docker-entrypoint.sh /
+RUN chmod 777 /usr/local/bin/docker-entrypoint.sh
 
 RUN chmod 777 -R storage/

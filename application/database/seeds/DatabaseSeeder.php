@@ -11,13 +11,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
-        \App\Models\User::create([
-            'tx_nome'     => 'Admin Engajamento',
-            'email'    => 'admin@admin.com',
-            'password'    => bcrypt(123),
-            'dt_nascimento'   => date('Y-m-d'),
-            'bol_ativo'   => 'A',
+        $this->call([
+            UsersTableSeeder::class,
+            AtividadesTableSeeder::class,
+            PessoasAjudadasTableSeeder::class,
+            RevisaoTableSeeder::class,
         ]);
     }
 }

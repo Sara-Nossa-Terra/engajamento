@@ -15,7 +15,7 @@ class RevisaoController extends Controller
      */
     public function index()
     {
-        $revisoes = Revisao::orderBy('created_at', 'ASC')->paginate(5);
+        $revisoes = Revisao::orderBy('created_at', 'ASC')->paginate(30);
         return view('revisao.index', compact('revisoes'));
     }
 
