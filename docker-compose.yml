@@ -2,7 +2,7 @@ version: "3.2"
 services:
   php-engajamento:
     container_name: php-engajamento
-    image: php:7.4-fpm
+    image: php-engajamento:7.4-fpm
     build:
       context: application
       dockerfile: Dockerfile
@@ -38,7 +38,7 @@ services:
       - network-engajamento
   database-service:
     container_name: database-engajamento
-    image: postgres
+    image: postgres:9.6
     ports:
       - "5433:5432"
     expose:
