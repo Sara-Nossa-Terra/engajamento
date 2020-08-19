@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="form-group row">
-        <label for="tx_dia" class="col-sm-2 col-form-label">Dia
+        <label for="dt_dia" class="col-sm-2 col-form-label">Dia
             <span class="obrigatorio"> *</span>
         </label>
         <div class="col-sm-10">
@@ -27,37 +27,13 @@
                     <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                 </div>
                 {{-- Implementar callendar.--}}
-                <input class="form-control date_input {{ $errors->has('tx_dia') ? 'is-invalid' : '' }}"
+                <input class="form-control date_input {{ $errors->has('dt_dia') ? 'is-invalid' : '' }}"
                         placeholder="06/06/2020"
-                       type="text" name="tx_dia" id="tx_dia"
-                       value="{{ $atividades->tx_dia ?? old('tx_dia') }}">
-                @if ($errors->has('tx_dia'))
+                       type="text" name="dt_dia" id="dt_dia"
+                       value="{{ $atividades->tx_dia ?? old('dt_dia') }}">
+                @if ($errors->has('dt_dia'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('tx_dia') }}
-                    </div>
-                @endif
-            </div>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="tx_hora" class="col-sm-2 col-form-label">Hora
-            <span class="obrigatorio"> *</span>
-        </label>
-        <div class="col-sm-10">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-clock"></i></span>
-                </div>
-                {{-- Implementar máscara de telefone.--}}
-                <input type="text" class="form-control time_input  {{ $errors->has('tx_hora') ? 'is-invalid' : '' }}"
-                        placeholder="14:00"
-                       name="tx_hora" id="tx_hora"
-                       value="{{ $atividades->tx_hora ?? old('tx_hora') }}">
-                <div id="picker"></div>
-
-            @if ($errors->has('tx_hora'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('tx_hora') }}
+                        {{ $errors->first('dt_dia') }}
                     </div>
                 @endif
             </div>
@@ -77,29 +53,20 @@
 
 <script>
     window.addEventListener('load', function() {
-        const dataAgora = new Date();
-        dataAgora.setHours(18);
-        dataAgora.setMinutes(0);
-
         // datepicker
-        flatpickr('#tx_dia', {
-            dateFormat: 'Y-m-d',
+        flatpickr('#dt_dia', {
             altFormat: "j F Y",
             defaultDate: new Date(),
             locale: 'pt',
             altInput: true,
-        });
-
-        // timepicker
-        flatpickr('#tx_hora', {
-            locale: 'pt',
             enableTime: true,
+            dateFormat: "Y-m-d H:i:S",
             time_24hr: true,
-            noCalendar: true,
-            defaultDate: dataAgora,
-            dateFormat: 'H:i',
-            altFormat: "H:i",
-            altInput: true,
+            onChange(dates, b, instance) {
+                const [dataSelecionada] = [dates];
+
+                instance.setDate(dataSelecionada);
+            }
         });
 
     })
