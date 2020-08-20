@@ -31,7 +31,7 @@
                 <input class="form-control date_input {{ $errors->has('dt_dia') ? 'is-invalid' : '' }}"
                        placeholder="06/06/2020"
                        type="text" name="dt_dia" id="dt_dia"
-                       value="{{ $atividades->tx_dia ?? old('dt_dia') }}">
+                       value="">
                 @if ($errors->has('dt_dia'))
                     <div class="invalid-feedback">
                         {{ $errors->first('dt_dia') }}
@@ -80,7 +80,7 @@
         // datepicker
         const datePickerInstance = flatpickr('#dt_dia', {
             altFormat: "j F Y",
-            defaultDate: new Date(),
+            defaultDate: new Date("{{ $atividades->dt_dia ?? old('dt_dia') }}" || new Date()),
             locale: 'pt',
             altInput: true,
             dateFormat: "Y-m-d H:i:S",
@@ -97,7 +97,7 @@
             enableTime: true,
             time_24hr: true,
             noCalendar: true,
-            defaultDate: new Date(),
+            defaultDate: new Date("{{ $atividades->dt_dia ?? old('dt_dia') }}" || new Date()),
             dateFormat: 'H:i',
             altFormat: "H:i",
             altInput: true,
