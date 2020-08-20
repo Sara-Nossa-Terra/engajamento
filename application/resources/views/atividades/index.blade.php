@@ -51,10 +51,10 @@
                         tabela += '<tr>\n';
                         tabela += '<td>\n';
                         tabela += `<a href='atividades/${atividade.id}/edit'\n`+
-                        ' class="btn btn-primary" title="Editar">\n' +
+                        ' class="btn btn-primary " title="Editar">\n' +
                         '<span class="fa fa-edit"></span></a>';
                         tabela += `<a href='atividades/${atividade.id}/destroy'\n`+
-                        ' class="btn btn-danger link-excluir" title="Excluir">\n' +
+                        ' class="btn btn-danger ml-2 link-excluir" title="Excluir">\n' +
                         '<span class="fa fa-trash"></span></a>';
                         tabela += '</td>\n';
                         tabela += `<td>${atividade.tx_nome}</td>\n`;
