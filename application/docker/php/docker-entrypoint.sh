@@ -16,6 +16,16 @@ if  ! [ -e "/var/www/html/.env" ] ; then
      && chmod 777 /var/www/html/.env \
      && chmod 777 -R storage \
      && php artisan key:generate
+
+     # Regex to many "/"
+    sed -i "s@HOME_URI_VAL@$HOME_URI_VAL@g" /var/www/html/.env
+
+    sed -i "s/@@DB_CONNECTION@@/$DB_CONNECTION/g" /var/www/html/.env
+    sed -i "s/@@DB_HOST@@/$DB_HOST/g" /var/www/html/.env
+    sed -i "s/@@DB_PORT@@/$DB_PORT/g" /var/www/html/.env
+    sed -i "s/@@DB_DATABASE@@/$DB_DATABASE/g" /var/www/html/.env
+    sed -i "s/@@DB_USERNAME@@/$DB_USERNAME/g" /var/www/html/.env
+    sed -i "s/@@DB_PASSWORD@@/$DB_PASSWORD/g" /var/www/html/.env
 fi
 
 echo "[ ****************** ] Ending Endpoint of Application [ ****************** ]"

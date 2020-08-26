@@ -12,6 +12,13 @@ services:
     environment:
       - UPDATE_COMPOSER_DEPENDENCIES=true
       - USE_PHP_FPM=true
+      - HOME_URI_VAL=http://localhost
+      - DB_DATABASE=laravel
+      - DB_USERNAME=root
+      - DB_PASSWORD=123456
+      - DB_HOST=database-engajamento
+      - DB_PORT=5432
+      - DB_CONNECTION=pgsql
     ports:
       - 8081:80
     working_dir: /var/www/html/
@@ -31,11 +38,7 @@ services:
       - network-engajamento
   database-service:
     container_name: database-engajamento
-    image: postgres
-    environment:
-      POSTGRES_DB: 'laravel'
-      POSTGRES_USER: 'root'
-      POSTGRES_PASSWORD: '123456'
+    image: postgres:9.6
     ports:
       - "5433:5432"
     expose:
@@ -43,6 +46,10 @@ services:
     volumes:
       - ./database/docker-data/postgres:/var/lib/postgresql/data
       - ./database/:/docker-entrypoint-initdb.d/
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=laravel
     networks:
       - network-engajamento
 networks:
