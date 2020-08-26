@@ -147,11 +147,11 @@
 
             async requisitar() {
                 try {
-                    const response = await fetch(`${this.url}?year=2020&day=17&month=8`);
+                    const response = await fetch(`${this.url}?dt_begin=2020-06-02&dt_until=2020-06-10`);
                     const jsonAtividades = await response.json();
 
-                    console.log(jsonAtividades);
-                    // this.atividades = jsonAtividades.data;
+                    // console.log(jsonAtividades.data);
+                    this.atividades = jsonAtividades.data;
                     // this.totalAtividades = jsonAtividades.total;
                     // this.totalPorPagina = jsonAtividades.per_page;
                     // this.paginaAtual = jsonAtividades.current_page;
