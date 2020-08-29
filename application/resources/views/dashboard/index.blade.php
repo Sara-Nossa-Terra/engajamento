@@ -1,188 +1,194 @@
 @extends('adminlte::page') @section('title', 'Dashboard')
 @section('content_header')
-    <script src="{{ asset('js/dashboard/index.js')}}"></script>
-    <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
+<script src="{{ asset('js/dashboard/index.js') }}"></script>
+<link href="{{ asset('css/dashboard.css') }}" rel="stylesheet" />
 @stop @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-9">
-                <div class="card" id="main_card_container">
-                    <div class="p-2 div_lista_pessoas_ajudadas">
-                        <!-- Periodos -->
-                        <div class="d-flex justify-content-center mb-2">
-                            <div class="btn btn-sm btn-primary">
-                                <i class="fa fa-angle-double-left"></i>
-                            </div>
-                            <div class="periodos mx-1">
-                                Período - 28/10/2020
-                            </div>
-
-                            <div class="btn btn-sm btn-primary">
-                                <i class="fa fa-angle-double-right"></i>
-                            </div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-9">
+            <div class="card" id="main_card_container">
+                <div class="p-2 div_lista_pessoas_ajudadas">
+                    <!-- Periodos -->
+                    <div class="d-flex justify-content-center mb-2">
+                        <button id="botao_voltar_semana" type="button" class="btn btn-sm btn-primary">
+                            <i class="fa fa-angle-double-left"></i>
+                        </button type="button">
+                        <div id="periodo_atividades" class="periodos mx-1">
+                            Carregando...
                         </div>
 
-                        <!-- Atividades -->
-                        <div class="card p-1 mt-1 bg-info-blue mb-1">
-                            <div class="row px-2">
-                                <div class="filtro-container col-12 col-lg-6">
-                                    <input type="text" class="form-control mt-1 mb-1"
-                                           placeholder="Filtro" id="home_search"/>
-                                </div>
-                                <div class="cultos col-12 col-lg-6">
-                                    <div class="row">
-                                        <div class="col-4 cultos-info mb-1">
-                                            <h6 class="culto-title  m-1  text-center text-white">Culto</h6>
-                                            <h6 class="culto-horario m-1   text-white text-center">TER20H</h6>
-                                            <button type="button"
-                                                    class="btn btn- text-white  btn-sm btn-blue btn-block">
-                                                1
-                                            </button>
-                                        </div>
-                                        <div class="col-4 cultos-info mb-1">
-                                            <h6 class="culto-title  m-1  text-center text-white">Culto</h6>
-                                            <h6 class="culto-horario m-1   text-white text-center">TER20H</h6>
-                                            <button type="button"
-                                                    class="btn   btn- text-white  btn-sm btn-blue btn-block"
-                                            >
-                                                1
-                                            </button>
-                                        </div>
+                        <button id="botao_avancar_semana"  type="button"   class="btn btn-sm btn-primary">
+                            <i class="fa fa-angle-double-right"></i>
+                        </button type="button">
+                    </div>
 
-                                        <div class="col-4 cultos-info mb-1">
-                                            <h6
-                                                class="culto-title  m-1  text-center text-white"
-                                            >
-                                                Culto
-                                            </h6>
-                                            <h6
-                                                class="culto-horario m-1   text-white text-center"
-                                            >
-                                                TER20H
-                                            </h6>
-                                            <button
-                                                type="button"
-                                                class="btn   btn- text-white  btn-sm btn-blue btn-block"
-                                            >
-                                                1
-                                            </button>
-                                        </div>
-
-                                        <div class="col-4 cultos-info mb-1">
-                                            <h6
-                                                class="culto-title  m-1  text-center text-white"
-                                            >
-                                                Culto
-                                            </h6>
-                                            <h6
-                                                class="culto-horario m-1   text-white text-center"
-                                            >
-                                                TER20H
-                                            </h6>
-                                            <button
-                                                type="button"
-                                                class="btn   btn- text-white  btn-sm btn-blue btn-block"
-                                            >
-                                                1
-                                            </button>
-                                        </div>
-
-                                        <div class="col-4 cultos-info mb-1">
-                                            <h6
-                                                class="culto-title  m-1  text-center text-white"
-                                            >
-                                                Culto
-                                            </h6>
-                                            <h6
-                                                class="culto-horario m-1   text-white text-center"
-                                            >
-                                                TER20H
-                                            </h6>
-                                            <button
-                                                type="button"
-                                                class="btn   btn- text-white  btn-sm btn-blue btn-block"
-                                            >
-                                                1
-                                            </button>
-                                        </div>
-
-                                        <div class="col-4 cultos-info mb-1">
-                                            <h6
-                                                class="culto-title  m-1  text-center text-white"
-                                            >
-                                                Culto
-                                            </h6>
-                                            <h6
-                                                class="culto-horario m-1   text-white text-center"
-                                            >
-                                                TER20H
-                                            </h6>
-                                            <button
-                                                type="button"
-                                                class="btn   btn- text-white  btn-sm btn-blue btn-block"
-                                            >
-                                                1
-                                            </button>
-                                        </div>
+                    <!-- Filtro e atividades da semana (aquele card azul) -->
+                    <div class="card p-1 mt-1 bg-info-blue mb-1">
+                        <div class="row px-2">
+                            <div class="filtro-container col-12 col-lg-6">
+                                <input type="text" class="form-control mt-1 mb-1" placeholder="Filtro" id="home_search" />
+                            </div>
+                            <div class="cultos col-12 col-lg-6">
+                                <div class="row">
+                                    <div class="col-4 cultos-info mb-1">
+                                        <h6 class="culto-title m-1 text-center text-white">
+                                            Culto
+                                        </h6>
+                                        <h6 class="culto-horario m-1 text-white text-center">
+                                            TER20H
+                                        </h6>
+                                        <button type="button" class="btn btn- text-white btn-sm btn-blue btn-block">
+                                            1
+                                        </button>
+                                    </div>
+                                    <div class="col-4 cultos-info mb-1">
+                                        <h6 class="culto-title m-1 text-center text-white">
+                                            Culto
+                                        </h6>
+                                        <h6 class="culto-horario m-1 text-white text-center">
+                                            TER20H
+                                        </h6>
+                                        <button type="button" class="btn btn- text-white btn-sm btn-blue btn-block">
+                                            1
+                                        </button>
+                                    </div>
+                    
+                                    <div class="col-4 cultos-info mb-1">
+                                        <h6 class="culto-title m-1 text-center text-white">
+                                            Culto
+                                        </h6>
+                                        <h6 class="culto-horario m-1 text-white text-center">
+                                            TER20H
+                                        </h6>
+                                        <button type="button" class="btn btn- text-white btn-sm btn-blue btn-block">
+                                            1
+                                        </button>
+                                    </div>
+                    
+                                    <div class="col-4 cultos-info mb-1">
+                                        <h6 class="culto-title m-1 text-center text-white">
+                                            Culto
+                                        </h6>
+                                        <h6 class="culto-horario m-1 text-white text-center">
+                                            TER20H
+                                        </h6>
+                                        <button type="button" class="btn btn- text-white btn-sm btn-blue btn-block">
+                                            1
+                                        </button>
+                                    </div>
+                    
+                                    <div class="col-4 cultos-info mb-1">
+                                        <h6 class="culto-title m-1 text-center text-white">
+                                            Culto
+                                        </h6>
+                                        <h6 class="culto-horario m-1 text-white text-center">
+                                            TER20H
+                                        </h6>
+                                        <button type="button" class="btn btn- text-white btn-sm btn-blue btn-block">
+                                            1
+                                        </button>
+                                    </div>
+                    
+                                    <div class="col-4 cultos-info mb-1">
+                                        <h6 class="culto-title m-1 text-center text-white">
+                                            Culto
+                                        </h6>
+                                        <h6 class="culto-horario m-1 text-white text-center">
+                                            TER20H
+                                        </h6>
+                                        <button type="button" class="btn btn- text-white btn-sm btn-blue btn-block">
+                                            1
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- Atividades -->
+                    <div id="lista_de_atividades">
+                      
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-@stop
+</div>
+@stop @section('js')
+<script>
+    class Atividades {
+        url = "{{ config('url') }}/filtrar-atividades";
+        atividades = [];
+        dataAtual = new Date();
+        dataPrimeiroDiaSemana = new Date();
+        dataUltimoDiaSemana = new Date();
 
-@section('js')
-    <script>
-        class Atividades {
-            url = "{{ config('url') }}/filtrar-atividades";
-            atividades = [];
-            totalAtividades = 0;
-            totalPorPagina = 30;
-            ultimaPagina = 1;
-            paginaAtual = 1;
+        /**
+         *
+         * Ajuda as datas dos dias atuais da semana
+         * de acordo com a data do dispositivo
+         * do usuário.
+         *
+         */
+        constructor() {
+            this.calcularSegundaEDomingo();
+        }
 
-            async requisitar() {
-                try {
-                    const response = await fetch(`${this.url}?dt_begin=2020-06-02&dt_until=2020-06-10`);
-                    const jsonAtividades = await response.json();
+        async requisitar() {
+            try {
+                const diaDataPrimeiroDiaSemana = this.formatarDiaMesData(
+                    this.dataPrimeiroDiaSemana.getDate()
+                );
+                const mesDataPrimeiroDiaSemana = this.formatarDiaMesData(
+                    this.dataPrimeiroDiaSemana.getMonth() + 1
+                );
+                const anoDataPrimeiroDiaSemana = this.dataPrimeiroDiaSemana.getFullYear();
 
-                    // console.log(jsonAtividades.data);
-                    this.atividades = jsonAtividades.data;
-                    // this.totalAtividades = jsonAtividades.total;
-                    // this.totalPorPagina = jsonAtividades.per_page;
-                    // this.paginaAtual = jsonAtividades.current_page;
-                } catch (err) {
-                    await this.handleFalhar(err);
-                }
+                const diaDataUltimoDiaSemana = this.formatarDiaMesData(
+                    this.dataUltimoDiaSemana.getDate()
+                );
+                const mesDataUltimoDiaSemana = this.formatarDiaMesData(
+                    this.dataUltimoDiaSemana.getMonth() + 1
+                );
+                const anoDataUltimoDiaSemana = this.dataUltimoDiaSemana.getFullYear();
+
+                // data formatadas de segunda e domingo (primeiro e últimos dias da semana)
+                const dt_begin = `${anoDataPrimeiroDiaSemana}-${mesDataPrimeiroDiaSemana}-${diaDataPrimeiroDiaSemana}`;
+                const dt_until = `${anoDataUltimoDiaSemana}-${mesDataUltimoDiaSemana}-${diaDataUltimoDiaSemana}`;
+
+                const response = await fetch(
+                    `${this.url}?dt_begin=${dt_begin}&dt_until=${dt_until}`
+                );
+                const jsonAtividades = await response.json();
+
+                this.atividades = jsonAtividades.data;
+            } catch (err) {
+                await this.handleFalhar(err);
             }
+        }
 
+        async listarAtividades() {
+            try {
+                this.atividades.forEach((atividade) => {
+                    let iniciaisNome = "";
 
-            async listarAtividades() {
+                    const nome = atividade.tx_nome || "";
 
-                try {
-                    this.atividades.forEach(atividade => {
-                        let iniciaisNome = '';
+                    if (nome.split(" ").length <= 1) {
+                        const [primeiraLetraNome, segundaLetraNome] = nome;
 
-                        const nome = atividade.tx_nome || '';
+                        iniciaisNome = primeiraLetraNome + segundaLetraNome;
+                    } else {
+                        const [primeiroNome, sobrenome] = nome.split(" ");
 
-                        if (nome.split(' ').length <= 1) {
-                            const [primeiraLetraNome, segundaLetraNome] = nome;
+                        const [primeiraLetraNome] = primeiroNome;
+                        const [primeiraLetraSobrenome] = sobrenome;
 
-                            iniciaisNome = primeiraLetraNome + segundaLetraNome;
-                        } else {
-                            const [primeiroNome, sobrenome] = nome.split(' ');
+                        iniciaisNome =
+                            primeiraLetraNome + primeiraLetraSobrenome;
+                    }
 
-                            const [primeiraLetraNome] = primeiroNome;
-                            const [primeiraLetraSobrenome] = sobrenome;
-
-                            iniciaisNome = primeiraLetraNome + primeiraLetraSobrenome;
-                        }
-
-                        const [atividadeTemplate] = $(`
+                    const [atividadeTemplate] = $(`
                              <div class="card search_identifier p-1 mt-1 mb-2 div_pessoa_ajudada">
                              <div class="row">
                                  <div class="author-contact-info col-12 col-lg-6 ">
@@ -267,35 +273,164 @@
                                  </div>
                              </div>
                          </div>
-                    `)
+                    `);
 
-                        document.getElementById("main_card_container").appendChild(atividadeTemplate);
-                    })
-                } catch (err) {
-                    await this.handleFalhar(err)
-                }
-            }
-
-            async handleFalhar(err = {}) {
-                console.log(err);
-                const errorElement = document.createElement("div");
-
-                // estilização
-                errorElement.innerText = "Ocorreu um erro ao mostrar as pessoas ajudadas. Atualize a página e tente novamente.";
-                errorElement.className = "mx-2 alert alert-danger";
-
-                // add erro na DOM
-                const container = document.getElementById("main_card_container");
-                container.appendChild(errorElement);
+                    document
+                        .getElementById("lista_de_atividades")
+                        .appendChild(atividadeTemplate);
+                });
+            } catch (err) {
+                await this.handleFalhar(err);
             }
         }
 
-        $(document).ready(async function ($) {
-            const atividades = new Atividades();
+        async handleFalhar(err = {}) {
+            console.log(err);
+            const errorElement = document.createElement("div");
 
+            // estilização
+            errorElement.innerText =
+                "Ocorreu um erro ao mostrar as pessoas ajudadas. Atualize a página e tente novamente.";
+            errorElement.className = "mx-2 alert alert-danger";
+
+            // add erro na DOM
+            const container = document.getElementById("main_card_container");
+            container.appendChild(errorElement);
+        }
+
+
+        /**
+        *
+        * Calcula a segunda feira e domingo
+        * baseado no dia atual (muda conforme vc aavança ou volta a semanas)
+        *
+        */
+        calcularSegundaEDomingo() {
+            // calcula as datas
+            this.dataPrimeiroDiaSemana = this.getSegundaFeira(this.dataAtual);
+            this.dataUltimoDiaSemana.setDate(
+                this.dataPrimeiroDiaSemana.getDate() + 6
+            );
+
+
+            // seta na página as datas selecionadas
+
+            const diaPrimeiroDiaSemana = this.formatarDiaMesData(this.dataPrimeiroDiaSemana.getDate());
+            const mesPrimeiroDiaSemana = this.formatarDiaMesData(this.dataPrimeiroDiaSemana.getMonth() + 1);
+
+            const diaUltimoDiaSemana = this.formatarDiaMesData(this.dataUltimoDiaSemana.getDate());
+            const mesUltimoDiaSemana = this.formatarDiaMesData(this.dataUltimoDiaSemana.getMonth() + 1);
+
+            document.getElementById('periodo_atividades').innerText = `Período ${diaPrimeiroDiaSemana}/${mesPrimeiroDiaSemana} - ${diaUltimoDiaSemana}/${mesUltimoDiaSemana}`;
+        }
+
+        limparAtividades() {
+            document.getElementById('lista_de_atividades').innerHTML = '';
+        }
+
+        async avancarSemana() {            
+            const dataSelecionada = this.dataAtual;
+            this.dataAtual.setDate(dataSelecionada.getDate() + 7);
+            this.calcularSegundaEDomingo();
+
+            console.log(this.dataAtual)
+
+            this.limparAtividades();
+            await this.requisitar();
+            await this.listarAtividades()
+        }
+
+        async voltarSemana() {
+            const dataSelecionada = this.dataAtual;
+            this.dataAtual.setDate(dataSelecionada.getDate() - 7);
+            this.calcularSegundaEDomingo();
+
+            console.log(this.dataAtual)
+            this.limparAtividades();
+            await this.requisitar();
+            await this.listarAtividades();
+        }
+
+        /**
+         *
+         * Função responsável por captura a segunda feira de uma data
+         * passada por parametro
+         *
+         * @params d {Date}
+         *
+         * */
+        getSegundaFeira(d) {
+            d = new Date(d);
+            var day = d.getDay(),
+                diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+            return new Date(d.setDate(diff));
+        }
+
+       /**
+        *
+        * Formata o dia e o mês para se encaixar no padrão do 
+        * data passada como parametro na hora de fazer a requisição para listar as atividades
+        *
+        * */
+        formatarDiaMesData(numero = 1) {
+            return numero < 10 ? `0${numero}` : numero;
+        }
+    }
+
+    window.addEventListener("load", async () => {
+        const atividades = new Atividades();
+
+        try {
             await atividades.requisitar();
-            // await atividades.listarAtividades()
-        })
+            await atividades.listarAtividades();
 
-    </script>
+
+            /**
+             * 
+             * Listeners
+             * 
+            */
+
+            document.getElementById('botao_voltar_semana').addEventListener('click', async () => {
+                await atividades.voltarSemana();
+            })
+
+            document.getElementById('botao_avancar_semana').addEventListener('click', async () => {
+               await atividades.avancarSemana();
+            })
+        } catch (err) {
+            atividade.handleFalhar(err);
+        }
+
+
+        
+    /**
+     * Filtro da dashboard
+     */
+    const input = document.getElementById("home_search");
+
+    if (input) {
+        // atualiza o estado da dom toda vez que o input é editado
+        input.onkeyup = (event) => {
+            const valorInput = $(input).val();
+            const textsEl = document.querySelectorAll(".author-name");
+
+            // mostrar todos os items com a classe .search_identifier
+            $(".search_identifier").show();
+
+            textsEl.forEach((el) => {
+                if (
+                    // oculta item se ele não der match com o texto procurado
+                    el.innerHTML
+                        .toLowerCase()
+                        .indexOf(valorInput.toLowerCase()) < 0
+                ) {
+                    $(el).parent().parent().parent().parent().parent().hide();
+                }
+            });
+        };
+    }
+
+    });
+</script>
 @stop
