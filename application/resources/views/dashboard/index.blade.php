@@ -10,16 +10,18 @@
                 <div class="p-2 div_lista_pessoas_ajudadas">
                     <!-- Periodos -->
                     <div class="d-flex justify-content-center mb-2">
-                        <button id="botao_voltar_semana" type="button" class="btn btn-sm btn-primary">
-                            <i class="fa fa-angle-double-left"></i>
-                        </button type="button">
-                        <div id="periodo_atividades" class="periodos mx-1">
-                            Carregando...
-                        </div>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button id="botao_voltar_semana" type="button" class="btn btn-sm btn-primary">
+                                <i class="fa fa-angle-double-left"></i>
+                            </button type="button">
+                            <button id="periodo_atividades" class="btn periodos mx-1 disable">
+                                Carregando...
+                            </button>
 
-                        <button id="botao_avancar_semana"  type="button"   class="btn btn-sm btn-primary">
-                            <i class="fa fa-angle-double-right"></i>
-                        </button type="button">
+                            <button id="botao_avancar_semana"  type="button"   class="btn btn-sm btn-primary">
+                                <i class="fa fa-angle-double-right"></i>
+                            </button type="button">
+                        </div>
                     </div>
 
                     <!-- Filtro e atividades da semana (aquele card azul) -->
