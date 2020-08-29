@@ -169,6 +169,12 @@
 
         async listarAtividades() {
             try {
+                document.getElementById('lista_de_atividades').innerHTML = '';
+
+                if (!this.atividades.length) {
+                    return this.imprimirMensagemNenhumaAtividadeParaListar();
+                }
+
                 this.atividades.forEach((atividade) => {
                     let iniciaisNome = "";
 
@@ -333,9 +339,7 @@
             this.dataAtual.setDate(dataSelecionada.getDate() + 7);
             this.calcularSegundaEDomingo();
 
-            console.log(this.dataAtual)
-
-            this.limparAtividades();
+            this.imprimirLoading();
             await this.requisitar();
             await this.listarAtividades()
         }
@@ -345,10 +349,33 @@
             this.dataAtual.setDate(dataSelecionada.getDate() - 7);
             this.calcularSegundaEDomingo();
 
-            console.log(this.dataAtual)
-            this.limparAtividades();
+            this.imprimirLoading();
             await this.requisitar();
             await this.listarAtividades();
+        }
+
+        imprimirMensagemNenhumaAtividadeParaListar() {
+            const mensagemDiv = document.createElement('div');
+            mensagemDiv.className = 'alert text-center';
+            mensagemDiv.style.backgroundColor = '#00aadd';
+            mensagemDiv.style.color = '#fff';
+            mensagemDiv.innerText = 'Nenhuma atividade para mostrar';
+            
+            this.limparAtividades();
+            document.getElementById('lista_de_atividades').appendChild(mensagemDiv);
+        }
+
+        imprimirLoading() {
+            const loadingContainer = document.createElement('div');
+            loadingContainer.className = 'd-flex justify-content-center px-4 py-4 align-items-center';
+
+            const loadingIcon = document.createElement('div')
+            loadingIcon.className = 'bouncingLoader';
+
+            loadingContainer.appendChild(loadingIcon);
+
+            document.getElementById('lista_de_atividades').innerHTML = '';
+            document.getElementById('lista_de_atividades').appendChild(loadingContainer);
         }
 
         /**
@@ -381,15 +408,11 @@
         const atividades = new Atividades();
 
         try {
+            await atividades.imprimirLoading();
             await atividades.requisitar();
             await atividades.listarAtividades();
 
-
-            /**
-             * 
-             * Listeners
-             * 
-            */
+            // listeners
 
             document.getElementById('botao_voltar_semana').addEventListener('click', async () => {
                 await atividades.voltarSemana();
@@ -405,7 +428,9 @@
 
         
     /**
-     * Filtro da dashboard
+     * 
+     * Filtro de atividades
+     *
      */
     const input = document.getElementById("home_search");
 
