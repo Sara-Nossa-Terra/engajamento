@@ -319,7 +319,7 @@
             mensagemDiv.className = 'alert text-center';
             mensagemDiv.style.backgroundColor = '#00aadd';
             mensagemDiv.style.color = '#fff';
-            mensagemDiv.innerText = 'Nenhum líder para mostrar';
+            mensagemDiv.innerText = 'Nenhuma pessoa para mostrar';
 
             document.getElementById('lista_de_atividades').appendChild(mensagemDiv);
         }   
