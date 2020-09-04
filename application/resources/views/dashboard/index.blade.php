@@ -1,7 +1,11 @@
 @extends('adminlte::page') @section('title', 'Dashboard')
 @section('content_header')
-<script src="{{ asset('js/dashboard/index.js') }}"></script>
+
 <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet" />
+<!-- Link do CDN MomentJS  -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"
+    integrity="sha512-rmZcZsyhe0/MAjquhTgiUcb4d9knaFc7b5xAfju483gbEXTkeJRUMIPk6s3ySZMYUHEcjKbjLjyddGWMrNEvZg=="
+    crossorigin="anonymous"></script>
 @stop @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -117,71 +121,59 @@
     </div>
 </div>
 @stop @section('js')
+
 <script>
-    class Atividades {
+
+    class Lideres {
         url = "{{ config('url') }}/filtrar-atividades";
-        atividades = [];
-        dataAtual = new Date();
-        dataPrimeiroDiaSemana = new Date();
-        dataUltimoDiaSemana = new Date();
-
-        /**
-         *
-         * Ajuda as datas dos dias atuais da semana
-         * de acordo com a data do dispositivo
-         * do usuário.
-         *
-         */
+        lideres = [];
+        dataLideres = new Date();
+        
         constructor() {
-            this.calcularSegundaEDomingo();
+            this.dataLideres = new Date();
         }
 
-        async requisitar() {
-            try {
-                const diaDataPrimeiroDiaSemana = this.formatarDiaMesData(
-                    this.dataPrimeiroDiaSemana.getDate()
-                );
-                const mesDataPrimeiroDiaSemana = this.formatarDiaMesData(
-                    this.dataPrimeiroDiaSemana.getMonth() + 1
-                );
-                const anoDataPrimeiroDiaSemana = this.dataPrimeiroDiaSemana.getFullYear();
+        // requisita os lideres
+        async requisitar() {   
+            // imprime loading
+            this.loading(true);
+            this.setPeriodoNaPagina();
 
-                const diaDataUltimoDiaSemana = this.formatarDiaMesData(
-                    this.dataUltimoDiaSemana.getDate()
-                );
-                const mesDataUltimoDiaSemana = this.formatarDiaMesData(
-                    this.dataUltimoDiaSemana.getMonth() + 1
-                );
-                const anoDataUltimoDiaSemana = this.dataUltimoDiaSemana.getFullYear();
+            const dataComecoSemana = moment(this.dataLideres).startOf('week');
+            const dataFimSemana = moment(this.dataLideres).endOf('week');
 
-                // data formatadas de segunda e domingo (primeiro e últimos dias da semana)
-                const dt_begin = `${anoDataPrimeiroDiaSemana}-${mesDataPrimeiroDiaSemana}-${diaDataPrimeiroDiaSemana}`;
-                const dt_until = `${anoDataUltimoDiaSemana}-${mesDataUltimoDiaSemana}-${diaDataUltimoDiaSemana}`;
+            let dt_begin = moment(dataComecoSemana).format('YYYY-MM-DD');
+            let dt_until = moment(dataFimSemana).format('YYYY-MM-DD');
 
-                const response = await fetch(
-                    `${this.url}?dt_begin=${dt_begin}&dt_until=${dt_until}`
-                );
-                const jsonAtividades = await response.json();
+            const response = await fetch(
+                `${this.url}?dt_begin=${dt_begin}&dt_until=${dt_until}`
+            );
 
-                this.atividades = jsonAtividades.data;
-            } catch (err) {
-                await this.handleFalhar(err);
-            }
+            const jsonLideres = await response.json();
+            this.lideres = jsonLideres.data;
         }
 
-        async listarAtividades() {
-            try {
+        // lista os lideres no documento
+        listar() {
+            setTimeout(() => {
+                // seta periodo das atividades na página HTML (aqueles entre os meios dos botões avançar e voltar semana)
+                const dataComecoSemana = moment(this.dataLideres).startOf('week');
+                const dataFimSemana = moment(this.dataLideres).endOf('week');
+
+                let dt_begin = moment(dataComecoSemana).format('YYYY-MM-DD');
+                let dt_until = moment(dataFimSemana).format('YYYY-MM-DD');                
+
                 document.getElementById('lista_de_atividades').innerHTML = '';
 
-                if (!this.atividades.length) {
-                    return this.imprimirMensagemNenhumaAtividadeParaListar();
+                if (!this.lideres.length) {
+                    this.imprimirMensagemNenhumLiderParaMostrar();
                 }
 
-                this.atividades.forEach((atividade) => {
+                this.lideres.forEach((lider) => {
+
+                    // Calcula o botão preto com as iniciais do Nome do Lider
                     let iniciaisNome = "";
-
-                    const nome = atividade.tx_nome || "";
-
+                    const nome = lider.tx_nome || "";
                     if (nome.split(" ").length <= 1) {
                         const [primeiraLetraNome, segundaLetraNome] = nome;
 
@@ -196,23 +188,18 @@
                             primeiraLetraNome + primeiraLetraSobrenome;
                     }
 
-                    const [atividadeTemplate] = $(`
+                    const [liderTemplate] = $(`
                              <div class="card search_identifier p-1 mt-1 mb-2 div_pessoa_ajudada">
                              <div class="row">
                                  <div class="author-contact-info col-12 col-lg-6 ">
                                      <div class="p-2 row bg-grey">
-                                         <div class="author-name-container  col-7">
+                                         <div class="author-name-container  col-12">
                                              <button class="btn btn-sm btn-dark">
                                                  ${iniciaisNome.toUpperCase()}
                                              </button>
                                              <span class="author-name text-muted span_nome_pessoa_ajudada">
-                                                ${atividade.tx_nome}
+                                                ${lider.tx_nome}
                                             </span>
-                                         </div>
-                                         <div class="col-5">
-                                             <button class="btn btn-green btn-whatsapp btn-sm">
-                                                 <i class="fab fa-whatsapp text-white"></i>
-                                             </button>
                                          </div>
                                      </div>
                                  </div>
@@ -285,15 +272,16 @@
 
                     document
                         .getElementById("lista_de_atividades")
-                        .appendChild(atividadeTemplate);
+                        .appendChild(liderTemplate);
                 });
-            } catch (err) {
-                await this.handleFalhar(err);
-            }
+
+            }, 2000)
         }
 
-        async handleFalhar(err = {}) {
+        // trata os erros que podem acontecer ao requsitar lideres
+        handleFalhar(err = {}) {
             console.log(err);
+            this.loading(false);
             const errorElement = document.createElement("div");
 
             // estilização
@@ -306,158 +294,89 @@
             container.appendChild(errorElement);
         }
 
+        // imprime o loading de carregando....
+        loading(show = true) {
+            if (!show) {
+                document.getElementById('lista_de_atividades').innerHTML = '';
+                return 0;
+            }
 
-        /**
-        *
-        * Calcula a segunda feira e domingo
-        * baseado no dia atual (muda conforme vc aavança ou volta a semanas)
-        *
-        */
-        calcularSegundaEDomingo() {
-            // calcula as datas
-            this.dataPrimeiroDiaSemana = this.getSegundaFeira(this.dataAtual);
-            this.dataUltimoDiaSemana.setDate(
-                this.dataPrimeiroDiaSemana.getDate() + 6
-            );
-
-
-            // seta na página as datas selecionadas
-
-            const diaPrimeiroDiaSemana = this.formatarDiaMesData(this.dataPrimeiroDiaSemana.getDate());
-            const mesPrimeiroDiaSemana = this.formatarDiaMesData(this.dataPrimeiroDiaSemana.getMonth() + 1);
-
-            const diaUltimoDiaSemana = this.formatarDiaMesData(this.dataUltimoDiaSemana.getDate());
-            const mesUltimoDiaSemana = this.formatarDiaMesData(this.dataUltimoDiaSemana.getMonth() + 1);
-
-            document.getElementById('periodo_atividades').innerText = `Período ${diaPrimeiroDiaSemana}/${mesPrimeiroDiaSemana} - ${diaUltimoDiaSemana}/${mesUltimoDiaSemana}`;
-        }
-
-        limparAtividades() {
-            document.getElementById('lista_de_atividades').innerHTML = '';
-        }
-
-        async avancarSemana() {            
-            const dataSelecionada = this.dataAtual;
-            this.dataAtual.setDate(dataSelecionada.getDate() + 7);
-            this.calcularSegundaEDomingo();
-
-            this.imprimirLoading();
-            await this.requisitar();
-            await this.listarAtividades()
-        }
-
-        async voltarSemana() {
-            const dataSelecionada = this.dataAtual;
-            this.dataAtual.setDate(dataSelecionada.getDate() - 7);
-            this.calcularSegundaEDomingo();
-
-            this.imprimirLoading();
-            await this.requisitar();
-            await this.listarAtividades();
-        }
-
-        imprimirMensagemNenhumaAtividadeParaListar() {
-            const mensagemDiv = document.createElement('div');
-            mensagemDiv.className = 'alert text-center';
-            mensagemDiv.style.backgroundColor = '#00aadd';
-            mensagemDiv.style.color = '#fff';
-            mensagemDiv.innerText = 'Nenhuma atividade para mostrar';
-            
-            this.limparAtividades();
-            document.getElementById('lista_de_atividades').appendChild(mensagemDiv);
-        }
-
-        imprimirLoading() {
             const loadingContainer = document.createElement('div');
-            loadingContainer.className = 'd-flex justify-content-center px-4 py-4 align-items-center';
+            loadingContainer.className = 'd-flex justify-content-center px-2 py-2 align-items-center';
 
             const loadingIcon = document.createElement('div')
-            loadingIcon.className = 'bouncingLoader';
+            loadingIcon.className = 'donutSpinner';
 
             loadingContainer.appendChild(loadingIcon);
 
             document.getElementById('lista_de_atividades').innerHTML = '';
             document.getElementById('lista_de_atividades').appendChild(loadingContainer);
         }
+        
+        imprimirMensagemNenhumLiderParaMostrar() {
+            this.loading(false);
+            const mensagemDiv = document.createElement('div');
+            mensagemDiv.className = 'alert text-center';
+            mensagemDiv.style.backgroundColor = '#00aadd';
+            mensagemDiv.style.color = '#fff';
+            mensagemDiv.innerText = 'Nenhum líder para mostrar';
 
-        /**
-         *
-         * Função responsável por captura a segunda feira de uma data
-         * passada por parametro
-         *
-         * @params d {Date}
-         *
-         * */
-        getSegundaFeira(d) {
-            d = new Date(d);
-            var day = d.getDay(),
-                diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
-            return new Date(d.setDate(diff));
+            document.getElementById('lista_de_atividades').appendChild(mensagemDiv);
+        }   
+        
+        // Seta período dos lideres mostrados na página HTML
+        setPeriodoNaPagina() {
+            const dt_begin = moment(this.dataLideres).startOf('week').format('DD/MM');
+            const dt_until = moment(this.dataLideres).endOf('week').format('DD/MM');
+
+            document.getElementById('periodo_atividades').innerText = `Período ${dt_begin} - ${dt_until}`
         }
 
-       /**
-        *
-        * Formata o dia e o mês para se encaixar no padrão do 
-        * data passada como parametro na hora de fazer a requisição para listar as atividades
-        *
-        * */
-        formatarDiaMesData(numero = 1) {
-            return numero < 10 ? `0${numero}` : numero;
+        async avancarSemana() {
+            const {  _d: dataProximaSemana } = moment(this.dataLideres).add('7', 'days');
+            this.dataLideres = dataProximaSemana;
+
+
+            try {
+                await this.requisitar();
+                await this.listar();
+            } catch (err) {
+                this.handleFalhar(err)
+            }
+;        }
+
+        async voltarSemana() {
+            const { _d: dataSemanaAnterior } = moment(this.dataLideres).subtract('7', 'days');
+            this.dataLideres = dataSemanaAnterior;
+
+            try {
+                await this.requisitar();
+                await this.listar();
+            } catch (err) {
+                this.handleFalhar(err)
+            }
         }
     }
 
-    window.addEventListener("load", async () => {
-        const atividades = new Atividades();
+    // executa quando o documento carregar
+    window.addEventListener('load', async () => {
+        const lideres = new Lideres();
 
         try {
-            await atividades.imprimirLoading();
-            await atividades.requisitar();
-            await atividades.listarAtividades();
-
-            // listeners
-
-            document.getElementById('botao_voltar_semana').addEventListener('click', async () => {
-                await atividades.voltarSemana();
-            })
-
-            document.getElementById('botao_avancar_semana').addEventListener('click', async () => {
-               await atividades.avancarSemana();
-            })
+            await lideres.requisitar();
+            await lideres.listar();
+         
         } catch (err) {
-            atividade.handleFalhar(err);
+            lideres.handleFalhar(err)
         }
 
+        document.getElementById('botao_voltar_semana').addEventListener('click', async () => {
+            await lideres.voltarSemana();
+        });
 
-        
-    /**
-     * 
-     * Filtro de atividades
-     *
-     */
-    const input = document.getElementById("home_search");
-
-    if (input) {
-        // atualiza o estado da dom toda vez que o input é editado
-        input.onkeyup = (event) => {
-            const valorInput = $(input).val();
-            const textsEl = document.querySelectorAll(".author-name");
-
-            // mostrar todos os items com a classe .search_identifier
-            $(".search_identifier").show();
-
-            textsEl.forEach((el) => {
-                if (
-                    // oculta item se ele não der match com o texto procurado
-                    el.innerHTML
-                        .toLowerCase()
-                        .indexOf(valorInput.toLowerCase()) < 0
-                ) {
-                    $(el).parent().parent().parent().parent().parent().hide();
-                }
-            });
-        };
-    }
-
-    });
+        document.getElementById('botao_avancar_semana').addEventListener('click', async () => {
+            await lideres.avancarSemana();
+        })
+    })
 </script>
 @stop
