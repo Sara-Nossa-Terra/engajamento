@@ -15,22 +15,21 @@ class CreateAtividadePessoaTable extends Migration
     {
         Schema::create('tb_atividades_pessoas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('atividade_id')->nullable()->comment('Relacionamento com o codigo da atividade');
+            $table->dateTime('dt_periodo')
+                ->comment('Determina a semana(Periodo) em que a atividade foi realizada junto com a pessoa');
+
+            $table->integer('atividade_id')->comment('Relacionamento com o codigo da atividade');
             $table->foreign('atividade_id')->references('id')->on('tb_atividades');
-            $table->integer('pessoa_id')->nullable()->comment('Relacionamento com o codigo da pessoa');
+
+            $table->integer('pessoa_id')->comment('Relacionamento com o codigo da pessoa');
             $table->foreign('pessoa_id')->references('id')->on('tb_pessoas');
-            $table->date('dt_periodo')->comment('Determina a semana(Periodo) em que a atividade foi realizada junto com a pessoa');
 
             $table->softDeletes();
             $table->timestamps();
 
             $table->index([
-                'id',
                 'atividade_id',
-                'pessoa_id',
-                'created_at',
-                'updated_at',
-                'deleted_at'
+                'pessoa_id'
             ]);
         });
     }
