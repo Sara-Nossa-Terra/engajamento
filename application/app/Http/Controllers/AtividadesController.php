@@ -2,23 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\GetAtividadeFormRequest;
-use App\Http\Requests\StoreUpdateAtividadesFormRequest;
+use App\Http\Requests\{GetAtividadeFormRequest, StoreUpdateAtividadesFormRequest};
 use App\Http\Resources\AtividadesResource;
 use App\Models\Atividades;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class AtividadesController extends Controller
 {
-    protected $repository;
-
-    public function __construct()
-    {
-//        $this->repository = PessoasAjudadas;
-    }
-
-    public function index(Request $request)
+    public static function index(Request $request)
     {
         if ( !$request->ajax() )
             return view('atividades.index');
@@ -31,7 +22,7 @@ class AtividadesController extends Controller
             return $atividades;
         }, $atividades);
 
-        return response()->json($atividades, 200);
+        return AtividadesResource::collection($atividades);
     }
 
     public function create()
@@ -50,7 +41,7 @@ class AtividadesController extends Controller
 
     public function show($id)
     {
-        $category = $this->repository->findById($id);
+        $category = Atividades::findById($id);
 
         if (!$category)
             return redirect()->back();
@@ -87,15 +78,6 @@ class AtividadesController extends Controller
         $atividades->delete();
 
         return redirect()->route('atividades.index')->withSuccess('Cadastro excluído com sucesso !');
-    }
-
-    public function search(Request $request)
-    {
-        $data = $request->except('_token');
-
-        $categories = $this->repository->search($data);
-
-        return view('admin.categories.index', compact('categories', 'data'));
     }
 
     /**

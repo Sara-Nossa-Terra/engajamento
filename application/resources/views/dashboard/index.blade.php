@@ -17,14 +17,14 @@
                         <div class="btn-group" role="group" aria-label="Basic example">
                             <button id="botao_voltar_semana" type="button" class="btn btn-sm btn-primary">
                                 <i class="fa fa-angle-double-left"></i>
-                            </button type="button">
+                            </button>
                             <button id="periodo_atividades" class="btn periodos mx-1 disable">
                                 Carregando...
                             </button>
 
                             <button id="botao_avancar_semana"  type="button"   class="btn btn-sm btn-primary">
                                 <i class="fa fa-angle-double-right"></i>
-                            </button type="button">
+                            </button>
                         </div>
                     </div>
 
@@ -58,7 +58,7 @@
                                             1
                                         </button>
                                     </div>
-                    
+
                                     <div class="col-4 cultos-info mb-1">
                                         <h6 class="culto-title m-1 text-center text-white">
                                             Culto
@@ -70,7 +70,7 @@
                                             1
                                         </button>
                                     </div>
-                    
+
                                     <div class="col-4 cultos-info mb-1">
                                         <h6 class="culto-title m-1 text-center text-white">
                                             Culto
@@ -82,7 +82,7 @@
                                             1
                                         </button>
                                     </div>
-                    
+
                                     <div class="col-4 cultos-info mb-1">
                                         <h6 class="culto-title m-1 text-center text-white">
                                             Culto
@@ -94,7 +94,7 @@
                                             1
                                         </button>
                                     </div>
-                    
+
                                     <div class="col-4 cultos-info mb-1">
                                         <h6 class="culto-title m-1 text-center text-white">
                                             Culto
@@ -110,10 +110,10 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Atividades -->
                     <div id="lista_de_atividades">
-                      
+
                     </div>
                 </div>
             </div>
@@ -125,16 +125,19 @@
 <script>
 
     class Lideres {
-        url = "{{ config('url') }}/filtrar-atividades";
+        url = "{{ route('atividades.filtraratividades') }}";
+        urlPessoas = "{{ route('dashboard.listarpessoas') }}";
         lideres = [];
+        atividades = [];
+        pessoasAjudadas = [];
         dataLideres = new Date();
-        
+
         constructor() {
             this.dataLideres = new Date();
         }
 
-        // requisita os lideres
-        async requisitar() {   
+        // requisita as pessoas ajudadas
+        async requisitar() {
             // imprime loading
             this.loading(true);
             this.setPeriodoNaPagina();
@@ -145,12 +148,18 @@
             let dt_begin = moment(dataComecoSemana).format('YYYY-MM-DD');
             let dt_until = moment(dataFimSemana).format('YYYY-MM-DD');
 
-            const response = await fetch(
+            const responseAtividades = await fetch(
                 `${this.url}?dt_begin=${dt_begin}&dt_until=${dt_until}`
             );
+            const jsonAtividades = await responseAtividades.json();
+            this.atividades = jsonAtividades.data;
 
-            const jsonLideres = await response.json();
-            this.lideres = jsonLideres.data;
+            const responsePessoas = await fetch(this.urlPessoas);
+            const jsonPessoas = await responsePessoas.json();
+            this.pessoasAjudadas = jsonPessoas.data;
+
+            // const jsonLideres = await response.json();
+            // this.lideres = jsonLideres.data;
         }
 
         // lista os lideres no documento
@@ -161,7 +170,7 @@
                 const dataFimSemana = moment(this.dataLideres).endOf('week');
 
                 let dt_begin = moment(dataComecoSemana).format('YYYY-MM-DD');
-                let dt_until = moment(dataFimSemana).format('YYYY-MM-DD');                
+                let dt_until = moment(dataFimSemana).format('YYYY-MM-DD');
 
                 document.getElementById('lista_de_atividades').innerHTML = '';
 
@@ -169,11 +178,11 @@
                     this.imprimirMensagemNenhumLiderParaMostrar();
                 }
 
-                this.lideres.forEach((lider) => {
+                this.pessoasAjudadas.forEach((pessoaAjudada) => {
 
                     // Calcula o botão preto com as iniciais do Nome do Lider
                     let iniciaisNome = "";
-                    const nome = lider.tx_nome || "";
+                    const nome = pessoaAjudada.tx_nome || "";
                     if (nome.split(" ").length <= 1) {
                         const [primeiraLetraNome, segundaLetraNome] = nome;
 
@@ -188,91 +197,77 @@
                             primeiraLetraNome + primeiraLetraSobrenome;
                     }
 
-                    const [liderTemplate] = $(`
-                             <div class="card search_identifier p-1 mt-1 mb-2 div_pessoa_ajudada">
-                             <div class="row">
-                                 <div class="author-contact-info col-12 col-lg-6 ">
-                                     <div class="p-2 row bg-grey">
-                                         <div class="author-name-container  col-12">
-                                             <button class="btn btn-sm btn-dark">
-                                                 ${iniciaisNome.toUpperCase()}
-                                             </button>
-                                             <span class="author-name text-muted span_nome_pessoa_ajudada">
-                                                ${lider.tx_nome}
+                    const [pessoaAjudadaTemplate] = $(`
+                        <div class="card search_identifier p-1 mt-1 mb-2 div_pessoa_ajudada">
+                            <div class="row">
+                                <div class="author-contact-info col-12 col-lg-6 ">
+                                    <div class="p-2 row bg-grey">
+                                        <div class="author-name-container  col-12">
+                                            <button class="btn btn-sm btn-dark">
+                                                ${iniciaisNome.toUpperCase()}
+                                            </button>
+                                            <span class="author-name text-muted span_nome_pessoa_ajudada">
+                                                ${pessoaAjudada.tx_nome}
                                             </span>
                                          </div>
                                      </div>
-                                 </div>
-                                 <div class="card-info row col-12 col-lg-6">
-                                     <div class="culto-container mb-1 col-4">
-                                         <h6 class="culto-title text-center text-muted">Culto</h6>
-                                         <h6 class="culto-horario text-muted text-center">TER20H</h6>
-                                         <button
-                                             type="button"
-                                             class="btn btn-sm btn-primary btn-block"
-                                         >
-                                             <i class="fa fa-thumbs-up"></i>
-                                         </button>
-                                     </div>
+                                </div>
+                                <div class="card-info row col-12 col-lg-6">
+                                    <div class="culto-container mb-1 col-4">
+                                        <h6 class="culto-title text-center text-muted">Culto</h6>
+                                        <h6 class="culto-horario text-muted text-center">TER20H</h6>
+                                        <button type="button" class="btn btn-sm btn-primary btn-block">
+                                            <i class="fa fa-thumbs-up"></i>
+                                        </button>
+                                    </div>
 
-                                     <div class="culto-container mb-1 col-4">
-                                         <h6 class="culto-title text-center text-muted">Culto</h6>
-                                         <h6 class="culto-horario text-muted text-center">TER20H</h6>
-                                         <button
-                                             type="button"
-                                             class="btn btn-sm btn-primary btn-block"
-                                         >
-                                             <i class="fa fa-thumbs-up"></i>
-                                         </button>
-                                     </div>
+                                    <div class="culto-container mb-1 col-4">
+                                        <h6 class="culto-title text-center text-muted">Culto</h6>
+                                        <h6 class="culto-horario text-muted text-center">TER20H</h6>
+                                        <button type="button" class="btn btn-sm btn-primary btn-block" >
+                                            <i class="fa fa-thumbs-up"></i>
+                                        </button>
+                                    </div>
 
-                                     <div class="culto-container mb-1 col-4">
-                                         <h6 class="culto-title text-center text-muted">Culto</h6>
-                                         <h6 class="culto-horario text-muted text-center">TER20H</h6>
-                                         <button type="button"
-                                                 class="btn btn-light btn-light btn-sm btn-block btn-dislike"
-                                         >
-                                             <i class="fa fa-thumbs-down text-secondary"></i>
-                                         </button>
-                                     </div>
+                                    <div class="culto-container mb-1 col-4">
+                                        <h6 class="culto-title text-center text-muted">Culto</h6>
+                                        <h6 class="culto-horario text-muted text-center">TER20H</h6>
+                                        <button type="button" class="btn btn-light btn-light btn-sm btn-block btn-dislike">
+                                            <i class="fa fa-thumbs-down text-secondary"></i>
+                                        </button>
+                                    </div>
 
-                                     <div class="culto-container mb-1 col-4">
-                                         <h6 class="culto-title text-center text-muted">Culto</h6>
-                                         <h6 class="culto-horario text-muted text-center">TER20H</h6>
-                                         <button type="button"
-                                                 class="btn btn-light btn-light btn-sm btn-block btn-dislike"
-                                         >
-                                             <i class="fa fa-thumbs-down text-secondary"></i>
-                                         </button>
-                                     </div>
+                                    <div class="culto-container mb-1 col-4">
+                                        <h6 class="culto-title text-center text-muted">Culto</h6>
+                                        <h6 class="culto-horario text-muted text-center">TER20H</h6>
+                                        <button type="button" class="btn btn-light btn-light btn-sm btn-block btn-dislike">
+                                            <i class="fa fa-thumbs-down text-secondary"></i>
+                                        </button>
+                                    </div>
 
-                                     <div class="culto-container mb-1 col-4">
-                                         <h6 class="culto-title text-center text-muted">Culto</h6>
-                                         <h6 class="culto-horario text-muted text-center">TER20H</h6>
-                                         <button type="button"
-                                                 class="btn btn-light btn-light btn-sm btn-block btn-dislike"
-                                         >
-                                             <i class="fa fa-thumbs-down text-secondary"></i>
-                                         </button>
-                                     </div>
+                                    <div class="culto-container mb-1 col-4">
+                                        <h6 class="culto-title text-center text-muted">Culto</h6>
+                                        <h6 class="culto-horario text-muted text-center">TER20H</h6>
+                                        <button type="button" class="btn btn-light btn-light btn-sm btn-block btn-dislike">
+                                            <i class="fa fa-thumbs-down text-secondary"></i>
+                                        </button>
+                                    </div>
 
-                                     <div class="culto-container mb-1 col-4">
-                                         <h6 class="culto-title text-center text-muted">Culto</h6>
-                                         <h6 class="culto-horario text-muted text-center">TER20H</h6>
-                                         <button type="button"
-                                                 class="btn btn-light btn-light btn-sm btn-block btn-dislike"
-                                         >
-                                             <i class="fa fa-thumbs-down text-secondary"></i>
-                                         </button>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
+                                    <div class="culto-container mb-1 col-4">
+                                        <h6 class="culto-title text-center text-muted">Culto</h6>
+                                        <h6 class="culto-horario text-muted text-center">TER20H</h6>
+                                        <button type="button" class="btn btn-light btn-light btn-sm btn-block btn-dislike">
+                                            <i class="fa fa-thumbs-down text-secondary"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     `);
 
                     document
                         .getElementById("lista_de_atividades")
-                        .appendChild(liderTemplate);
+                        .appendChild(pessoaAjudadaTemplate);
                 });
 
             }, 2000)
@@ -312,7 +307,7 @@
             document.getElementById('lista_de_atividades').innerHTML = '';
             document.getElementById('lista_de_atividades').appendChild(loadingContainer);
         }
-        
+
         imprimirMensagemNenhumLiderParaMostrar() {
             this.loading(false);
             const mensagemDiv = document.createElement('div');
@@ -322,14 +317,18 @@
             mensagemDiv.innerText = 'Nenhuma pessoa para mostrar';
 
             document.getElementById('lista_de_atividades').appendChild(mensagemDiv);
-        }   
-        
+        }
+
         // Seta período dos lideres mostrados na página HTML
         setPeriodoNaPagina() {
             const dt_begin = moment(this.dataLideres).startOf('week').format('DD/MM');
             const dt_until = moment(this.dataLideres).endOf('week').format('DD/MM');
 
             document.getElementById('periodo_atividades').innerText = `Período ${dt_begin} - ${dt_until}`
+        }
+
+        async acaoThumbs() {
+
         }
 
         async avancarSemana() {
@@ -343,7 +342,7 @@
             } catch (err) {
                 this.handleFalhar(err)
             }
-;        }
+        }
 
         async voltarSemana() {
             const { _d: dataSemanaAnterior } = moment(this.dataLideres).subtract('7', 'days');
@@ -365,7 +364,6 @@
         try {
             await lideres.requisitar();
             await lideres.listar();
-         
         } catch (err) {
             lideres.handleFalhar(err)
         }
@@ -376,7 +374,12 @@
 
         document.getElementById('botao_avancar_semana').addEventListener('click', async () => {
             await lideres.avancarSemana();
-        })
+        });
+
+        document.getElementsByClassName('botao_avaliar').addEventListener('click', async () => {
+            // verificar se tem class thumbs up ou down e pegar do atributo data o id da pessoa e da atividade
+            // await lideres.acaoThumbs();
+        });
     })
 </script>
 @stop

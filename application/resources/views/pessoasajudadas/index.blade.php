@@ -51,6 +51,7 @@
         * */
         class PessoasAjudadas {
             lista = [];
+            // @todo mudar para endpoint '/pessoasajudadas' e corrigir bugs caso haja
             url = "{{ config('url') }}/listar-pessoas-ajudadas";
             itemTemplate = ""
 
@@ -62,7 +63,9 @@
             async requisitar() {
                 try {
                     const response =  await fetch(this.url);
-                    this.lista = await response.json();
+                    var pessoasJson = await response.json();
+                    console.log(pessoasJson.data)
+                    this.lista = pessoasJson.data;
                 } catch (err) {
                     this.handlerFalhar();
                 }
