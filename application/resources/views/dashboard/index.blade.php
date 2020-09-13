@@ -3,11 +3,8 @@
 
 <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet" />
 <!-- Link do CDN MomentJS  -->
-<script
-    src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"
-    integrity="sha512-rmZcZsyhe0/MAjquhTgiUcb4d9knaFc7b5xAfju483gbEXTkeJRUMIPk6s3ySZMYUHEcjKbjLjyddGWMrNEvZg=="
-    crossorigin="anonymous"
-></script>
+<script src="{{ asset('js/moment/moment.min.js') }}"></script>
+<script src="{{ asset('js/moment/pt-br.min.js') }}" charset="UTF-8"></script>
 @stop @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -195,6 +192,7 @@
 
         constructor() {
             this.dataLideres = new Date();
+            moment.locale("pt-br");
         }
 
         // requisita as pessoas ajudadas
@@ -262,10 +260,20 @@
                     // template com todas atividades da pessoa ajudada
                     let atividadeTemplate = "";
                     this.atividades.forEach((atividade) => {
+                        const dataDiaFormatada = moment(
+                            atividade.dt_dia
+                        ).format("ddd");
+                        const horaDiaFormatada = moment(
+                            atividade.dt_dia
+                        ).format("H");
                         atividadeTemplate += `
-                          <div class="culto-container mb-1 col-4" id="atividade_pessoa_ajudada_${atividade.id}">
-                                <h6 class="culto-title text-center text-muted">${atividade.tx_nome}</h6>
-                                <h6 class="culto-horario text-muted text-center">TER20H</h6>
+                          <div class="culto-container mb-1 col-4" id="atividade_pessoa_ajudada_${
+                              atividade.id
+                          }">
+                                <h6 class="culto-title text-center text-muted">${
+                                    atividade.tx_nome
+                                }</h6>
+                                <h6 class="culto-horario text-muted text-center">${dataDiaFormatada.toUpperCase()}${horaDiaFormatada}H</h6>
                                 <button type="button" class="btn btn-light btn-light btn-sm btn-block btn-dislike">
                                     <i class="fa fa-thumbs-down text-secondary"></i>
                                 </button>
