@@ -259,6 +259,7 @@
 
                     // template com todas atividades da pessoa ajudada
                     let atividadeTemplate = "";
+
                     this.atividades.forEach((atividade) => {
                         const dataDiaFormatada = moment(
                             atividade.dt_dia
@@ -280,6 +281,27 @@
                             </div>
                         `;
                     });
+
+                    // Verifica se é necessário imprimir alguma atividade estática
+                    const totalAtividadesEstaticasASeremImprimidas =
+                        6 - this.atividades.length;
+                    if (totalAtividadesEstaticasASeremImprimidas > 0) {
+                        for (
+                            let i = 0;
+                            i < totalAtividadesEstaticasASeremImprimidas;
+                            i++
+                        ) {
+                            atividadeTemplate += `
+                                 <div class="culto-container mb-1 col-4">
+                                <h6 class="culto-title text-center text-muted">CULTO</h6>
+                                <h6 class="culto-horario text-muted text-center">SÁB22H</h6>
+                                <button type="button" class="btn btn-light btn-light btn-sm btn-block btn-dislike">
+                                    <i class="fa fa-thumbs-down text-secondary"></i>
+                                </button>
+                            </div>
+                            `;
+                        }
+                    }
 
                     // template de cada pessoa ajudada na lista
                     const [pessoaAjudadaTemplate] = $(`
