@@ -17,7 +17,7 @@ independentemente do Sistema Operacional(SO) utilizado. Informaçoes mais detalh
 Com Docker e docker-compose devidamente instalados em sua máquina basta clonar o projeto executar o ```docker-compose```:
 ```bash
     $ git clone https://github.com/sara-nossa-terra/engajamento && cd engajamento
-    $ docker-compose up
+    $ docker-compose up -d
 ```
 
 Dentro da pasta engajamento rodar o seguinte comando para dar permissão de escrita para a pasta de arquivos temporária da aplicação:
