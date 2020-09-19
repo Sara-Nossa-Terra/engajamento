@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AtividadePessoa;
+use App\Models\PessoasAjudadas;
+use App\Models\User;
+use App\Http\Resources\{AtividadesPessoasResource, AtividadesResource};
 use App\Http\Requests\{GetAtividadeFormRequest, StoreUpdateAtividadesFormRequest};
-use App\Http\Resources\AtividadesResource;
 use App\Models\Atividades;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AtividadesController extends Controller
 {
@@ -88,8 +92,48 @@ class AtividadesController extends Controller
      */
     public function getAtividadesPorFiltro(GetAtividadeFormRequest $request)
     {
-        $atividades = Atividades::whereBetween('dt_dia', [$request['dt_begin'], $request['dt_until']])->get();
+        $lider_id = auth()->user()->id;
 
-        return AtividadesResource::collection($atividades);
+        $pessoas = PessoasAjudadas::where('lider_id', $lider_id)->get()->toArray();
+        $lider = User::find($lider_id)->first()->toArray();
+
+        $retorno = array();
+
+        foreach ((array)$pessoas as $pessoa) {
+            $retorno['pessoasAjudadas'][$pessoa['id']] = $pessoa;
+
+            # filtra as Atividades verificando se foi realizada a "chamada";
+            $atividades = Atividades::leftJoin("tb_atividades_pessoas as tap", function ($join) use ($pessoa) {
+                $join->on("tap.atividade_id", "=", "tb_atividades.id");
+                $join->on("tap.pessoa_id", "=", DB::raw($pessoa['id']) );
+            })
+                ->leftJoin("tb_pessoas as tp", function ($join) use ($request, $lider_id) {
+                    $join->on("tap.pessoa_id", "=", "tp.id");
+                    $join->on("tp.lider_id", "=", DB::raw($lider_id));
+                $join->whereBetween('dt_dia', [$request['dt_begin'], $request['dt_until']]);
+                })
+                ->select("tap.id as thumbsup", "tb_atividades.*")
+                ->where("tap.deleted_at", "=", null)
+                ->get();
+
+            foreach($atividades as $atividade) {
+
+                # Conversão para bolleano do thumbsUp.
+                $atividade['thumbsup'] = !!$atividade['thumbsup'];
+
+                $retorno['pessoasAjudadas'][$pessoa['id']]['atividade'][] = $atividade;
+            }
+        }
+        $retorno['atividades'] = Atividades::whereBetween('dt_dia', [$request['dt_begin'], $request['dt_until']])->get();
+//        $retorno['atividades'][] = Atividades::all();
+        $retorno['totalizador'] = DB::table("tb_atividades_pessoas as p")
+            ->join("tb_pessoas as tp", function ($join) use ($lider_id) {
+                $join->on("p.pessoa_id", '=', "tp.id");
+                $join->on("lider_id", '=', DB::raw($lider_id));
+            })
+            ->select(DB::raw('count(p.atividade_id) as count_atividades, p.atividade_id'))
+            ->groupBy("p.atividade_id")
+            ->get();
+        return $retorno;
     }
 }

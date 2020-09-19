@@ -207,18 +207,12 @@
             let dt_begin = moment(dataComecoSemana).format("YYYY-MM-DD");
             let dt_until = moment(dataFimSemana).format("YYYY-MM-DD");
 
-            const responseAtividades = await fetch(
+            const pessoasAjudadas = await fetch(
                 `${this.url}?dt_begin=${dt_begin}&dt_until=${dt_until}`
             );
-            const jsonAtividades = await responseAtividades.json();
-            this.atividades = jsonAtividades.data;
-
-            const responsePessoas = await fetch(this.urlPessoas);
-            const jsonPessoas = await responsePessoas.json();
-            this.pessoasAjudadas = jsonPessoas.data;
-
-            // const jsonLideres = await response.json();
-            // this.lideres = jsonLideres.data;
+            const jsonPessoasAjudadas = await pessoasAjudadas.json();
+            this.pessoasAjudadas = jsonPessoasAjudadas.pessoasAjudadas;
+            this.atividades = jsonPessoasAjudadas.atividades;
         }
 
         // lista os lideres no documento
