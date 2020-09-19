@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AtividadePessoa;
-use App\Models\PessoasAjudadas;
-use App\Models\User;
-use App\Http\Resources\{AtividadesPessoasResource, AtividadesResource};
+use App\Models\{PessoasAjudadas, Atividades, User};
+use App\Http\Resources\AtividadesResource;
 use App\Http\Requests\{GetAtividadeFormRequest, StoreUpdateAtividadesFormRequest};
-use App\Models\Atividades;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
