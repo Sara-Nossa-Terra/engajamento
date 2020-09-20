@@ -185,13 +185,12 @@
     class Lideres {
         url = "{{ route('atividades.filtraratividades') }}";
         urlPessoas = "{{ route('dashboard.listarpessoas') }}";
-        lideres = [];
-        atividades = [];
         pessoasAjudadas = [];
-        dataLideres = new Date();
+        totalizador = [];
+        dataDasAtividades = new Date();
 
         constructor() {
-            this.dataLideres = new Date();
+            this.dataDasAtividades = new Date();
             moment.locale("pt-br");
         }
 
@@ -201,37 +200,49 @@
             this.loading(true);
             this.setPeriodoNaPagina();
 
-            const dataComecoSemana = moment(this.dataLideres).startOf("week");
-            const dataFimSemana = moment(this.dataLideres).endOf("week");
+            const dataComecoSemana = moment(this.dataDasAtividades).startOf(
+                "week"
+            );
+            const dataFimSemana = moment(this.dataDasAtividades).endOf("week");
 
             let dt_begin = moment(dataComecoSemana).format("YYYY-MM-DD");
             let dt_until = moment(dataFimSemana).format("YYYY-MM-DD");
 
-            const pessoasAjudadas = await fetch(
+            console.log("data inicio req", dt_begin);
+            console.log("data fim req", dt_until);
+
+            const response = await fetch(
                 `${this.url}?dt_begin=${dt_begin}&dt_until=${dt_until}`
             );
-            const jsonPessoasAjudadas = await pessoasAjudadas.json();
-            this.pessoasAjudadas = jsonPessoasAjudadas.pessoasAjudadas;
-            this.atividades = jsonPessoasAjudadas.atividades;
+            const json = await response.json();
+
+            this.pessoasAjudadas = Object.values(json.pessoasAjudadas);
+            this.totalizador = json.totalizador;
+
+            console.log("pessoas ajudadas:", this.pessoasAjudadas);
+            console.log("totalizador", this.totalizador);
         }
 
         // lista os lideres no documento
         listar() {
+            // executado depois de 2 segundos
             setTimeout(() => {
                 // seta periodo das atividades na página HTML (aqueles entre os meios dos botões avançar e voltar semana)
-                const dataComecoSemana = moment(this.dataLideres).startOf(
+                const dataComecoSemana = moment(this.dataDasAtividades).startOf(
                     "week"
                 );
-                const dataFimSemana = moment(this.dataLideres).endOf("week");
+                const dataFimSemana = moment(this.dataDasAtividades).endOf(
+                    "week"
+                );
 
                 let dt_begin = moment(dataComecoSemana).format("YYYY-MM-DD");
                 let dt_until = moment(dataFimSemana).format("YYYY-MM-DD");
 
                 document.getElementById("lista_de_atividades").innerHTML = "";
 
-                if (!this.pessoasAjudadas.length) {
-                    this.imprimirMensagemNenhumLiderParaMostrar();
-                }
+                // if (!this.pessoasAjudadas.length) {
+                //     this.imprimirMesangemNenhumaAtividadeMostrar();
+                // }
 
                 this.pessoasAjudadas.forEach((pessoaAjudada) => {
                     // Calcula o botão preto com as iniciais do Nome do Lider
@@ -254,31 +265,46 @@
                     // template com todas atividades da pessoa ajudada
                     let atividadeTemplate = "";
 
-                    this.atividades.forEach((atividade) => {
+                    pessoaAjudada.atividade.forEach((atividade) => {
                         const dataDiaFormatada = moment(
                             atividade.dt_dia
                         ).format("ddd");
                         const horaDiaFormatada = moment(
                             atividade.dt_dia
                         ).format("H");
+
                         atividadeTemplate += `
-                          <div class="culto-container mb-1 col-4" id="atividade_pessoa_ajudada_${
-                              atividade.id
-                          }">
+                            <div class="culto-container mb-1 col-4" id="atividade_pessoa_ajudada_${
+                                atividade.id
+                            }">
                                 <h6 class="culto-title text-center text-muted">${
                                     atividade.tx_nome
                                 }</h6>
                                 <h6 class="culto-horario text-muted text-center">${dataDiaFormatada.toUpperCase()}${horaDiaFormatada}H</h6>
-                                <button type="button" class="btn btn-light btn-light btn-sm btn-block btn-dislike">
+                                <button type="button" class="btn btn-light btn-sm btn-block btn-dislike">
                                     <i class="fa fa-thumbs-down text-secondary"></i>
                                 </button>
-                            </div>
+
+                                ${
+                                    atividade.thumbsup
+                                        ? `
+                                        <button type="button" class="btn btn-thumbsup btn-sm btn-block btn-dislike">
+                                            <i class="fa fa-thumbs-up text-white"></i>
+                                        </button>
+                                    `
+                                        : `
+                                        <button type="button" class="btn btn-light btn-sm btn-block btn-dislike">
+                                            <i class="fa fa-thumbs-down text-secondary"></i>
+                                        </button>
+                                    `
+                                }
+                            </div>  
                         `;
                     });
 
                     // Verifica se é necessário imprimir alguma atividade estática
                     const totalAtividadesEstaticasASeremImprimidas =
-                        6 - this.atividades.length;
+                        6 - pessoaAjudada.atividade.length;
                     if (totalAtividadesEstaticasASeremImprimidas > 0) {
                         for (
                             let i = 0;
@@ -287,7 +313,7 @@
                         ) {
                             atividadeTemplate += `
                                  <div class="culto-container mb-1 col-4">
-                                <h6 class="culto-title text-center text-muted">CULTO</h6>
+                                <h6 class="culto-title text-center text-muted">ESTÁTICA</h6>
                                 <h6 class="culto-horario text-muted text-center">SÁB22H</h6>
                                 <button type="button" class="btn btn-light btn-light btn-sm btn-block btn-dislike">
                                     <i class="fa fa-thumbs-down text-secondary"></i>
@@ -365,13 +391,13 @@
                 .appendChild(loadingContainer);
         }
 
-        imprimirMensagemNenhumLiderParaMostrar() {
+        imprimirMesangemNenhumaAtividadeMostrar() {
             this.loading(false);
             const mensagemDiv = document.createElement("div");
             mensagemDiv.className = "alert text-center";
             mensagemDiv.style.backgroundColor = "#00aadd";
             mensagemDiv.style.color = "#fff";
-            mensagemDiv.innerText = "Nenhuma pessoa para mostrar";
+            mensagemDiv.innerText = "Nenhuma pessoa ajudada para mostrar";
 
             document
                 .getElementById("lista_de_atividades")
@@ -380,10 +406,10 @@
 
         // Seta período dos lideres mostrados na página HTML
         setPeriodoNaPagina() {
-            const dt_begin = moment(this.dataLideres)
+            const dt_begin = moment(this.dataDasAtividades)
                 .startOf("week")
                 .format("DD/MM");
-            const dt_until = moment(this.dataLideres)
+            const dt_until = moment(this.dataDasAtividades)
                 .endOf("week")
                 .format("DD/MM");
 
@@ -395,11 +421,10 @@
         async acaoThumbs() {}
 
         async avancarSemana() {
-            const { _d: dataProximaSemana } = moment(this.dataLideres).add(
-                "7",
-                "days"
-            );
-            this.dataLideres = dataProximaSemana;
+            const { _d: dataProximaSemana } = moment(
+                this.dataDasAtividades
+            ).add("7", "days");
+            this.dataDasAtividades = dataProximaSemana;
 
             try {
                 await this.requisitar();
@@ -411,9 +436,9 @@
 
         async voltarSemana() {
             const { _d: dataSemanaAnterior } = moment(
-                this.dataLideres
+                this.dataDasAtividades
             ).subtract("7", "days");
-            this.dataLideres = dataSemanaAnterior;
+            this.dataDasAtividades = dataSemanaAnterior;
 
             try {
                 await this.requisitar();
