@@ -54,120 +54,7 @@
                                 />
                             </div>
                             <div class="cultos col-12 col-lg-6">
-                                <div class="row">
-                                    <div class="col-4 cultos-info mb-1">
-                                        <h6
-                                            class="culto-title m-1 text-center text-white"
-                                        >
-                                            Culto
-                                        </h6>
-                                        <h6
-                                            class="culto-horario m-1 text-white text-center"
-                                        >
-                                            TER20H
-                                        </h6>
-                                        <button
-                                            type="button"
-                                            class="btn btn- text-white btn-sm btn-blue btn-block"
-                                        >
-                                            1
-                                        </button>
-                                    </div>
-                                    <div class="col-4 cultos-info mb-1">
-                                        <h6
-                                            class="culto-title m-1 text-center text-white"
-                                        >
-                                            Culto
-                                        </h6>
-                                        <h6
-                                            class="culto-horario m-1 text-white text-center"
-                                        >
-                                            TER20H
-                                        </h6>
-                                        <button
-                                            type="button"
-                                            class="btn btn- text-white btn-sm btn-blue btn-block"
-                                        >
-                                            1
-                                        </button>
-                                    </div>
-
-                                    <div class="col-4 cultos-info mb-1">
-                                        <h6
-                                            class="culto-title m-1 text-center text-white"
-                                        >
-                                            Culto
-                                        </h6>
-                                        <h6
-                                            class="culto-horario m-1 text-white text-center"
-                                        >
-                                            TER20H
-                                        </h6>
-                                        <button
-                                            type="button"
-                                            class="btn btn- text-white btn-sm btn-blue btn-block"
-                                        >
-                                            1
-                                        </button>
-                                    </div>
-
-                                    <div class="col-4 cultos-info mb-1">
-                                        <h6
-                                            class="culto-title m-1 text-center text-white"
-                                        >
-                                            Culto
-                                        </h6>
-                                        <h6
-                                            class="culto-horario m-1 text-white text-center"
-                                        >
-                                            TER20H
-                                        </h6>
-                                        <button
-                                            type="button"
-                                            class="btn btn- text-white btn-sm btn-blue btn-block"
-                                        >
-                                            1
-                                        </button>
-                                    </div>
-
-                                    <div class="col-4 cultos-info mb-1">
-                                        <h6
-                                            class="culto-title m-1 text-center text-white"
-                                        >
-                                            Culto
-                                        </h6>
-                                        <h6
-                                            class="culto-horario m-1 text-white text-center"
-                                        >
-                                            TER20H
-                                        </h6>
-                                        <button
-                                            type="button"
-                                            class="btn btn- text-white btn-sm btn-blue btn-block"
-                                        >
-                                            1
-                                        </button>
-                                    </div>
-
-                                    <div class="col-4 cultos-info mb-1">
-                                        <h6
-                                            class="culto-title m-1 text-center text-white"
-                                        >
-                                            Culto
-                                        </h6>
-                                        <h6
-                                            class="culto-horario m-1 text-white text-center"
-                                        >
-                                            TER20H
-                                        </h6>
-                                        <button
-                                            type="button"
-                                            class="btn btn- text-white btn-sm btn-blue btn-block"
-                                        >
-                                            1
-                                        </button>
-                                    </div>
-                                </div>
+                                <div class="row" id="menu_atividades"></div>
                             </div>
                         </div>
                     </div>
@@ -187,6 +74,7 @@
         urlPessoas = "{{ route('dashboard.listarpessoas') }}";
         pessoasAjudadas = [];
         totalizador = [];
+        menuAtividades = [];
         dataDasAtividades = new Date();
 
         constructor() {
@@ -208,9 +96,6 @@
             let dt_begin = moment(dataComecoSemana).format("YYYY-MM-DD");
             let dt_until = moment(dataFimSemana).format("YYYY-MM-DD");
 
-            console.log("data inicio req", dt_begin);
-            console.log("data fim req", dt_until);
-
             const response = await fetch(
                 `${this.url}?dt_begin=${dt_begin}&dt_until=${dt_until}`
             );
@@ -218,14 +103,11 @@
 
             this.pessoasAjudadas = Object.values(json.pessoasAjudadas);
             this.totalizador = json.totalizador;
-
-            console.log("pessoas ajudadas:", this.pessoasAjudadas);
-            console.log("totalizador", this.totalizador);
+            this.menuAtividades = json.atividades;
         }
 
-        // lista os lideres no documento
-        listar() {
-            // executado depois de 2 segundos
+        // lista das pessoas ajudadas
+        listarPessoasAjudadas() {
             setTimeout(() => {
                 // seta periodo das atividades na página HTML (aqueles entre os meios dos botões avançar e voltar semana)
                 const dataComecoSemana = moment(this.dataDasAtividades).startOf(
@@ -240,32 +122,21 @@
 
                 document.getElementById("lista_de_atividades").innerHTML = "";
 
-                // if (!this.pessoasAjudadas.length) {
-                //     this.imprimirMesangemNenhumaAtividadeMostrar();
-                // }
+                if (!this.pessoasAjudadas.length) {
+                    this.imprimirMesangemNenhumaAtividadeMostrar();
+                }
 
+                const atividadesCounter = 0;
                 this.pessoasAjudadas.forEach((pessoaAjudada) => {
-                    // Calcula o botão preto com as iniciais do Nome do Lider
-                    let iniciaisNome = "";
-                    const nome = pessoaAjudada.tx_nome || "";
-                    if (nome.split(" ").length <= 1) {
-                        const [primeiraLetraNome, segundaLetraNome] = nome;
-
-                        iniciaisNome = primeiraLetraNome + segundaLetraNome;
-                    } else {
-                        const [primeiroNome, sobrenome] = nome.split(" ");
-
-                        const [primeiraLetraNome] = primeiroNome;
-                        const [primeiraLetraSobrenome] = sobrenome;
-
-                        iniciaisNome =
-                            primeiraLetraNome + primeiraLetraSobrenome;
-                    }
-
                     // template com todas atividades da pessoa ajudada
                     let atividadeTemplate = "";
+                    let atividadesCounter = 0;
 
                     pessoaAjudada.atividade.forEach((atividade) => {
+                        // conta as atividades para, se o número de atividades for maior que 6, ele ignora a sétima atividade em diante
+                        if (atividadesCounter >= 6) return;
+                        atividadesCounter++;
+
                         const dataDiaFormatada = moment(
                             atividade.dt_dia
                         ).format("ddd");
@@ -281,47 +152,50 @@
                                     atividade.tx_nome
                                 }</h6>
                                 <h6 class="culto-horario text-muted text-center">${dataDiaFormatada.toUpperCase()}${horaDiaFormatada}H</h6>
-                                <button type="button" class="btn btn-light btn-sm btn-block btn-dislike">
-                                    <i class="fa fa-thumbs-down text-secondary"></i>
-                                </button>
 
                                 ${
                                     atividade.thumbsup
                                         ? `
-                                        <button type="button" class="btn btn-thumbsup btn-sm btn-block btn-dislike">
+                                        <button
+                                            id="botao_atividade_${pessoaAjudada.id}_${atividade.id}"
+                                            onClick="acaoThumbsUp(${atividade.id}, ${pessoaAjudada.id}, ${atividade.thumbsup})"
+                                            type="button" class="btn btn-thumbsup btn-sm btn-block">
                                             <i class="fa fa-thumbs-up text-white"></i>
                                         </button>
                                     `
                                         : `
-                                        <button type="button" class="btn btn-light btn-sm btn-block btn-dislike">
+                                        <button
+                                            id="botao_atividade_${pessoaAjudada.id}_${atividade.id}"
+                                            onClick="acaoThumbsUp(${atividade.id}, ${pessoaAjudada.id}, ${atividade.thumbsup})"
+                                            type="button" class="btn btn-light btn-sm btn-block btn-dislike">
                                             <i class="fa fa-thumbs-down text-secondary"></i>
                                         </button>
                                     `
                                 }
-                            </div>  
+                            </div>
                         `;
                     });
 
-                    // Verifica se é necessário imprimir alguma atividade estática
-                    const totalAtividadesEstaticasASeremImprimidas =
-                        6 - pessoaAjudada.atividade.length;
-                    if (totalAtividadesEstaticasASeremImprimidas > 0) {
-                        for (
-                            let i = 0;
-                            i < totalAtividadesEstaticasASeremImprimidas;
-                            i++
-                        ) {
-                            atividadeTemplate += `
-                                 <div class="culto-container mb-1 col-4">
-                                <h6 class="culto-title text-center text-muted">ESTÁTICA</h6>
-                                <h6 class="culto-horario text-muted text-center">SÁB22H</h6>
-                                <button type="button" class="btn btn-light btn-light btn-sm btn-block btn-dislike">
-                                    <i class="fa fa-thumbs-down text-secondary"></i>
-                                </button>
-                            </div>
-                            `;
-                        }
-                    }
+                    // // Verifica se é necessário imprimir alguma atividade estática
+                    // const totalAtividadesEstaticasASeremImprimidas =
+                    //     6 - pessoaAjudada.atividade.length;
+                    // if (totalAtividadesEstaticasASeremImprimidas > 0) {
+                    //     for (
+                    //         let i = 0;
+                    //         i < totalAtividadesEstaticasASeremImprimidas;
+                    //         i++
+                    //     ) {
+                    //         atividadeTemplate += `
+                    //         <div class="culto-container mb-1 col-4">
+                    //             <h6 class="culto-title text-center text-muted">ESTÁTICA</h6>
+                    //             <h6 class="culto-horario text-muted text-center">SÁB22H</h6>
+                    //             <button type="button" class="btn btn-light btn-light btn-sm btn-block btn-dislike">
+                    //                 <i class="fa fa-thumbs-down text-secondary"></i>
+                    //             </button>
+                    //         </div>
+                    //         `;
+                    //     }
+                    // }
 
                     // template de cada pessoa ajudada na lista
                     const [pessoaAjudadaTemplate] = $(`
@@ -330,9 +204,6 @@
                                 <div class="author-contact-info col-12 col-lg-6 ">
                                     <div class="p-2 row bg-grey">
                                         <div class="author-name-container  col-12">
-                                            <button class="btn btn-sm btn-dark">
-                                                ${iniciaisNome.toUpperCase()}
-                                            </button>
                                             <span class="author-name text-muted span_nome_pessoa_ajudada">
                                                 ${pessoaAjudada.tx_nome}
                                             </span>
@@ -353,6 +224,44 @@
             }, 2000);
         }
 
+        // lista do menu azul de atividades
+        listarMenuAtividades() {
+            let menuTemplate = "";
+
+            let countAtividades = 0;
+            this.menuAtividades.forEach((atividade) => {
+                // imprimir somtente até 6 atividades
+                if (countAtividades >= 6) return;
+                countAtividades++;
+
+                const atividadeCounter = this.countAtividades(atividade);
+
+                const dataDiaFormatada = moment(atividade.dt_dia).format("ddd");
+                const horaDiaFormatada = moment(atividade.dt_dia).format("H");
+
+                menuTemplate += `
+                    <div class="col-4 cultos-info mb-1">
+                        <h6
+                            class="culto-title m-1 text-center text-white"
+                        >
+                            ${atividade.tx_nome}
+                        </h6>
+                        <h6 class="culto-horario m-1 text-white text-center">
+                            ${dataDiaFormatada.toUpperCase()}${horaDiaFormatada}H
+                        </h6>
+                        <button
+                            type="button"
+                            class="btn btn- text-white btn-sm btn-blue btn-block"
+                        >
+                            ${atividadeCounter}
+                        </button>
+                    </div>
+                `;
+            });
+
+            document.getElementById("menu_atividades").innerHTML = menuTemplate;
+        }
+
         // trata os erros que podem acontecer ao requsitar lideres
         handleFalhar(err = {}) {
             console.log(err);
@@ -371,6 +280,8 @@
 
         // imprime o loading de carregando lideres....
         loading(show = true) {
+            document.getElementById("menu_atividades").innerHTML = "";
+
             if (!show) {
                 document.getElementById("lista_de_atividades").innerHTML = "";
                 return 0;
@@ -418,7 +329,32 @@
             ).innerText = `Período ${dt_begin} - ${dt_until}`;
         }
 
-        async acaoThumbs() {}
+        countAtividades(atividade) {
+            let counter = 0;
+
+            this.pessoasAjudadas.forEach((pessoaAjudada) => {
+                pessoaAjudada.atividade.forEach((atividade) => {
+                    if (!atividade.thumbsup) return;
+                    counter++;
+                });
+            });
+
+            return counter;
+        }
+
+        // Função responsável por mudar o valor do thumbsup dentro da lista de atividades (pessoasAjudadadas -> pessoaAjudada -> atividade -> thumbsup)
+        atualizarListaThumbsUp(pessoaAjudadaId, atividadeId, newThumbsUpValue) {
+            this.pessoasAjudadas.map((pessoaAjudada) => {
+                if (pessoaAjudada.id != pessoaAjudadaId) return;
+                pessoaAjudada.atividade.map((atividade) => {
+                    if (atividade.id != atividadeId) return;
+                    atividade.thumbsup = newThumbsUpValue;
+                });
+                return pessoaAjudada;
+            });
+
+            this.listarPessoasAjudadas();
+        }
 
         async avancarSemana() {
             const { _d: dataProximaSemana } = moment(
@@ -428,7 +364,8 @@
 
             try {
                 await this.requisitar();
-                await this.listar();
+                await this.listarMenuAtividades();
+                await this.listarPessoasAjudadas();
             } catch (err) {
                 this.handleFalhar(err);
             }
@@ -442,20 +379,69 @@
 
             try {
                 await this.requisitar();
-                await this.listar();
+                await this.listarMenuAtividades();
+                await this.listarPessoasAjudadas();
             } catch (err) {
                 this.handleFalhar(err);
             }
         }
     }
 
-    // executa quando o documento carregar
-    window.addEventListener("load", async () => {
-        const lideres = new Lideres();
+    const lideres = new Lideres();
+
+    async function acaoThumbsUp(
+        atividadeId,
+        pessoaAjudadaId,
+        thumbsup = false
+    ) {
+        let url = ""; // precisa colocar aqui a rota da requisição
+        let method = "POST";
+
+        if (thumbsup) {
+            url = ""; // colocar aqui a rota de delete;
+            method = "DELETE";
+        }
 
         try {
+            // await fetch(url, {
+            //     method,
+            //     body: new FormData(),
+            // })
+
+            let botao = document.getElementById(
+                `botao_atividade_${pessoaAjudadaId}_${atividadeId}`
+            );
+
+            if (!botao) return;
+
+            let icone = document.createElement("i");
+
+            botao.id = `botao_atividade_${pessoaAjudadaId}_${atividadeId}`;
+            botao.className = "btn btn-light btn-sm btn-block btn-dislike";
+            icone.className = "fa fa-thumbs-down text-secondary";
+
+            if (!thumbsup) {
+                botao.className = "btn btn-thumbsup btn-sm btn-block";
+                icone.className = "fa fa-thumbs-up text-white";
+            }
+
+            botao.innerHTML = "";
+            botao.appendChild(icone);
+            lideres.atualizarListaThumbsUp(
+                pessoaAjudadaId,
+                atividadeId,
+                !thumbsup
+            );
+        } catch (err) {
+            console.log("Erro na requisição do thumbs up: ", err);
+        }
+    }
+
+    async function carregarPessoasAjudadas() {
+        try {
             await lideres.requisitar();
-            await lideres.listar();
+            await lideres.listarMenuAtividades();
+            await lideres.listarPessoasAjudadas();
         } catch (err) {
             lideres.handleFalhar(err);
         }
@@ -471,13 +457,11 @@
             .addEventListener("click", async () => {
                 await lideres.avancarSemana();
             });
+    }
 
-        // document
-        //     .getElementsByClassName("botao_avaliar")
-        //     .addEventListener("click", async () => {
-        //         // verificar se tem class thumbs up ou down e pegar do atributo data o id da pessoa e da atividade
-        //         // await lideres.acaoThumbs();
-        //     });
-    });
+    // if thumbs up -> delete else -> post
+
+    // executa quando o documento carregar
+    window.addEventListener("load", carregarPessoasAjudadas);
 </script>
 @stop
