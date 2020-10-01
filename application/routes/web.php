@@ -31,6 +31,7 @@ Route::middleware(['auth'])->group(function () {
         'lideres'         => 'UsersController',
         'pessoasajudadas' => 'PessoasAjudadasController',
         'revisao'         => 'RevisaoController',
+        'atividadepessoa' => 'AtividadePessoaController',
     ]);
 
 });

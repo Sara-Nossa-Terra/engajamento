@@ -394,11 +394,11 @@
         pessoaAjudadaId,
         thumbsup = false
     ) {
-        let url = ""; // precisa colocar aqui a rota da requisição
+        let url = "{{ route('atividadepessoa.create') }}";
         let method = "POST";
 
         if (thumbsup) {
-            url = ""; // colocar aqui a rota de delete;
+            url = "{{ route('atividadepessoa.delete') }}";
             method = "DELETE";
         }
 

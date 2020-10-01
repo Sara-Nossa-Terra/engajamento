@@ -2,27 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreUpdateAtividadePessoaFormRequest;
+use App\Models\AtividadePessoa;
 
 class AtividadePessoaController extends Controller
 {
-    public function index(Request $request)
+    public function store(StoreUpdateAtividadePessoaFormRequest $request)
     {
-        dd($request);
-    }
+        $atividades = new AtividadePessoa();
+        $atividades->fill($request->toArray());
+        $atividades->save();
 
-    public function store(Request $request)
-    {
-        dd($request);
-    }
-
-    public function update(Request $request, $id)
-    {
-        dd($request);
+        return response()->json([], 201);
     }
 
     public function destroy($id)
     {
-        dd($id);
+        if (!$atividades = AtividadePessoa::where('id', $id)->first() )
+            return response()->json(['message', 'Não foi possível excluír o registro !'], 404);
+
+        $atividades->delete();
+
+        return response()->json(['message' => 'Cadastro excluído com sucesso !'], 200);
     }
 }
