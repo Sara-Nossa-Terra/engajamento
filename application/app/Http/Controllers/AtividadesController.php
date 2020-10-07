@@ -12,9 +12,14 @@ class AtividadesController extends Controller
 {
     public static function index(Request $request)
     {
-        if ( !$request->ajax() )
-            return view('atividades.index');
+        if ( $request->ajax() )
+            return self::lista();
 
+        return view('atividades.index');
+    }
+
+    public static function lista()
+    {
         $atividades = Atividades::orderBy('tx_nome', 'ASC')->get()->toArray();
 
         $atividades = array_map(function ($atividades) {

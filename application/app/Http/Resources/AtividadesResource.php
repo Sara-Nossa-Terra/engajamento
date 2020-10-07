@@ -15,11 +15,11 @@ class AtividadesResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'         => $this->id,
-            'tx_nome'    => $this->tx_nome,
-            'dt_dia'     => $this->dt_dia,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'id'         => $this['id'],
+            'tx_nome'    => $this['tx_nome'],
+            'dt_dia'     => $this['dt_dia'],
+            'created_at' => $this['created_at'],
+            'updated_at' => $this['updated_at'],
         ];
     }
 }

@@ -20,6 +20,7 @@ Route::middleware(['auth'])->group(function () {
     # Atividades rotas
     Route::get('/atividades/{id}/destroy', 'AtividadesController@destroy')->name('atividades.delete');
     Route::get('/filtrar-atividades', 'AtividadesController@getAtividadesPorFiltro')->name('atividades.filtraratividades');
+    Route::get('/atividades/listar', 'AtividadesController@lista')->name('atividades.lista');
 
     # Dashboard rotas
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');

@@ -1,4 +1,5 @@
-@extends('adminlte::page') @section('title', 'Atividades')
+@extends('adminlte::page')
+@section('title', 'Atividades')
 @section('content_header')
 <h1>Lista de Atividades</h1>
 @stop @section('content')
@@ -18,8 +19,8 @@
                 </div>
             </div>
             @include('includes.alerts')
-            <div class="card-body">
-                <table class="table table-striped table-hover table-bordered">
+            <div class="card-body" id="container_conteudo">
+                <table id="table" class="table table-striped table-hover table-bordered">
                     <thead class="thead-light">
                         <tr>
                             <th>Ações</th>
@@ -27,65 +28,71 @@
                             <th scope="col">Dia</th>
                         </tr>
                     </thead>
-                    <tbody class="lista-atividades"></tbody>
+                    <tbody id="container_lista_atividades"></tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
-@endsection @section('js')
+@endsection
+@section('js')
 <script>
-    $(function () {
-        $.ajax({
-            type: "GET",
-            url: "{{ route('atividades.index') }}",
-            dataType: "json",
-            success: function (response) {
-                var tabela = "";
-
-                $.each(response, function (index, atividade) {
-                    tabela += "<tr>\n";
-                    tabela += "<td>\n";
-                    tabela +=
-                        `<a href='atividades/${atividade.id}/edit'\n` +
-                        ' class="btn btn-primary " title="Editar">\n' +
-                        '<span class="fa fa-edit"></span></a>';
-                    tabela +=
-                        `<a href='atividades/${atividade.id}/destroy'\n` +
-                        ' class="btn btn-danger ml-2 link-excluir" title="Excluir">\n' +
-                        '<span class="fa fa-trash"></span></a>';
-                    tabela += "</td>\n";
-                    tabela += `<td>${atividade.tx_nome}</td>\n`;
-                    tabela += `<td>${atividade.dt_dia}</td>\n`;
-                    tabela += "</tr>\n";
-                });
-                $(".lista-atividades").html(tabela);
-            },
-        });
-    });
-
     class Atividade {
-        url = "{{ route('atividades.index') }}";
+        url = "{{ route('atividades.lista') }}";
         atividades = [];
 
         async requisitar() {
             try {
                 const response = await fetch(this.url);
+                var atividadesJson = await response.json();
+                this.atividades = atividadesJson.data;
             } catch (err) {
-                this.handleError(err);
+                this.handlerFalhar(err);
             }
         }
+        async listar() {
+            this.atividades.forEach(atividade => {
+                const atividadesElemento = $(`
+                        <tr class="atividade">
+                            <td>
+                                <a href="${`/atividades/${atividade.id}/edit`}"
+                                   class="btn btn-primary pessoa_ajudada_link" title="Editar">
+                                    <span class="fa fa-edit"></span>
+                                </a>
+                                <a href="${`/atividades/${atividade.id}/destroy`}"
+                                   class="btn btn-danger link-excluir" title="Excluir">
+                                    <span class="fa fa-trash"></span>
+                                </a>
+                            </td>
+                            <td>${atividade.tx_nome} </td>
+                            <td> ${atividade.dt_dia} </td>
+                        </tr>
+                    `);
 
-        handleError(err = {}) {}
+                $("#container_lista_atividades").append(atividadesElemento);
+            })
+        }
 
-        listarAtividades() {}
+        handlerFalhar() {
+            const errorElement = document.createElement("div");
+
+            const table = document.getElementById("table");
+            table.remove();
+
+            errorElement.innerText = "Ocorreu um erro ao mostrar as pessoas ajudadas. Atualize a página e tente novamente.";
+            errorElement.className = "alert alert-danger";
+
+            const container = document.getElementById("container_conteudo");
+            container.appendChild(errorElement);
+        }
+
     }
 
     window.addEventListener("load", async () => {
         const atividade = new Atividade();
 
         await atividade.requisitar();
-        await atividade.listarAtividades();
+        await atividade.listar();
     });
 </script>
 @stop
