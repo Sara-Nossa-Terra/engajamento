@@ -94,40 +94,32 @@ class AtividadesController extends Controller
      */
     public function getAtividadesPorFiltro(GetAtividadeFormRequest $request)
     {
-        $lider_id = auth()->user()->id;
-
-        $pessoas = PessoasAjudadas::where('lider_id', $lider_id)->get()->toArray();
-        $lider = User::find($lider_id)->first()->toArray();
-
         $retorno = array();
-
+        $dt_begin = $request['dt_begin'];
+        $dt_until = $request['dt_until'];
+        $lider_id = auth()->user()->id;
+        $pessoas = PessoasAjudadas::where('lider_id', $lider_id)->get()->toArray();
+        
         foreach ((array)$pessoas as $pessoa) {
             $retorno['pessoasAjudadas'][$pessoa['id']] = $pessoa;
-
             # filtra as Atividades verificando se foi realizada a "chamada";
-            $atividades = Atividades::leftJoin("tb_atividades_pessoas as tap", function ($join) use ($pessoa) {
-                $join->on("tap.atividade_id", "=", "tb_atividades.id");
-                $join->on("tap.pessoa_id", "=", DB::raw($pessoa['id']) );
-            })
-                ->leftJoin("tb_pessoas as tp", function ($join) use ($request, $lider_id) {
-                    $join->on("tap.pessoa_id", "=", "tp.id");
-                    $join->on("tp.lider_id", "=", DB::raw($lider_id));
-                $join->whereBetween('dt_dia', [$request['dt_begin'], $request['dt_until']]);
-                })
-                ->select("tap.id as thumbsup", "tb_atividades.*")
-                ->where("tap.deleted_at", "=", null)
+            $atividades = Atividades::select(
+                    DB::raw("(select id from tb_atividades_pessoas where deleted_at is null and atividade_id = tb_atividades.id and pessoa_id = ". $pessoa['id']. " and dt_periodo between '2020-10-04' and '2020-10-10' limit 1) as thumbsup"),
+                    "tb_atividades.*"
+                )
+                ->orderBy("tb_atividades.id", 'ASC')
                 ->get();
-
+//var_dump(DB::getQueryLog()); die;
             foreach($atividades as $atividade) {
-
-                # Conversão para bolleano do thumbsUp.
-                $atividade['thumbsup'] = !!$atividade['thumbsup'];
-
                 $retorno['pessoasAjudadas'][$pessoa['id']]['atividade'][] = $atividade;
             }
         }
-        $retorno['atividades'] = Atividades::whereBetween('dt_dia', [$request['dt_begin'], $request['dt_until']])->get();
-//        $retorno['atividades'][] = Atividades::all();
+        
+        # Busca Atividades
+//        $retorno['atividades'] = Atividades::whereBetween('dt_dia', [$request['dt_begin'], $request['dt_until']])->get();
+        $retorno['atividades'][] = Atividades::all();
+        
+        # Busca Dado para Totalizador
         $retorno['totalizador'] = DB::table("tb_atividades_pessoas as p")
             ->join("tb_pessoas as tp", function ($join) use ($lider_id) {
                 $join->on("p.pessoa_id", '=', "tp.id");
@@ -136,6 +128,7 @@ class AtividadesController extends Controller
             ->select(DB::raw('count(p.atividade_id) as count_atividades, p.atividade_id'))
             ->groupBy("p.atividade_id")
             ->get();
+
         return $retorno;
     }
 }

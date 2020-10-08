@@ -395,33 +395,30 @@
         const thumbsDownURL = "{{ route('atividadepessoa.destroy', ':id') }}";
         const thumbsUpURL = "{{ route('atividadepessoa.store') }}";
 
-        async function acaoThumbsUp(
-            atividadeId,
-            pessoaAjudadaId,
-            thumbsup = false
-        ) {
+        async function acaoThumbsUp(atividadeId, pessoaAjudadaId, thumbsup = null) {
             let url = thumbsUpURL;
             let method = "POST";
             const formData = new FormData();
-
-            if (thumbsup) {
+console.log(thumbsup);
+            if (thumbsup != null) {
                 url = thumbsDownURL;
-                url = url.slice(0, url.length - 3) + pessoaAjudadaId;
+                url = url.slice(0, url.length - 3) + thumbsup;
                 method = "DELETE";
             } else {
+                method = "POST";
                 formData.append('atividade_id', atividadeId);
                 formData.append('pessoa_id', pessoaAjudadaId);
                 formData.append('dt_periodo', new Date().toISOString());
             }
 
             try {
-                await fetch(url, {
+                const responseAtividadePessoa = await fetch(url, {
                     method,
                     body: formData,
                     headers: {
                         'X-CSRF-Token': "{{ csrf_token() }}"
                     }
-                })
+                }).then(result => result.json());
 
                 // botão clicado pelo usuário
                 let botao = document.getElementById(
@@ -436,17 +433,17 @@
                 botao.className = "btn btn-light btn-sm btn-block btn-dislike";
                 icone.className = "fa fa-thumbs-down text-secondary";
 
-                if (!thumbsup) {
+                if (thumbsup == null) {
                     botao.className = "btn btn-thumbsup btn-sm btn-block";
                     icone.className = "fa fa-thumbs-up text-white";
                 }
-
+console.log(responseAtividadePessoa.id);
                 botao.innerHTML = "";
                 botao.appendChild(icone);
                 lideres.atualizarListaThumbsUp(
                     pessoaAjudadaId,
                     atividadeId,
-                    !thumbsup
+                    (thumbsup == null? responseAtividadePessoa.id: null)
                 );
             } catch (err) {
                 console.log("Erro na requisição do thumbs up: ", err);

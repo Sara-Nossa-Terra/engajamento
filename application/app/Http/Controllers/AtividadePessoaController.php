@@ -13,15 +13,16 @@ class AtividadePessoaController extends Controller
         $atividades->fill($request->toArray());
         $atividades->save();
 
-        return response()->json([], 201);
+        return response()->json($atividades, 201);
     }
 
     public function destroy($id)
     {
-        if (!$atividades = AtividadePessoa::where('id', $id)->first() )
+        $atividade = AtividadePessoa::where('id', $id)->first();
+        if(!$atividade){
             return response()->json(['message', 'Não foi possível excluír o registro !'], 404);
-
-        $atividades->delete();
+        }
+        $atividade->delete();
 
         return response()->json(['message' => 'Cadastro excluído com sucesso !'], 200);
     }
