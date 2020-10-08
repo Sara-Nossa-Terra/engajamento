@@ -40,6 +40,11 @@ Após alguns instantes a aplicação estará disponível em:
     localhost:8082
 ```
 
+Para fazer autenticar(Logar) e entrar no sistema através da tela inicial utilize os seguintes dados de acesso:
+
+E-mail: admin@admin.com
+Senha: 123
+
 Para descarregar os containers basta digitar:
 ```bash
     $ docker-compose down
