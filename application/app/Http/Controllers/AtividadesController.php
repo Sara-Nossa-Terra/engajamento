@@ -119,7 +119,7 @@ class AtividadesController extends Controller
                     "tb_atividades.tx_nome",
                     "tb_atividades.dt_dia"
                 )
-                ->orderBy("tb_atividades.id", 'ASC')
+                ->orderBy("tb_atividades.dt_dia", 'ASC')
                 ->get();
 //var_dump(DB::getQueryLog()); die;
             foreach($atividades as $atividade) {
@@ -128,7 +128,7 @@ class AtividadesController extends Controller
         }
         
         # Busca Atividades
-        $retorno['atividades'][] = Atividades::all();
+        $retorno['atividades'][] = Atividades::orderBy('dt_dia', 'ASC')->get();
         
         # Busca Dado para Totalizador
         $retorno['totalizador'] = DB::table("tb_atividades_pessoas as p")
