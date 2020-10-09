@@ -101,7 +101,6 @@
                 );
                 const json = await response.json();
 
-                console.log(json);
                 this.pessoasAjudadas = Object.values(json.pessoasAjudadas);
                 this.totalizador = json.totalizador;
                 this.menuAtividades = json.atividades[0];
@@ -400,7 +399,7 @@
             let url = thumbsUpURL;
             let method = "POST";
             const formData = new FormData();
-console.log(thumbsup);
+
             if (thumbsup != null) {
                 url = thumbsDownURL;
                 url = url.slice(0, url.length - 3) + thumbsup;
@@ -438,7 +437,7 @@ console.log(thumbsup);
                     botao.className = "btn btn-thumbsup btn-sm btn-block";
                     icone.className = "fa fa-thumbs-up text-white";
                 }
-console.log(responseAtividadePessoa.id);
+                
                 botao.innerHTML = "";
                 botao.appendChild(icone);
                 lideres.atualizarListaThumbsUp(
