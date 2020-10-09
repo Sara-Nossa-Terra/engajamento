@@ -104,8 +104,20 @@ class AtividadesController extends Controller
             $retorno['pessoasAjudadas'][$pessoa['id']] = $pessoa;
             # filtra as Atividades verificando se foi realizada a "chamada";
             $atividades = Atividades::select(
-                    DB::raw("(select id from tb_atividades_pessoas where deleted_at is null and atividade_id = tb_atividades.id and pessoa_id = ". $pessoa['id']. " and dt_periodo between '2020-10-04' and '2020-10-10' limit 1) as thumbsup"),
-                    "tb_atividades.*"
+                DB::raw("(
+                    SELECT
+                        id
+                    FROM tb_atividades_pessoas
+                    WHERE
+                        deleted_at IS NULL
+                        AND atividade_id = tb_atividades.id
+                        AND pessoa_id = ". $pessoa['id']. "
+                        AND dt_periodo BETWEEN '". $dt_begin. "'
+                        AND '". $dt_until. "'
+                        LIMIT 1) AS thumbsup"),
+                    "tb_atividades.id",
+                    "tb_atividades.tx_nome",
+                    "tb_atividades.dt_dia"
                 )
                 ->orderBy("tb_atividades.id", 'ASC')
                 ->get();
@@ -116,7 +128,6 @@ class AtividadesController extends Controller
         }
         
         # Busca Atividades
-//        $retorno['atividades'] = Atividades::whereBetween('dt_dia', [$request['dt_begin'], $request['dt_until']])->get();
         $retorno['atividades'][] = Atividades::all();
         
         # Busca Dado para Totalizador

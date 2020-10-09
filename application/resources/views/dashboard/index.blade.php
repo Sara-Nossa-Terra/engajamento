@@ -408,7 +408,7 @@
                 method = "POST";
                 formData.append('atividade_id', atividadeId);
                 formData.append('pessoa_id', pessoaAjudadaId);
-                formData.append('dt_periodo', new Date().toISOString());
+                formData.append('dt_periodo', lideres.dataDasAtividades.toISOString());
             }
 
             try {
