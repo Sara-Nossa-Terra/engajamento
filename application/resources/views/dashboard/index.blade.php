@@ -101,9 +101,10 @@
                 );
                 const json = await response.json();
 
+                console.log(json);
                 this.pessoasAjudadas = Object.values(json.pessoasAjudadas);
                 this.totalizador = json.totalizador;
-                this.menuAtividades = json.atividades;
+                this.menuAtividades = json.atividades[0];
             }
 
             // lista das pessoas ajudadas
