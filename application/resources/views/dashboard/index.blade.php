@@ -437,7 +437,7 @@
                     botao.className = "btn btn-thumbsup btn-sm btn-block";
                     icone.className = "fa fa-thumbs-up text-white";
                 }
-                
+
                 botao.innerHTML = "";
                 botao.appendChild(icone);
                 lideres.atualizarListaThumbsUp(
@@ -472,8 +472,35 @@
                 });
         }
 
+        function filtroPessoasAjudadas() {
+            const input = document.getElementById("home_search");
 
-        // executa quando o documento carregar
+            if (input) {
+                // atualiza o estado da dom toda vez que o input é editado
+                input.onkeyup = (event) => {
+                    const valorInput = $(input).val();
+                    const textsEl = document.querySelectorAll(".author-name");
+
+                    // mostrar todos os items com a classe .search_identifier
+                    $(".search_identifier").show();
+
+                    textsEl.forEach((el) => {
+                        if (
+                            // oculta item se ele não der match com o texto procurado
+                            el.innerHTML
+                                .toLowerCase()
+                                .indexOf(valorInput.toLowerCase()) < 0
+                        ) {
+                            $(el).parent().parent().parent().parent().parent().hide();
+                        }
+                    });
+                };
+            }
+        }
+
+        // executado quando a página for totalmente carregada
         window.addEventListener("load", carregarPessoasAjudadas);
+        window.addEventListener("load", filtroPessoasAjudadas)
+
     </script>
 @stop
