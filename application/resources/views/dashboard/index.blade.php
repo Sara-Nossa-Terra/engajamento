@@ -420,31 +420,18 @@
                     }
                 }).then(result => result.json());
 
-                // botão clicado pelo usuário
-                let botao = document.getElementById(
-                    `botao_atividade_${pessoaAjudadaId}_${atividadeId}`
-                );
+                // atualiza a lista de atividades da pessoa ajudada
+                lideres.pessoasAjudadas.map(pessoa => {
+                    if (pessoa.id == pessoaAjudadaId) {
+                        pessoa.atividade.map(atividade => {
+                            if (atividade.id != atividadeId) return;
+                            atividade.thumbsup =  thumbsup == null? responseAtividadePessoa.id: null
+                        })
+                    }
+                })
 
-                if (!botao) return;
-
-                let icone = document.createElement("i");
-
-                botao.id = `botao_atividade_${pessoaAjudadaId}_${atividadeId}`;
-                botao.className = "btn btn-light btn-sm btn-block btn-dislike";
-                icone.className = "fa fa-thumbs-down text-secondary";
-
-                if (thumbsup == null) {
-                    botao.className = "btn btn-thumbsup btn-sm btn-block";
-                    icone.className = "fa fa-thumbs-up text-white";
-                }
-
-                botao.innerHTML = "";
-                botao.appendChild(icone);
-                lideres.atualizarListaThumbsUp(
-                    pessoaAjudadaId,
-                    atividadeId,
-                    (thumbsup == null? responseAtividadePessoa.id: null)
-                );
+                lideres.listarPessoasAjudadas();
+                lideres.listarMenuAtividades();
             } catch (err) {
                 console.log("Erro na requisição do thumbs up: ", err);
             }
