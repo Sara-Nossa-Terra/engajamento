@@ -37,6 +37,7 @@ class UsersController extends Controller
     public function store(StoreUpdateUserFormRequest $request)
     {
         $lider = new User();
+        $request['nu_telefone'] = str_replace(["(", ")"], "", $request['nu_telefone']);
         $data = $request->toArray();
         $data['password'] = bcrypt($data['password']);
         $lider->fill($data);
@@ -71,6 +72,7 @@ class UsersController extends Controller
         if (!$lider = User::findOrFail($id) )
             return redirect()->back()->with('message', 'Não foi possível atualizar o registro !');
 
+        $request['nu_telefone'] = str_replace(["(", ")"], "", $request['nu_telefone']);
         $data = $request->toArray();
         if (isset($request->password)) {
             $data['password'] = bcrypt($data['password']);

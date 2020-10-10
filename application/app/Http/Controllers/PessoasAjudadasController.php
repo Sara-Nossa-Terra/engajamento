@@ -26,7 +26,9 @@ class PessoasAjudadasController extends Controller
     public function store(StoreUpdatePessoasAjudadasFormRequest $request)
     {
         $pessoasAjudadas = new PessoasAjudadas();
-        $pessoasAjudadas->fill($request->toArray());
+        $request['nu_telefone'] = str_replace(["(", ")"], "", $request['nu_telefone']);
+        $data = $request->toArray();
+        $pessoasAjudadas->fill($data);
         $pessoasAjudadas->save();
 
         return redirect()->route('pessoasajudadas.index')->withSuccess('Cadastro realizado com sucesso');
@@ -57,7 +59,9 @@ class PessoasAjudadasController extends Controller
         if (!$pessoasAjudadas = PessoasAjudadas::findOrFail($id))
             return redirect()->back()->with('message', 'Não foi possível atualizar o registro !');
 
-        $pessoasAjudadas->fill($request->toArray());
+        $request['nu_telefone'] = str_replace(["(", ")"], "", $request['nu_telefone']);
+        $data = $request->toArray();
+        $pessoasAjudadas->fill($data);
         $pessoasAjudadas->save();
 
         return redirect()
