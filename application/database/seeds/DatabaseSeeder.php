@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             AtividadesTableSeeder::class,
             PessoasAjudadasTableSeeder::class,
             RevisaoTableSeeder::class,
+            AtividadePessoaTableSeeder::class
         ]);
     }
 }

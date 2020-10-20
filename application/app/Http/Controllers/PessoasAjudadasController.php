@@ -3,18 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUpdatePessoasAjudadasFormRequest;
+use App\Http\Resources\PessoasAjudadasResource;
 use App\Models\{User, PessoasAjudadas};
 use Illuminate\Http\Request;
 
 class PessoasAjudadasController extends Controller
 {
-    protected $repository;
-
-    public function __construct()
-    {
-//        $this->repository = PessoasAjudadas;
-    }
-
     public function index()
     {
         $pessoasAjudadas = PessoasAjudadas::orderBy('tx_nome', 'ASC')->paginate(30);
@@ -32,7 +26,9 @@ class PessoasAjudadasController extends Controller
     public function store(StoreUpdatePessoasAjudadasFormRequest $request)
     {
         $pessoasAjudadas = new PessoasAjudadas();
-        $pessoasAjudadas->fill($request->toArray());
+        $request['nu_telefone'] = str_replace(["(", ")"], "", $request['nu_telefone']);
+        $data = $request->toArray();
+        $pessoasAjudadas->fill($data);
         $pessoasAjudadas->save();
 
         return redirect()->route('pessoasajudadas.index')->withSuccess('Cadastro realizado com sucesso');
@@ -63,7 +59,9 @@ class PessoasAjudadasController extends Controller
         if (!$pessoasAjudadas = PessoasAjudadas::findOrFail($id))
             return redirect()->back()->with('message', 'Não foi possível atualizar o registro !');
 
-        $pessoasAjudadas->fill($request->toArray());
+        $request['nu_telefone'] = str_replace(["(", ")"], "", $request['nu_telefone']);
+        $data = $request->toArray();
+        $pessoasAjudadas->fill($data);
         $pessoasAjudadas->save();
 
         return redirect()
@@ -81,12 +79,14 @@ class PessoasAjudadasController extends Controller
         return redirect()->route('pessoasajudadas.index')->withSuccess('Cadastro excluído com sucesso !');
     }
 
-    public function search(Request $request)
+    public static function getByLiderId()
     {
-        $data = $request->except('_token');
+        $liderId = auth()->user()->id;
 
-        $categories = $this->repository->search($data);
+        $pessoasAjudadas = PessoasAjudadas::where('lider_id', $liderId)
+            ->orderBy('tx_nome', 'ASC')
+            ->get();
 
-        return view('admin.categories.index', compact('categories', 'data'));
+        return PessoasAjudadasResource::collection($pessoasAjudadas);
     }
 }

@@ -1,6 +1,6 @@
 PessoasAjudadas = {
 
-    url: "http://localhost:8000/listar-pessoas-ajudadas",
+    url: "/listar-pessoas-ajudadas",
     lista: [],
 
     requisitar: function () {
