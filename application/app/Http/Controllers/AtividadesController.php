@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{PessoasAjudadas, Atividades, User};
+use App\Models\{PessoasAjudadas, Atividades};
 use App\Http\Resources\AtividadesResource;
 use App\Http\Requests\{GetAtividadeFormRequest, StoreUpdateAtividadesFormRequest};
 use Illuminate\Http\Request;
@@ -81,6 +81,8 @@ class AtividadesController extends Controller
         if (!$atividades = Atividades::where('id', $id)->first() )
             return redirect()->back()->with('message', 'Não foi possível excluír o registro !');
 
+        $atividades->fill(["deleted_id" => auth()->user()->id]);
+        $atividades->save();
         $atividades->delete();
 
         return redirect()->route('atividades.index')->withSuccess('Cadastro excluído com sucesso !');
@@ -99,7 +101,7 @@ class AtividadesController extends Controller
         $dt_until = $request['dt_until'];
         $lider_id = auth()->user()->id;
         $pessoas = PessoasAjudadas::where('lider_id', $lider_id)->get()->toArray();
-        
+
         foreach ((array)$pessoas as $pessoa) {
             $retorno['pessoasAjudadas'][$pessoa['id']] = $pessoa;
             # filtra as Atividades verificando se foi realizada a "chamada";
@@ -121,15 +123,15 @@ class AtividadesController extends Controller
                 )
                 ->orderBy("tb_atividades.dt_dia", 'ASC')
                 ->get();
-//var_dump(DB::getQueryLog()); die;
+
             foreach($atividades as $atividade) {
                 $retorno['pessoasAjudadas'][$pessoa['id']]['atividade'][] = $atividade;
             }
         }
-        
+
         # Busca Atividades
         $retorno['atividades'][] = Atividades::orderBy('dt_dia', 'ASC')->get();
-        
+
         # Busca Dado para Totalizador
         $retorno['totalizador'] = DB::table("tb_atividades_pessoas as p")
             ->join("tb_pessoas as tp", function ($join) use ($lider_id) {
