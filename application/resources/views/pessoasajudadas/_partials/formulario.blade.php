@@ -95,13 +95,12 @@
 </div>
 <script>
 
-    const dataAgora = new Date(2000, 5, 2);
-
+    const dataPadrao = new Date(2000, 5, 2);
     // datepicker
     flatpickr('#dt_nascimento', {
         dateFormat: 'Y-m-d',
         altFormat: "j F Y",
-        defaultDate: dataAgora,
+        defaultDate: "{{ $pessoasAjudadas->dt_nascimento ?? old('dt_nascimento') }}" || dataPadrao,
         locale: 'pt',
         altInput: true,
     });
