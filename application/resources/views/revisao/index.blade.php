@@ -33,11 +33,11 @@
                         @foreach($revisoes as $revisao)
                             <tr>
                                 <td>
-                                    <a href="{{ route('revisao.edit', base64_encode($revisao->id)) }}"
+                                    <a href="{{ route('revisao.edit', $revisao->id) }}"
                                        class="btn btn-primary" title="Editar">
                                         <span class="fa fa-edit"></span>
                                     </a>
-                                    <a href="{{ route('revisao.delete', base64_encode($revisao->id)) }}"
+                                    <a href="{{ route('revisao.delete', $revisao->id) }}"
                                        class="btn btn-danger link-excluir" title="Excluir">
                                         <span class="fa fa-trash"></span>
                                     </a>

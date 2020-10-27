@@ -11,7 +11,6 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                 </div>
-                {{-- Implementar callendar.--}}
                 <input class="form-control  date_input  {{ $errors->has('dt_revisao') ? 'is-invalid' : '' }}"
                         placeholder="06/06/2020"
                        type="text" name="dt_revisao" id="dt_revisao"
@@ -63,7 +62,7 @@
     flatpickr('#dt_cadastro', {
         dateFormat: 'Y-m-d',
         altFormat: "j F Y",
-        defaultDate: new Date(),
+        defaultDate: "{{ $revisao->dt_cadastro ?? old('dt_cadastro') }}" || new Date(),
         locale: 'pt',
         altInput: true,
     });
@@ -71,7 +70,7 @@
     flatpickr('#dt_revisao', {
         dateFormat: 'Y-m-d',
         altFormat: "j F Y",
-        defaultDate: new Date(),
+        defaultDate: "{{ $revisao->dt_revisao ?? old('dt_revisao') }}" || new Date(),
         locale: 'pt',
         altInput: true,
     });
