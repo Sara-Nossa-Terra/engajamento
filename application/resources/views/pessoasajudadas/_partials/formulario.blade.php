@@ -3,10 +3,12 @@
 
 <div class="card-body">
     <div class="form-group row">
-        <label for="lider_id" class="col-sm-2 col-form-label">Líder</label>
+        <label for="lider_id" class="col-sm-2 col-form-label">Líder
+            <span class="obrigatorio"> *</span>
+        </label>
         <div class="col-sm-10">
-            <select name="lider_id" class="form-control" data-show-subtext="true"
-                    id="lider_id" data-live-search="true">
+            <select name="lider_id" class="form-control {{ $errors->has('lider_id') ? 'is-invalid' : '' }}"
+                    data-show-subtext="true" id="lider_id" data-live-search="true">
                 <option value="">Selecione</option>
                 @foreach($lideres as $lider)
                     <option
@@ -17,6 +19,11 @@
                     </option>
                 @endforeach
             </select>
+            @if ($errors->has('lider_id'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('lider_id') }}
+                </div>
+            @endif
         </div>
     </div>
     <div class="form-group row">
@@ -43,7 +50,6 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                 </div>
-                {{-- Implementar callendar.--}}
                 <input class="form-control date_input {{ $errors->has('dt_nascimento') ? 'is-invalid' : '' }}"
                        type="text" name="dt_nascimento" id="dt_nascimento"
                        placeholder="06/06/2020"
@@ -65,7 +71,6 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-phone"></i></span>
                 </div>
-                {{-- Implementar máscara de telefone.--}}
                 <input type="text" class="form-control  phone_input  {{ $errors->has('nu_telefone') ? 'is-invalid' : '' }}"
                        name="nu_telefone" id="nu_telefone"
                        value="{{ $pessoasAjudadas->nu_telefone ?? old('nu_telefone') }}">
@@ -90,13 +95,12 @@
 </div>
 <script>
 
-    const dataAgora = new Date(2000, 5, 2);
-
+    const dataPadrao = new Date(2000, 5, 2);
     // datepicker
     flatpickr('#dt_nascimento', {
         dateFormat: 'Y-m-d',
         altFormat: "j F Y",
-        defaultDate: dataAgora,
+        defaultDate: "{{ $pessoasAjudadas->dt_nascimento ?? old('dt_nascimento') }}" || dataPadrao,
         locale: 'pt',
         altInput: true,
     });

@@ -24,10 +24,17 @@ class StoreUpdatePessoasAjudadasFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'tx_nome'         => "required|max:100|min:15",
-            'dt_nascimento'   => "required|date",
-            'nu_telefone'     => "required",
-//            'nu_telefone'     => "required|min:12|max:12",
+            "lider_id"        => "required",
+            "tx_nome"         => "required|max:100|min:15",
+            "dt_nascimento"   => "required|date",
+            "nu_telefone"     => "required",
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'lider_id.required' => "O campo Líder é obrigatório",
         ];
     }
 }

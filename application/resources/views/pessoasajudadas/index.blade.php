@@ -4,7 +4,12 @@
 
 @section('content_header')
     <h1>Lista de Pessoas Ajudadas   </h1>
+    <!-- Link do CDN MomentJS  -->
+    <script src="{{ asset('js/moment/moment.min.js') }}"></script>
+    <script src="{{ asset('js/moment/pt-br.min.js') }}" charset="UTF-8"></script>
 @stop
+
+
 
 @section('content')
 
@@ -64,7 +69,6 @@
                 try {
                     const response =  await fetch(this.url);
                     var pessoasJson = await response.json();
-                    console.log(pessoasJson.data)
                     this.lista = pessoasJson.data;
                 } catch (err) {
                     this.handlerFalhar();
@@ -79,8 +83,7 @@
             async listar() {
                 this.lista.forEach(pessoaAjudada => {
                     // Formatar data nascimento
-                    const dtNascimento = new Date(pessoaAjudada.dt_nascimento);
-                    const dtNascimentoFormatada = `${dtNascimento.getDate()}/${dtNascimento.getMonth() + 1}/${dtNascimento.getFullYear()}`
+                    const dtNascimentoFormatada = moment(pessoaAjudada.dt_nascimento).format('DD/MM/yyyy');
 
                     // Formatar data
                     pessoaAjudada.nu_telefone = pessoaAjudada.nu_telefone.replace(".", " ");

@@ -63,7 +63,7 @@ class RevisaoController extends Controller
      */
     public function edit($id)
     {
-        if (!$revisao = Revisao::findOrFail(base64_decode($id)) )
+        if (!$revisao = Revisao::findOrFail($id) )
             return redirect()->back()->with('message', 'Não foi possível editar o registro !');
 
         return view('revisao.edit', compact('revisao'));
