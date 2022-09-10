@@ -19,7 +19,7 @@ Com Docker e docker-compose devidamente instalados em sua máquina basta clonar 
     $ git clone https://github.com/sara-nossa-terra/engajamento && cd engajamento
     $ docker-compose up -d
 ```
-
+#teste
 Dentro da pasta engajamento rodar o seguinte comando para dar permissão de escrita para a pasta de arquivos temporária da aplicação:
 ```bash
     $ chmod -R 775 application/storage
